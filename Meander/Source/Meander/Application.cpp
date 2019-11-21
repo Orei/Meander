@@ -49,6 +49,9 @@ namespace Meander
 
 			Update(delta);
 			Render();
+
+			m_Window->Present();
+			m_Window->PollEvents();
 		}
 	}
 

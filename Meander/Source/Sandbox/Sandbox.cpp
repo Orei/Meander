@@ -16,12 +16,10 @@ namespace Meander
 
 	void Sandbox::Update(float deltaTime)
 	{
-		m_Window->PollEvents();
 	}
 
 	void Sandbox::Render()
 	{
 		m_Context->Clear(ClearFlags::Color);
-		m_Window->Present();
 	}
 }
