@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Window.h"
 #include "Graphics/Context.h"
+#include "Utility/Timer.h"
 
 namespace Meander
 {
@@ -36,9 +37,17 @@ namespace Meander
 		Initialize();
 		Load();
 
-		while (m_Running)
+		// Avoid huge initial timestep
+		Timer timer;
+		timer.Start();
+
+		while (m_Running && !m_Window->IsClosing())
 		{
-			Update(0.f);
+			timer.Stop();
+			const float delta = (float)timer.GetElapsed();
+			timer.Start();
+
+			Update(delta);
 			Render();
 		}
 	}
