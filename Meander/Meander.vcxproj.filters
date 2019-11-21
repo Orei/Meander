@@ -1,12 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="Source\Entry.cpp" />
     <ClCompile Include="Source\pch.cpp" />
     <ClCompile Include="Source\Meander\Application.cpp" />
+    <ClCompile Include="Source\Meander\Utility\Log.cpp" />
+    <ClCompile Include="Source\Sandbox\Sandbox.cpp" />
+    <ClCompile Include="Source\Entry.cpp" />
+    <ClCompile Include="Source\Platform\GLFW\GLFWWindow.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLContext.cpp" />
+    <ClCompile Include="Source\Meander\Window.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Context.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Meander\Application.h" />
+    <ClInclude Include="Source\Meander\Utility\Log.h" />
+    <ClInclude Include="Source\Sandbox\Sandbox.h" />
+    <ClInclude Include="Source\Meander\Graphics\Context.h" />
+    <ClInclude Include="Source\Meander\Window.h" />
+    <ClInclude Include="Source\Platform\GLFW\GLFWWindow.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLContext.h" />
+    <ClInclude Include="Source\Meander\Common.h" />
   </ItemGroup>
 </Project>
