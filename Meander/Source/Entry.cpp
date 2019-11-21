@@ -1,9 +1,9 @@
 #include "pch.h"
-#include "Meander/Application.h"
+#include "Sandbox/Sandbox.h"
 
 int main()
 {
-	auto app = Meander::Application::Create();
+	auto app = Meander::CreateApplication();
 	app->Run();
 	delete app;
 

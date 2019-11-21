@@ -5,23 +5,23 @@ namespace Meander
 	class Application
 	{
 	public:
+		Application();
 		virtual ~Application();
 
 		void Run();
 		void Exit();
 
-		static Application* Create()
-		{
-			if (s_Instance != nullptr)
-				return nullptr;
-
-			return new Application();
-		}
+		virtual void Initialize() = 0;
+		virtual void Load() = 0;
+		virtual void Update(float deltaTime) = 0;
+		virtual void Render() = 0;
 
 	private:
-		Application();
 		bool m_Running = false;
 
 		static Application* s_Instance;
 	};
+
+	// Defined in Sandbox, should remain undefined if exported.
+	Application* CreateApplication();
 }
