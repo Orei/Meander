@@ -1,6 +1,6 @@
 #include "pch.h"
 #include "Sandbox.h"
-#include "Meander/Utility/Log.h"
+#include "Meander/Window.h"
 
 namespace Meander
 {
@@ -14,15 +14,11 @@ namespace Meander
 
 	void Sandbox::Update(float deltaTime)
 	{
-		MN_TRACE("Update");
+		m_Window->PollEvents();
 	}
 
 	void Sandbox::Render()
 	{
-	}
-
-	Application* CreateApplication()
-	{
-		return new Sandbox();
+		m_Window->Present();
 	}
 }

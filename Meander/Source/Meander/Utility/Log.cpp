@@ -12,5 +12,7 @@ namespace Meander
 
 		s_Logger = spdlog::stdout_color_mt("MEANDER");
 		s_Logger->set_level(spdlog::level::trace);
+
+		MN_INFO("Log initialized.");
 	}
 }

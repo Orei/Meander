@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
-#include "Utility/Log.h"
+#include "Window.h"
+#include "Graphics/Context.h"
 
 namespace Meander
 {
@@ -8,9 +9,19 @@ namespace Meander
 
 	Application::Application()
 	{
+		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
+
 		s_Instance = this;
 
 		Log::Initialize();
+		
+		// Create window and graphics context
+		m_Window = CreateWindow();
+		m_Context = CreateContext();
+
+		// TODO: Allow the client application to modify properties
+		m_Window->Initialize(WindowProperties());
+		m_Context->Initialize();
 	}
 	
 	Application::~Application()
