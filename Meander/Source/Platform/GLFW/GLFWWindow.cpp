@@ -35,6 +35,11 @@ namespace Meander
 		glfwSetErrorCallback(ErrorCallback);
 	}
 
+	void GLFWWindow::SetVerticalSync(bool enabled)
+	{
+		glfwSwapInterval(enabled);
+	}
+
 	void GLFWWindow::PollEvents()
 	{
 		glfwPollEvents();

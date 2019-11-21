@@ -34,6 +34,7 @@
     <ClInclude Include="Source\Meander\Common.h" />
     <ClInclude Include="Source\Meander\Graphics\Context.h" />
     <ClInclude Include="Source\Meander\Utility\Log.h" />
+    <ClInclude Include="Source\Meander\Utility\Timer.h" />
     <ClInclude Include="Source\Meander\Window.h" />
     <ClInclude Include="Source\pch.h" />
     <ClInclude Include="Source\Platform\GLFW\GLFWWindow.h" />

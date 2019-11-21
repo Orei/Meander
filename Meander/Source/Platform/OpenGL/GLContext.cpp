@@ -21,7 +21,23 @@ namespace Meander
 		MN_INFO("Renderer: {0}", glGetString(GL_RENDERER));
 	}
 
-	void GLContext::Clear()
+	void GLContext::Enable(unsigned int capabilities)
 	{
+		glEnable(capabilities);
+	}
+
+	void GLContext::Disable(unsigned int capabilities)
+	{
+		glDisable(capabilities);
+	}
+
+	void GLContext::SetClearColor(const glm::vec4& color)
+	{
+		glClearColor(color.r, color.g, color.b, color.a);
+	}
+
+	void GLContext::Clear(ClearFlags flags)
+	{
+		glClear((int)flags);
 	}
 }

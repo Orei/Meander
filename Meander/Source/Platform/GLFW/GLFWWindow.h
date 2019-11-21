@@ -8,13 +8,25 @@ namespace Meander
 	class GLFWWindow : public Window
 	{
 	public:
+		/* Initializes the window. */
 		virtual void Initialize(const WindowProperties& properties) override;
+
+		/* Enables or disables vertical synchronization. */
+		virtual void SetVerticalSync(bool enabled) override;
+
+		/* Polls for events. */
 		virtual void PollEvents() override;
+
+		/* Presents the back-buffer to the window. */
 		virtual void Present() override;
+		
+		/* Whether the window is requesting the program to close. */
 		virtual bool IsClosing() override;
 
+		/* Returns the process address. */
 		virtual void* GetProcessAddress() override;
 
+		/* Returns a pointer to the native GLFW window. */
 		inline const GLFWwindow* GetNativeWindow() const { return m_NativeWindow; }
 
 	private:

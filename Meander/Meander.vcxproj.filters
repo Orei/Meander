@@ -21,5 +21,6 @@
     <ClInclude Include="Source\Platform\GLFW\GLFWWindow.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLContext.h" />
     <ClInclude Include="Source\Meander\Common.h" />
+    <ClInclude Include="Source\Meander\Utility\Timer.h" />
   </ItemGroup>
 </Project>
