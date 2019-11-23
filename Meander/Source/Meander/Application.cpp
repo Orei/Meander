@@ -2,6 +2,7 @@
 #include "Application.h"
 #include "Window.h"
 #include "Graphics/Context.h"
+#include "Input/Input.h"
 #include "Utility/Timer.h"
 
 namespace Meander
@@ -49,6 +50,7 @@ namespace Meander
 			Update(delta);
 			Render();
 
+			Input::Update();
 			m_Window->Present();
 			m_Window->PollEvents();
 		}

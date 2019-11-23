@@ -26,6 +26,7 @@
     <ClCompile Include="Source\Meander\Graphics\Context.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Meander\Graphics\VertexArray.cpp" />
+    <ClCompile Include="Source\Meander\Input\Input.cpp" />
     <ClCompile Include="Source\Meander\Transform.cpp" />
     <ClCompile Include="Source\Meander\Utility\Log.cpp" />
     <ClCompile Include="Source\Meander\Window.cpp" />
@@ -46,6 +47,10 @@
     <ClInclude Include="Source\Meander\Graphics\Mesh.h" />
     <ClInclude Include="Source\Meander\Graphics\Shader.h" />
     <ClInclude Include="Source\Meander\Graphics\VertexArray.h" />
+    <ClInclude Include="Source\Meander\Input\Input.h" />
+    <ClInclude Include="Source\Meander\Input\InputAction.h" />
+    <ClInclude Include="Source\Meander\Input\Key.h" />
+    <ClInclude Include="Source\Meander\Input\MouseButton.h" />
     <ClInclude Include="Source\Meander\Transform.h" />
     <ClInclude Include="Source\Meander\Utility\Log.h" />
     <ClInclude Include="Source\Meander\Utility\Timer.h" />

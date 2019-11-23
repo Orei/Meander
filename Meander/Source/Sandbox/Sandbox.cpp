@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Sandbox.h"
 #include "Meander/Window.h"
+#include "Meander/Input/Input.h"
 #include "Meander/Graphics/Context.h"
 #include "Meander/Graphics/Buffer.h"
 #include "Meander/Graphics/VertexArray.h"
@@ -48,6 +49,9 @@ namespace Meander
 		time += deltaTime / 1000.f;
 
 		camera.SetPosition({ sin(time) * 2.f, 1.f, cos(time) * 2.f });
+
+		if (Input::IsKeyPressed(Key::Escape))
+			Exit();
 	}
 
 	void Sandbox::Render()

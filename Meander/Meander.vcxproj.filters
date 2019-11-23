@@ -18,6 +18,7 @@
     <ClCompile Include="Source\Platform\OpenGL\GLShader.cpp" />
     <ClCompile Include="Source\Meander\Transform.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Camera.cpp" />
+    <ClCompile Include="Source\Meander\Input\Input.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -39,6 +40,10 @@
     <ClInclude Include="Source\Platform\OpenGL\GLShader.h" />
     <ClInclude Include="Source\Meander\Transform.h" />
     <ClInclude Include="Source\Meander\Graphics\Camera.h" />
+    <ClInclude Include="Source\Meander\Input\Input.h" />
+    <ClInclude Include="Source\Meander\Input\Key.h" />
+    <ClInclude Include="Source\Meander\Input\MouseButton.h" />
+    <ClInclude Include="Source\Meander\Input\InputAction.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Test.glsl" />
