@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Entry.cpp" />
     <ClCompile Include="Source\Meander\Application.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Buffer.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Context.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Meander\Graphics\VertexArray.cpp" />
@@ -40,6 +41,7 @@
     <ClInclude Include="Source\Meander\Application.h" />
     <ClInclude Include="Source\Meander\Common.h" />
     <ClInclude Include="Source\Meander\Graphics\Buffer.h" />
+    <ClInclude Include="Source\Meander\Graphics\Camera.h" />
     <ClInclude Include="Source\Meander\Graphics\Context.h" />
     <ClInclude Include="Source\Meander\Graphics\Mesh.h" />
     <ClInclude Include="Source\Meander\Graphics\Shader.h" />
