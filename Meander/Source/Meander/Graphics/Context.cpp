@@ -8,7 +8,6 @@ namespace Meander
 	Context::Context()
 	{
 		MN_ASSERT(s_Instance == nullptr, "An instance of Context already exists.");
-
 		s_Instance = this;
 	}
 

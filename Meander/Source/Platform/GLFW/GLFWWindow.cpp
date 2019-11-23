@@ -11,21 +11,18 @@ namespace Meander
 
 	void GLFWWindow::Initialize(const WindowProperties& properties)
 	{
-		MN_INFO("Creating GLFW Window...");
+		MN_INFO("Creating GLFW window...");
 
 		s_Properties = properties;
 
-		if (glfwInit() != GLFW_TRUE)
-		{
-			MN_CRITICAL("Unable to initialize GLFW.");
-			return;
-		}
+		int status = glfwInit();
+		MN_ASSERT(status,"Unable to initialize GLFW.");
 
 		m_NativeWindow = glfwCreateWindow(properties.Width, properties.Height, properties.Title, nullptr, nullptr);
 
 		if (m_NativeWindow == nullptr)
 		{
-			MN_CRITICAL("Unable to create GLFW window.");
+			MN_ASSERT(false, "Unable to create GLFW window.");
 			glfwTerminate();
 			return;
 		}

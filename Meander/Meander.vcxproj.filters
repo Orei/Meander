@@ -10,6 +10,10 @@
     <ClCompile Include="Source\Platform\OpenGL\GLContext.cpp" />
     <ClCompile Include="Source\Meander\Window.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Context.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Buffer.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\VertexArray.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLBuffer.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLVertexArray.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -22,5 +26,10 @@
     <ClInclude Include="Source\Platform\OpenGL\GLContext.h" />
     <ClInclude Include="Source\Meander\Common.h" />
     <ClInclude Include="Source\Meander\Utility\Timer.h" />
+    <ClInclude Include="Source\Meander\Graphics\Mesh.h" />
+    <ClInclude Include="Source\Meander\Graphics\Buffer.h" />
+    <ClInclude Include="Source\Meander\Graphics\VertexArray.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLBuffer.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLVertexArray.h" />
   </ItemGroup>
 </Project>

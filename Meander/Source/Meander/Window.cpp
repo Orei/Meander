@@ -9,7 +9,6 @@ namespace Meander
 	Window::Window()
 	{
 		MN_ASSERT(s_Instance == nullptr, "An instance of Window already exists.");
-		
 		s_Instance = this;
 	}
 

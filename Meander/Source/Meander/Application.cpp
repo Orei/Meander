@@ -11,7 +11,6 @@ namespace Meander
 	Application::Application()
 	{
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
-
 		s_Instance = this;
 
 		Log::Initialize();

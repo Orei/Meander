@@ -19,6 +19,18 @@ namespace Meander
 		virtual void SetClearColor(const glm::vec4& color) override;
 
 		/* Clears the specified buffers. */
-		virtual void Clear(ClearFlags flags) override;
+		virtual void Clear(const ClearFlags& flags) override;
+
+		/* Renders a mesh. */
+		virtual void Render(const Shared<VertexArray>& vertexArray) override;
+
+		/* Returns the Context API, OpenGL in this case. */
+		virtual const ContextAPI& GetContextAPI() const override
+		{
+			return m_API;
+		}
+
+	private:
+		ContextAPI m_API = ContextAPI::OpenGL;
 	};
 }

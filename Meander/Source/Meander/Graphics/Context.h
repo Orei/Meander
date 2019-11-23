@@ -14,6 +14,13 @@ namespace Meander
 		return static_cast<ClearFlags>(static_cast<int>(a) | static_cast<int>(b));
 	}
 
+	enum class ContextAPI
+	{
+		OpenGL
+	};
+
+	class VertexArray;
+
 	class Context
 	{
 	public:
@@ -33,7 +40,13 @@ namespace Meander
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 
 		/* Clears the specified buffers. */
-		virtual void Clear(ClearFlags flags) = 0;
+		virtual void Clear(const ClearFlags& flags) = 0;
+
+		/* Renders a mesh. */
+		virtual void Render(const Shared<VertexArray>& vertexArray) = 0;
+
+		/* Returns the Context API. */
+		virtual const ContextAPI& GetContextAPI() const = 0;
 
 		/* Returns the context instance. */
 		inline static Context* Get() { return s_Instance; }

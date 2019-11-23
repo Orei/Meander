@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "GLContext.h"
 #include "Meander/Window.h"
+#include "Meander/Graphics/VertexArray.h"
 #include <glad/glad.h>
 
 namespace Meander
@@ -11,11 +12,7 @@ namespace Meander
 
 		int status = gladLoadGLLoader((GLADloadproc)Window::Get()->GetProcessAddress());
 
-		if (status != GL_TRUE)
-		{
-			MN_CRITICAL("Unable to initialize GLAD.");
-			return;
-		}
+		MN_ASSERT(status, "Unable to initialize GLAD.");
 
 		MN_INFO("OpenGL {0}", glGetString(GL_VERSION));
 		MN_INFO("Renderer: {0}", glGetString(GL_RENDERER));
@@ -36,8 +33,15 @@ namespace Meander
 		glClearColor(color.r, color.g, color.b, color.a);
 	}
 
-	void GLContext::Clear(ClearFlags flags)
+	void GLContext::Clear(const ClearFlags& flags)
 	{
 		glClear((int)flags);
+	}
+
+	void GLContext::Render(const Shared<VertexArray>& vertexArray)
+	{
+		vertexArray->Bind();
+		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
+		vertexArray->Unbind();
 	}
 }
