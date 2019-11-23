@@ -11,10 +11,21 @@ namespace Meander
 		Input::SetKeyState((Key)key, (InputAction)action);
 	}
 
+	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
+	{
+		Input::SetMouseButtonState((MouseButton)button, (InputAction)action);
+	}
+
+	static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
+	{
+		Input::SetMousePosition({ (float)xpos, (float)ypos });
+	}
+
 	void ErrorCallback(int error, const char* description)
 	{
 		MN_ERROR("GLFW Error: %s\n", description);
 	}
+	/* Callbacks */
 
 	void GLFWWindow::Initialize(const WindowProperties& properties)
 	{
@@ -35,11 +46,11 @@ namespace Meander
 		}
 
 		glfwMakeContextCurrent(m_NativeWindow);
-		glfwSetErrorCallback(ErrorCallback);
 
+		glfwSetErrorCallback(ErrorCallback);
 		glfwSetKeyCallback(m_NativeWindow, KeyCallback);
-		//glfwSetMouseButtonCallback(m_NativeWindow, GLFWInput::MouseButtonCallback);
-		//glfwSetCursorPosCallback(m_NativeWindow, GLFWInput::MousePositionCallback);
+		glfwSetMouseButtonCallback(m_NativeWindow, MouseButtonCallback);
+		glfwSetCursorPosCallback(m_NativeWindow, MousePositionCallback);
 	}
 
 	void GLFWWindow::SetVerticalSync(bool enabled)
