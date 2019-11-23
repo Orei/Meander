@@ -16,6 +16,7 @@
     <ClCompile Include="Source\Platform\OpenGL\GLVertexArray.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLShader.cpp" />
+    <ClCompile Include="Source\Meander\Transform.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -35,6 +36,7 @@
     <ClInclude Include="Source\Platform\OpenGL\GLVertexArray.h" />
     <ClInclude Include="Source\Meander\Graphics\Shader.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLShader.h" />
+    <ClInclude Include="Source\Meander\Transform.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Test.glsl" />
