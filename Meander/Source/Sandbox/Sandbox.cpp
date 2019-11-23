@@ -5,9 +5,11 @@
 #include "Meander/Graphics/Buffer.h"
 #include "Meander/Graphics/VertexArray.h"
 #include "Meander/Graphics/Mesh.h"
+#include "Meander/Graphics/Shader.h"
 
 namespace Meander
 {
+	Shared<Shader> shader;
 	Shared<Mesh> mesh;
 
 	void Sandbox::Initialize()
@@ -17,6 +19,10 @@ namespace Meander
 
 	void Sandbox::Load()
 	{
+		/* Load shader */
+		shader = Shader::Create("Assets/Shaders/Test.glsl");
+
+		/* Create mesh */
 		float squareVertices[5 * 4] = 
 		{
 			-0.5f, -0.5f,	0.0f, 0.0f,
@@ -40,6 +46,9 @@ namespace Meander
 	void Sandbox::Render()
 	{
 		m_Context->Clear(ClearFlags::Color | ClearFlags::Depth);
+
+		shader->Bind();
 		m_Context->Render(mesh->GetVertexArray());
+		shader->Unbind();
 	}
 }

@@ -14,6 +14,8 @@
     <ClCompile Include="Source\Meander\Graphics\VertexArray.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLBuffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLVertexArray.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Shader.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLShader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -31,5 +33,10 @@
     <ClInclude Include="Source\Meander\Graphics\VertexArray.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLBuffer.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLVertexArray.h" />
+    <ClInclude Include="Source\Meander\Graphics\Shader.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLShader.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Shaders\Test.glsl" />
   </ItemGroup>
 </Project>
