@@ -5,14 +5,14 @@ namespace Meander
 	class Mesh
 	{
 	public:
-		Mesh(float* vertices, unsigned int verticesSize, unsigned int* indices, unsigned int indexSize, const BufferLayout& layout)
+		Mesh(float* vertices, unsigned int verticesSize, unsigned int* indices, unsigned int indicesSize, const BufferLayout& layout)
 		{
 			m_VertexArray = VertexArray::Create();
 			
 			Shared<VertexBuffer> vertexBuffer = VertexBuffer::Create(vertices, verticesSize);
 			vertexBuffer->SetLayout(layout);
 
-			Shared<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, indexSize);
+			Shared<IndexBuffer> indexBuffer = IndexBuffer::Create(indices, indicesSize);
 			m_VertexArray->AddVertexBuffer(vertexBuffer);
 			m_VertexArray->SetIndexBuffer(indexBuffer);
 		}
