@@ -12,6 +12,9 @@ namespace Meander
 		/* Returns the delta time in seconds without any scaling applied. */
 		float GetDeltaPure() const { return m_DeltaSeconds; }
 
+		/* Returns the elapsed time in seconds since start. */
+		float GetElapsedSeconds() const { return m_ElapsedSeconds; }
+
 		/* Returns the current frame. */
 		int GetFrame() const { return m_CurrentFrame; }
 
@@ -25,10 +28,12 @@ namespace Meander
 		void Update(float deltaSeconds)
 		{
 			m_CurrentFrame++;
+			m_ElapsedSeconds += deltaSeconds;
 			m_DeltaSeconds = deltaSeconds;
 		}
 
 	private:
+		float m_ElapsedSeconds = 0.f;
 		float m_DeltaSeconds = 0.f;
 		float m_TimeScale = 1.f;
 		unsigned int m_CurrentFrame = 0;

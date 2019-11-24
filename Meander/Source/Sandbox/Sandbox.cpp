@@ -41,12 +41,17 @@ namespace Meander
 				{ "a_Position", BufferDataType::Float3 },
 				{ "a_UV", BufferDataType::Float2 }
 			}));
+
+		camera.SetPosition({ 0.f, 2.f, -5.f });
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
 	{
 		if (Input::IsKeyPressed(Key::Escape))
 			Exit();
+
+		const float elapsed = gameTime.GetElapsedSeconds();
+		camera.SetPosition({ sin(elapsed * 2.f) * 2.f, 1.f, cos(elapsed * 2.f) * 2.f });
 	}
 
 	void Sandbox::Render()
