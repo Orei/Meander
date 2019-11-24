@@ -43,13 +43,8 @@ namespace Meander
 			}));
 	}
 
-	void Sandbox::Update(float deltaTime)
+	void Sandbox::Update(GameTime& gameTime)
 	{
-		static float time = 0.f;
-		time += deltaTime / 1000.f;
-
-		camera.SetPosition({ sin(time) * 2.f, 1.f, cos(time) * 2.f });
-
 		if (Input::IsKeyPressed(Key::Escape))
 			Exit();
 	}

@@ -44,6 +44,7 @@
     <ClInclude Include="Source\Meander\Input\Key.h" />
     <ClInclude Include="Source\Meander\Input\MouseButton.h" />
     <ClInclude Include="Source\Meander\Input\InputAction.h" />
+    <ClInclude Include="Source\Meander\GameTime.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Test.glsl" />

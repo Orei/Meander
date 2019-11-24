@@ -8,7 +8,7 @@ namespace Meander
 	public:
 		virtual void Initialize() override;
 		virtual void Load() override;
-		virtual void Update(float deltaTime) override;
+		virtual void Update(GameTime& gameTime) override;
 		virtual void Render() override;
 	};
 }

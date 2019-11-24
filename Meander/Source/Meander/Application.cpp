@@ -1,6 +1,7 @@
 #include "pch.h"
 #include "Application.h"
 #include "Window.h"
+#include "GameTime.h"
 #include "Graphics/Context.h"
 #include "Input/Input.h"
 #include "Utility/Timer.h"
@@ -37,6 +38,8 @@ namespace Meander
 		Initialize();
 		Load();
 
+		GameTime gameTime;
+
 		// Avoid huge initial timestep
 		Timer timer;
 		timer.Start();
@@ -44,10 +47,10 @@ namespace Meander
 		while (m_Running && !m_Window->IsClosing())
 		{
 			timer.Stop();
-			const float delta = (float)timer.GetElapsed();
+			gameTime.Update((float)timer.GetElapsed() / 1000.f);
 			timer.Start();
 
-			Update(delta);
+			Update(gameTime);
 			Render();
 
 			Input::Update();

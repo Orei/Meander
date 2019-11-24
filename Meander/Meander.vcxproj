@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClInclude Include="Source\Meander\Application.h" />
     <ClInclude Include="Source\Meander\Common.h" />
+    <ClInclude Include="Source\Meander\GameTime.h" />
     <ClInclude Include="Source\Meander\Graphics\Buffer.h" />
     <ClInclude Include="Source\Meander\Graphics\Camera.h" />
     <ClInclude Include="Source\Meander\Graphics\Context.h" />
