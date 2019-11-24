@@ -34,6 +34,9 @@ namespace Meander
 		/* Whether the key was released this frame. */
 		static bool IsKeyReleased(Key key);
 
+		/* Returns a normalized float depending on the pressed keys. */
+		static float GetKeysAxis(Key negative, Key positive);
+
 		/* Whether the mouse button is currently pressed. */
 		static bool IsMouseDown(MouseButton button);
 
@@ -53,14 +56,16 @@ namespace Meander
 
 		/* Returns the mouse position. */
 		static const glm::vec2& GetMousePosition() { return m_MousePosition; }
+		static const glm::vec2 GetMouseDelta() { return m_MousePosition - m_PreviousMousePosition; }
 
 	private:
 		static InputState m_KeyStates[(unsigned int)Key::MAX];
 		static InputState m_MouseStates[(unsigned int)MouseButton::MAX];
 		static glm::vec2 m_MousePosition;
+		static glm::vec2 m_PreviousMousePosition;
 		static unsigned int m_CurrentFrame;
 		
-		static void Update() { m_CurrentFrame++; }
+		static void Update() { m_CurrentFrame++; m_PreviousMousePosition = m_MousePosition; }
 		
 		// Only allow application to update input.
 		friend class Application;

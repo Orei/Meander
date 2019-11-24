@@ -6,6 +6,7 @@ namespace Meander
 	InputState Input::m_KeyStates[(unsigned int)Key::MAX];
 	InputState Input::m_MouseStates[(unsigned int)MouseButton::MAX];
 	glm::vec2 Input::m_MousePosition = glm::vec2(0.f);
+	glm::vec2 Input::m_PreviousMousePosition = glm::vec2(0.f);
 	unsigned int Input::m_CurrentFrame = 0;
 
 	bool Input::IsKeyDown(Key key)
@@ -29,6 +30,11 @@ namespace Meander
 	{
 		const InputState& state = m_KeyStates[(unsigned int)key];
 		return state.Action == InputAction::Release && state.Frame == m_CurrentFrame;
+	}
+
+	float Input::GetKeysAxis(Key negative, Key positive)
+	{
+		return IsKeyDown(positive) - IsKeyDown(negative);
 	}
 
 	bool Input::IsMouseDown(MouseButton button)
