@@ -34,7 +34,7 @@ namespace Meander
 
 	float Input::GetKeysAxis(Key negative, Key positive)
 	{
-		return IsKeyDown(positive) - IsKeyDown(negative);
+		return (float)(IsKeyDown(positive) - IsKeyDown(negative));
 	}
 
 	bool Input::IsMouseDown(MouseButton button)
