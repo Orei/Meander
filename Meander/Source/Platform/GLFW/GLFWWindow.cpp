@@ -58,6 +58,11 @@ namespace Meander
 		glfwSwapInterval(enabled);
 	}
 
+	void GLFWWindow::SetCursorState(bool enabled)
+	{
+		glfwSetInputMode(m_NativeWindow, GLFW_CURSOR, enabled ? GLFW_CURSOR_NORMAL : GLFW_CURSOR_DISABLED);
+	}
+
 	void GLFWWindow::PollEvents()
 	{
 		glfwPollEvents();

@@ -32,6 +32,9 @@ namespace Meander
 
 		/* Enables or disables vertical synchronization. */
 		virtual void SetVerticalSync(bool enabled) = 0;
+
+		/* Enables or disables the cursor. */
+		virtual void SetCursorState(bool enabled) = 0;
 		
 		/* Polls for events. */
 		virtual void PollEvents() = 0;
