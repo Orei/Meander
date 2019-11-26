@@ -39,6 +39,9 @@ namespace Meander
 		/* Sets the clear-color. */
 		virtual void SetClearColor(const glm::vec4& color) = 0;
 
+		/* Enables or disables depth-testing. */
+		virtual void SetDepthTest(bool enabled) = 0;
+
 		/* Clears the specified buffers. */
 		virtual void Clear(const ClearFlags& flags) = 0;
 

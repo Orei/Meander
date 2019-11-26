@@ -44,4 +44,12 @@ namespace Meander
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);
 		vertexArray->Unbind();
 	}
+
+	void GLContext::SetDepthTest(bool enabled)
+	{
+		if (enabled)
+			Enable(GL_DEPTH_TEST);
+		else
+			Disable(GL_DEPTH_TEST);
+	}
 }

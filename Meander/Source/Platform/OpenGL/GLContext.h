@@ -32,5 +32,8 @@ namespace Meander
 
 	private:
 		ContextAPI m_API = ContextAPI::OpenGL;
+
+		// Inherited via Context
+		virtual void SetDepthTest(bool enabled) override;
 	};
 }
