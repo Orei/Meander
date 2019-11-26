@@ -12,23 +12,14 @@ namespace Meander
 			Recalculate();
 		}
 
-		const glm::vec3& GetPosition() const { return m_Transform.Position; }
-		void SetPosition(const glm::vec3& position) { m_Transform.Position = position; Recalculate(); }
-
-		const glm::quat& GetRotation() const { return m_Transform.Rotation; }
-		void SetRotation(const glm::quat& rotation) { m_Transform.Rotation = rotation; Recalculate(); }
-
-		const glm::mat4& GetViewMatrix() const { return m_ViewMatrix; }
+		Transform& GetTransform() { return m_Transform; }
+		const glm::mat4& GetViewMatrix() { Recalculate(); return m_ViewMatrix; }
 		const glm::mat4& GetProjectionMatrix() const { return m_ProjectionMatrix; }
 
 	private:
 		Transform m_Transform;
-		glm::mat4 m_ProjectionMatrix;
-		glm::mat4 m_ViewMatrix;
-
-		glm::vec3 m_Forward;
-		glm::vec3 m_Right;
-		glm::vec3 m_Up;
+		glm::mat4 m_ProjectionMatrix = glm::mat4(1.f);
+		glm::mat4 m_ViewMatrix = glm::mat4(1.f);
 
 		void Recalculate();
 	};
@@ -42,6 +33,6 @@ namespace Meander
 	class PerspectiveCamera : public Camera
 	{
 	public:
-		PerspectiveCamera(float fov, float ratio, float zNear = 0.1f, float zFar = 150.f);
+		PerspectiveCamera(float fov, float aspectRatio, float zNear = 0.1f, float zFar = 150.f);
 	};
 }

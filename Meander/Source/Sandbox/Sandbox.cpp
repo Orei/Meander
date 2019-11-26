@@ -11,7 +11,7 @@
 
 namespace Meander
 {
-	Shared<Shader> shader;
+	Shared<Shader> testShader;
 	Shared<Mesh> mesh;
 	Transform meshTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
@@ -19,12 +19,14 @@ namespace Meander
 	void Sandbox::Initialize()
 	{
 		m_Context->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.f));
+		m_Context->SetDepthTest(true);
+		m_Window->SetCursorState(false);
 	}
 
 	void Sandbox::Load()
 	{
 		/* Load shader */
-		shader = Shader::Create("Assets/Shaders/Test.glsl");
+		testShader = Shader::Create("Assets/Shaders/Test.glsl");
 
 		/* Create mesh */
 		float squareVertices[] = 
@@ -42,7 +44,7 @@ namespace Meander
 				{ "a_UV", BufferDataType::Float2 }
 			}));
 
-		camera.SetPosition({ 0.f, 2.f, -5.f });
+		camera.GetTransform().Translate(WORLD_FORWARD * -5.f);
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -50,20 +52,32 @@ namespace Meander
 		if (Input::IsKeyPressed(Key::Escape))
 			Exit();
 
-		const float elapsed = gameTime.GetElapsedSeconds();
-		camera.SetPosition({ sin(elapsed * 2.f) * 2.f, 1.f, cos(elapsed * 2.f) * 2.f });
+		glm::quat rotation = glm::angleAxis(glm::radians(45.f * gameTime.GetDeltaSeconds()), meshTransform.GetUp() * Input::GetKeysAxis(Key::Left, Key::Right)) *
+			glm::angleAxis(glm::radians(45.f * gameTime.GetDeltaSeconds()), meshTransform.GetRight() * Input::GetKeysAxis(Key::Down, Key::Up));
+
+		meshTransform.Rotate(rotation);
+
+		glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera.GetTransform().GetRight() +
+			Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
+			Input::GetKeysAxis(Key::S, Key::W) * camera.GetTransform().GetForward();
+
+		camera.GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
+
+		glm::vec2 look = Input::GetMouseDelta() * 0.05f;
+		camera.GetTransform().SetRotation(camera.GetTransform().GetRotation() * glm::angleAxis(glm::radians(look.x), WORLD_UP));
+		camera.GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) * camera.GetTransform().GetRotation());
 	}
 
 	void Sandbox::Render()
 	{
 		m_Context->Clear(ClearFlags::Color | ClearFlags::Depth);
 
-		shader->Set("u_Projection", camera.GetProjectionMatrix());
-		shader->Set("u_View", camera.GetViewMatrix());
-		shader->Set("u_Transform", meshTransform.GetMatrix());
+		testShader->Set("u_Projection", camera.GetProjectionMatrix());
+		testShader->Set("u_View", camera.GetViewMatrix());
+		testShader->Set("u_Transform", meshTransform.GetMatrix());
 
-		shader->Bind();
+		testShader->Bind();
 		m_Context->Render(mesh->GetVertexArray());
-		shader->Unbind();
+		testShader->Unbind();
 	}
 }
