@@ -29,12 +29,14 @@ Fragment
         vec2 UV;
     } fs_in;
 
+	uniform sampler2D u_Diffuse;
+
 	out vec4 o_Color;
 
     void main()
     {
-        vec2 uv = fs_in.UV;
+		vec3 color = texture(u_Diffuse, fs_in.UV).rgb;
 
-        o_Color = vec4(uv.x, uv.y, uv.x + uv.y, 1.0);
+        o_Color = vec4(color, 1.0);
     }
 }

@@ -7,6 +7,15 @@
 #define WORLD_UP glm::vec3(0.f, 1.f, 0.f)
 #define WORLD_FORWARD glm::vec3(0.f, 0.f, -1.f)
 
+#define DIFFUSE_SLOT 0
+#define NORMAL_SLOT 1
+#define SPECULAR_SLOT 2
+#define EMISSIVE_SLOT 3
+#define SHADOWMAP_SLOT 4
+#define SKYBOX_SLOT 5
+#define COLOR_BUFFER_SLOT 6
+#define DEPTH_BUFFER_SLOT 7
+
 namespace Meander
 {
 	template<typename T>

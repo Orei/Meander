@@ -4,6 +4,12 @@
 
 namespace Meander
 {
+	enum class Space
+	{
+		Local,
+		World
+	};
+
 	class Transform
 	{
 	public:

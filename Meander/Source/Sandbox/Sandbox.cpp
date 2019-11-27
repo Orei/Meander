@@ -8,43 +8,50 @@
 #include "Meander/Graphics/Mesh.h"
 #include "Meander/Graphics/Shader.h"
 #include "Meander/Graphics/Camera.h"
+#include "Meander/Graphics/Texture.h"
 
 namespace Meander
 {
 	Shared<Shader> testShader;
+	Shared<Texture> testTexture;
 	Shared<Mesh> mesh;
 	Transform meshTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
 
 	void Sandbox::Initialize()
 	{
+		m_Window->SetCursorState(false);
 		m_Context->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.f));
 		m_Context->SetDepthTest(true);
-		m_Window->SetCursorState(false);
-	}
 
-	void Sandbox::Load()
-	{
-		/* Load shader */
-		testShader = Shader::Create("Assets/Shaders/Test.glsl");
-
-		/* Create mesh */
-		float squareVertices[] = 
+		// Create mesh
+		float squareVertices[] =
 		{
-			-0.5f, -0.5f, 0.0f,	  0.0f, 0.0f,
-			 0.5f, -0.5f, 0.0f,	  1.0f, 0.0f,
-			 0.5f,  0.5f, 0.0f,	  1.0f, 1.0f,
-			-0.5f,  0.5f, 0.0f,	  0.0f, 1.0f
+			-0.5f, -0.5f, 0.0f,		0.0f, 0.0f,
+			 0.5f, -0.5f, 0.0f,		1.0f, 0.0f,
+			 0.5f,  0.5f, 0.0f,		1.0f, 1.0f,
+			-0.5f,  0.5f, 0.0f,		0.0f, 1.0f
 		};
 		unsigned int squareIndices[6] = { 0, 1, 2, 2, 3, 0 };
 
-		mesh.reset(new Mesh(squareVertices, sizeof(squareVertices), squareIndices, sizeof(squareIndices), 
+		mesh.reset(new Mesh(squareVertices, sizeof(squareVertices), squareIndices, sizeof(squareIndices),
 			{
 				{ "a_Position", BufferDataType::Float3 },
 				{ "a_UV", BufferDataType::Float2 }
 			}));
 
+		// Move the camera back, so we can see the center
 		camera.GetTransform().Translate(WORLD_FORWARD * -5.f);
+	}
+
+	void Sandbox::Load()
+	{
+		// Load shader
+		testShader = Shader::Create("Assets/Shaders/Test.glsl");
+		testShader->Set("u_Diffuse", DIFFUSE_SLOT);
+
+		// Load texture
+		testTexture = Texture::Create("Assets/Textures/Debug_White.png");
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -77,7 +84,9 @@ namespace Meander
 		testShader->Set("u_Transform", meshTransform.GetMatrix());
 
 		testShader->Bind();
+		testTexture->Bind(DIFFUSE_SLOT);
 		m_Context->Render(mesh->GetVertexArray());
+		testTexture->Unbind(DIFFUSE_SLOT);
 		testShader->Unbind();
 	}
 }
