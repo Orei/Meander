@@ -9,11 +9,11 @@
 #include "Meander/Graphics/Shader.h"
 #include "Meander/Graphics/Camera.h"
 #include "Meander/Graphics/Texture.h"
+#include "Meander/Graphics/Material.h"
 
 namespace Meander
 {
-	Shared<Shader> testShader;
-	Shared<Texture> testTexture;
+	Material testMaterial;
 	Shared<Mesh> mesh;
 	Transform meshTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
@@ -46,12 +46,8 @@ namespace Meander
 
 	void Sandbox::Load()
 	{
-		// Load shader
-		testShader = Shader::Create("Assets/Shaders/Test.glsl");
-		testShader->Set("u_Diffuse", DIFFUSE_SLOT);
-
-		// Load texture
-		testTexture = Texture::Create("Assets/Textures/Debug_White.png");
+		testMaterial = Material(Shader::Create("Assets/Shaders/Test.glsl"), 
+			Texture::Create("Assets/Textures/Debug_White.png"));
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -71,22 +67,21 @@ namespace Meander
 		camera.GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
 
 		glm::vec2 look = Input::GetMouseDelta() * 0.05f;
-		camera.GetTransform().SetRotation(camera.GetTransform().GetRotation() * glm::angleAxis(glm::radians(look.x), WORLD_UP));
-		camera.GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) * camera.GetTransform().GetRotation());
+		camera.GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) * 
+			camera.GetTransform().GetRotation() * 
+			glm::angleAxis(glm::radians(look.x), WORLD_UP));
 	}
 
 	void Sandbox::Render()
 	{
 		m_Context->Clear(ClearFlags::Color | ClearFlags::Depth);
 
-		testShader->Set("u_Projection", camera.GetProjectionMatrix());
-		testShader->Set("u_View", camera.GetViewMatrix());
-		testShader->Set("u_Transform", meshTransform.GetMatrix());
+		testMaterial.GetShader()->Set("u_Projection", camera.GetProjectionMatrix());
+		testMaterial.GetShader()->Set("u_View", camera.GetViewMatrix());
+		testMaterial.GetShader()->Set("u_Transform", meshTransform.GetMatrix());
 
-		testShader->Bind();
-		testTexture->Bind(DIFFUSE_SLOT);
+		testMaterial.Bind();
 		m_Context->Render(mesh->GetVertexArray());
-		testTexture->Unbind(DIFFUSE_SLOT);
-		testShader->Unbind();
+		testMaterial.Unbind();
 	}
 }

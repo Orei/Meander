@@ -29,13 +29,22 @@ Fragment
         vec2 UV;
     } fs_in;
 
-	uniform sampler2D u_Diffuse;
+    struct Material
+    {
+        sampler2D Diffuse;
+        sampler2D Normal;
+        float Specularity;
 
+        bool HasDiffuse;
+        bool HasNormal;
+    };
+
+    uniform Material u_Material;
 	out vec4 o_Color;
 
     void main()
     {
-		vec3 color = texture(u_Diffuse, fs_in.UV).rgb;
+		vec3 color = texture(u_Material.Diffuse, fs_in.UV).rgb;
 
         o_Color = vec4(color, 1.0);
     }

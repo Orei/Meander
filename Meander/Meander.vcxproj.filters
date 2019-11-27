@@ -22,6 +22,7 @@
     <ClCompile Include="Source\Meander\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLTexture.cpp" />
     <ClCompile Include="Source\Meander\Utility\stb_image.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Material.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -50,6 +51,7 @@
     <ClInclude Include="Source\Meander\GameTime.h" />
     <ClInclude Include="Source\Meander\Graphics\Texture.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLTexture.h" />
+    <ClInclude Include="Source\Meander\Graphics\Material.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Test.glsl" />
