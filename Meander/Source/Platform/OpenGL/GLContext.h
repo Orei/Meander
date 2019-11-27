@@ -18,6 +18,21 @@ namespace Meander
 		/* Sets the clear-color. */
 		virtual void SetClearColor(const glm::vec4& color) override;
 
+		/* Enables or disables depth-testing. */
+		virtual void SetDepthTest(bool enabled) override;
+
+		/* Enables or disables blending. */
+		virtual void SetBlend(bool enabled) override;
+
+		/* Enables or disables face culling. */
+		virtual void SetCullFace(bool enabled) override;
+
+		/* Sets front-face winding order. */
+		virtual void SetWindingOrder(const WindingOrder& order) override;
+
+		/* Sets face culling direction. */
+		virtual void SetCullDirection(const CullDirection& direction) override;
+
 		/* Clears the specified buffers. */
 		virtual void Clear(const ClearFlags& flags) override;
 
@@ -32,8 +47,5 @@ namespace Meander
 
 	private:
 		ContextAPI m_API = ContextAPI::OpenGL;
-
-		// Inherited via Context
-		virtual void SetDepthTest(bool enabled) override;
 	};
 }

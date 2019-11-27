@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "GLContext.h"
+#include "GLTypes.h"
 #include "Meander/Window.h"
 #include "Meander/Graphics/VertexArray.h"
 #include <glad/glad.h>
@@ -51,5 +52,31 @@ namespace Meander
 			Enable(GL_DEPTH_TEST);
 		else
 			Disable(GL_DEPTH_TEST);
+	}
+
+	void GLContext::SetBlend(bool enabled)
+	{
+		if (enabled)
+			Enable(GL_BLEND);
+		else
+			Disable(GL_BLEND);
+	}
+
+	void GLContext::SetCullFace(bool enabled)
+	{
+		if (enabled)
+			Enable(GL_CULL_FACE);
+		else
+			Disable(GL_CULL_FACE);
+	}
+
+	void GLContext::SetWindingOrder(const WindingOrder& order)
+	{
+		glFrontFace(GLTypes::GetWindingOrder(order));
+	}
+
+	void GLContext::SetCullDirection(const CullDirection& direction)
+	{
+		glCullFace(GLTypes::GetCullDirection(direction));
 	}
 }

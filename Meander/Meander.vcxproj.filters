@@ -23,6 +23,10 @@
     <ClCompile Include="Source\Platform\OpenGL\GLTexture.cpp" />
     <ClCompile Include="Source\Meander\Utility\stb_image.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Material.cpp" />
+    <ClCompile Include="Source\Meander\Utility\File.cpp" />
+    <ClCompile Include="Source\Meander\Utility\Path.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLTypes.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Primitives.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -52,6 +56,11 @@
     <ClInclude Include="Source\Meander\Graphics\Texture.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLTexture.h" />
     <ClInclude Include="Source\Meander\Graphics\Material.h" />
+    <ClInclude Include="Source\Meander\Utility\File.h" />
+    <ClInclude Include="Source\Meander\Utility\Path.h" />
+    <ClInclude Include="Source\Meander\Graphics\Primitives.h" />
+    <ClInclude Include="Source\Meander\Graphics\Types.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLTypes.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\Shaders\Test.glsl" />

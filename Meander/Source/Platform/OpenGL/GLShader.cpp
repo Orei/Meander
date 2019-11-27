@@ -1,5 +1,7 @@
 #include "pch.h"
 #include "GLShader.h"
+#include "Meander/Utility/File.h"
+#include "Meander/Utility/Path.h"
 #include <sstream>
 #include <fstream>
 #include <glm/gtc/type_ptr.hpp>
@@ -36,6 +38,7 @@ namespace Meander
 		static const char* FRAGMENT_TOKEN = "Fragment";
 		static const char* DEPTH_ENTER_TOKEN = "{";
 		static const char* DEPTH_EXIT_TOKEN = "}";
+		static const char* INCLUDE_TOKEN = "#include";
 
 		std::ifstream stream(path);
 		if (!stream.good())
@@ -56,6 +59,24 @@ namespace Meander
 			if (line.find(FRAGMENT_TOKEN) != std::string::npos && depth == 0) { type = ShaderType::Fragment; continue; }
 			if (line.find(DEPTH_ENTER_TOKEN) != std::string::npos) { if (++depth == 1) continue; }
 			if (line.find(DEPTH_EXIT_TOKEN) != std::string::npos) { if (--depth == 0) continue; }
+
+			if (line.find(INCLUDE_TOKEN) != std::string::npos)
+			{
+				size_t begin = line.find("\"") + 1;
+				size_t end = line.find("\"", begin);
+
+				std::string directory = Path::GetDirectory(path);
+				std::string file = line.substr(begin, end - begin);
+				std::string path = Path::Combine(directory, file);
+
+				std::string content;
+				if (!File::Read(path.c_str(), content))
+					continue;
+
+				ss[(int)type] << content << std::endl;
+				continue;
+			}
+
 			if (type == ShaderType::None) continue;
 			ss[(int)type] << line << std::endl;
 		}

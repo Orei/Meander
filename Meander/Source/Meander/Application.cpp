@@ -3,6 +3,7 @@
 #include "Window.h"
 #include "GameTime.h"
 #include "Graphics/Context.h"
+#include "Graphics/Primitives.h"
 #include "Input/Input.h"
 #include "Utility/Timer.h"
 
@@ -15,6 +16,7 @@ namespace Meander
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
 		s_Instance = this;
 
+		// Has to be created first to error messages
 		Log::Initialize();
 		
 		// Create window and graphics context
@@ -24,6 +26,9 @@ namespace Meander
 		// TODO: Allow the client application to modify properties
 		m_Window->Initialize(WindowProperties());
 		m_Context->Initialize();
+
+		// Created after the context
+		Primitives::Initialize();
 	}
 	
 	Application::~Application()

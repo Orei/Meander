@@ -2,7 +2,8 @@ Vertex
 {
     #version 330 core
     layout (location = 0) in vec3 a_Position;
-	layout (location = 1) in vec2 a_UV;
+	layout (location = 1) in vec3 a_Normal;
+	layout (location = 2) in vec2 a_UV;
 
     out VS_OUT
     {
@@ -24,20 +25,12 @@ Vertex
 Fragment
 {
     #version 330 core
+    #include "Material.inc"
+    
     in VS_OUT
     {
         vec2 UV;
     } fs_in;
-
-    struct Material
-    {
-        sampler2D Diffuse;
-        sampler2D Normal;
-        float Specularity;
-
-        bool HasDiffuse;
-        bool HasNormal;
-    };
 
     uniform Material u_Material;
 	out vec4 o_Color;

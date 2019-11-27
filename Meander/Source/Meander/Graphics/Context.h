@@ -1,4 +1,5 @@
 #pragma once
+#include "Types.h"
 #include <glm/vec4.hpp>
 
 namespace Meander
@@ -41,6 +42,18 @@ namespace Meander
 
 		/* Enables or disables depth-testing. */
 		virtual void SetDepthTest(bool enabled) = 0;
+
+		/* Enables or disables blending. */
+		virtual void SetBlend(bool enabled) = 0;
+
+		/* Enables or disables face culling. */
+		virtual void SetCullFace(bool enabled) = 0;
+
+		/* Sets front-face winding order. */
+		virtual void SetWindingOrder(const WindingOrder& order) = 0;
+
+		/* Sets face culling direction. */
+		virtual void SetCullDirection(const CullDirection& direction) = 0;
 
 		/* Clears the specified buffers. */
 		virtual void Clear(const ClearFlags& flags) = 0;
