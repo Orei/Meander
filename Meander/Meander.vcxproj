@@ -26,6 +26,7 @@
     <ClCompile Include="Source\Meander\Graphics\Context.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Material.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Primitives.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\Renderer.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Shader.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Texture.cpp" />
     <ClCompile Include="Source\Meander\Graphics\VertexArray.cpp" />
@@ -56,6 +57,7 @@
     <ClInclude Include="Source\Meander\Graphics\Material.h" />
     <ClInclude Include="Source\Meander\Graphics\Mesh.h" />
     <ClInclude Include="Source\Meander\Graphics\Primitives.h" />
+    <ClInclude Include="Source\Meander\Graphics\Renderer.h" />
     <ClInclude Include="Source\Meander\Graphics\Shader.h" />
     <ClInclude Include="Source\Meander\Graphics\Texture.h" />
     <ClInclude Include="Source\Meander\Graphics\Types.h" />

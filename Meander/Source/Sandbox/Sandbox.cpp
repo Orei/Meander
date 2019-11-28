@@ -9,10 +9,11 @@
 #include "Meander/Graphics/Texture.h"
 #include "Meander/Graphics/Material.h"
 #include "Meander/Graphics/Primitives.h"
+#include "Meander/Graphics/Renderer.h"
 
 namespace Meander
 {
-	Material testMaterial;
+	Shared<Material> testMaterial;
 	Transform meshTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
 
@@ -32,8 +33,8 @@ namespace Meander
 
 	void Sandbox::Load()
 	{
-		testMaterial = Material(Shader::Create("Assets/Shaders/Test.glsl"), 
-			Texture::Create("Assets/Textures/Debug_White.png"));
+		testMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"), 
+			Texture::Create("Assets/Textures/Debug_White.png")));
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -62,12 +63,8 @@ namespace Meander
 	{
 		m_Context->Clear(ClearFlags::Color | ClearFlags::Depth);
 
-		testMaterial.GetShader()->Set("u_Projection", camera.GetProjectionMatrix());
-		testMaterial.GetShader()->Set("u_View", camera.GetViewMatrix());
-		testMaterial.GetShader()->Set("u_Transform", meshTransform.GetMatrix());
-
-		testMaterial.Bind();
-		m_Context->Render(Primitives::GetCube()->GetVertexArray());
-		testMaterial.Unbind();
+		Renderer::Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+		Renderer::Render(meshTransform, Primitives::GetCube(), testMaterial);
+		Renderer::End();
 	}
 }
