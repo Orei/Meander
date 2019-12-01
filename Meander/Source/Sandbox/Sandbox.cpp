@@ -10,9 +10,12 @@
 #include "Meander/Graphics/Material.h"
 #include "Meander/Graphics/Primitives.h"
 #include "Meander/Graphics/Renderer.h"
+#include "Meander/Graphics/FrameBuffer.h"
 
 namespace Meander
 {
+	Shared<FrameBuffer> fbo;
+	Shared<Shader> procShader;
 	Shared<Material> testMaterial;
 	Transform meshTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
@@ -20,12 +23,15 @@ namespace Meander
 	void Sandbox::Initialize()
 	{
 		m_Window->SetCursorState(false);
+
 		m_Context->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.f));
 		m_Context->SetDepthTest(true);
 		m_Context->SetBlend(true);
 		m_Context->SetCullFace(true);
 		m_Context->SetWindingOrder(WindingOrder::CounterClockwise);
 		m_Context->SetCullDirection(CullDirection::Back);
+
+		fbo = FrameBuffer::Create(4096, 4096);
 
 		// Move the camera back, so we can see the center
 		camera.GetTransform().Translate(WORLD_FORWARD * -5.f);
@@ -35,6 +41,8 @@ namespace Meander
 	{
 		testMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"), 
 			Texture::Create("Assets/Textures/Debug_White.png")));
+
+		procShader = Shader::Create("Assets/Shaders/PostEffect.glsl");
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -61,10 +69,20 @@ namespace Meander
 
 	void Sandbox::Render()
 	{
-		m_Context->Clear(ClearFlags::Color | ClearFlags::Depth);
+		// Render the scene to the frame buffer
+		Renderer::SetRenderTarget(fbo);
 
 		Renderer::Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
 		Renderer::Render(meshTransform, Primitives::GetCube(), testMaterial);
+		Renderer::End();
+
+		// Render the frame buffer to the screen
+		Renderer::SetRenderTarget(nullptr);
+
+		Renderer::Begin();
+		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
+		Renderer::Render(fbo, procShader);
 		Renderer::End();
 	}
 }

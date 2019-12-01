@@ -58,8 +58,11 @@ namespace Meander
 		/* Clears the specified buffers. */
 		virtual void Clear(const ClearFlags& flags) = 0;
 
-		/* Renders a mesh. */
+		/* Renders a vertex array. */
 		virtual void Render(const Shared<VertexArray>& vertexArray) = 0;
+
+		/* Renders a full-screen quad, mainly used to render framebuffers to the screen. */
+		virtual void FillScreen() = 0;
 
 		/* Returns the Context API. */
 		virtual const ContextAPI& GetContextAPI() const = 0;

@@ -46,6 +46,12 @@ namespace Meander
 		vertexArray->Unbind();
 	}
 
+	void GLContext::FillScreen()
+	{
+		glBindVertexArray(0);
+		glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+	}
+
 	void GLContext::SetDepthTest(bool enabled)
 	{
 		if (enabled)

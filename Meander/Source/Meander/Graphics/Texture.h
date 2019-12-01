@@ -1,5 +1,6 @@
 #pragma once
 #include "Meander/Common.h"
+#include "Meander/Graphics/Types.h"
 
 namespace Meander
 {
@@ -19,7 +20,8 @@ namespace Meander
 		unsigned int GetHeight() const { return m_Height; }
 
 		static Shared<Texture> Create(const char* path);
-		static Shared<Texture> Create(unsigned int width, unsigned int height, unsigned char* pixels);
+		static Shared<Texture> Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format = TextureFormat::RGBA,
+			const TextureDataType& dataType = TextureDataType::UByte);
 
 	protected:
 		unsigned int m_Width = 0;

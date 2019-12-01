@@ -24,6 +24,7 @@
     <ClCompile Include="Source\Meander\Graphics\Buffer.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Camera.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Context.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\FrameBuffer.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Material.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Primitives.cpp" />
     <ClCompile Include="Source\Meander\Graphics\Renderer.cpp" />
@@ -41,6 +42,7 @@
     <ClCompile Include="Source\Platform\GLFW\GLFWWindow.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLBuffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLContext.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLFrameBuffer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLShader.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLTexture.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLTypes.cpp" />
@@ -54,6 +56,7 @@
     <ClInclude Include="Source\Meander\Graphics\Buffer.h" />
     <ClInclude Include="Source\Meander\Graphics\Camera.h" />
     <ClInclude Include="Source\Meander\Graphics\Context.h" />
+    <ClInclude Include="Source\Meander\Graphics\FrameBuffer.h" />
     <ClInclude Include="Source\Meander\Graphics\Material.h" />
     <ClInclude Include="Source\Meander\Graphics\Mesh.h" />
     <ClInclude Include="Source\Meander\Graphics\Primitives.h" />
@@ -76,14 +79,12 @@
     <ClInclude Include="Source\Platform\GLFW\GLFWWindow.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLBuffer.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLContext.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLFrameBuffer.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLShader.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLTexture.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLTypes.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLVertexArray.h" />
     <ClInclude Include="Source\Sandbox\Sandbox.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Assets\Shaders\Test.glsl" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

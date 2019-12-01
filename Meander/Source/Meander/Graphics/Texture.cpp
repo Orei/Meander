@@ -17,12 +17,12 @@ namespace Meander
 		return nullptr;
 	}
 
-	Shared<Texture> Texture::Create(unsigned int width, unsigned int height, unsigned char* pixels)
+	Shared<Texture> Texture::Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType)
 	{
 		switch (Context::Get()->GetContextAPI())
 		{
 		case ContextAPI::OpenGL:
-			return CreateShared<GLTexture>(width, height, pixels);
+			return CreateShared<GLTexture>(width, height, pixels, format, dataType);
 		}
 
 		MN_ASSERT(false, "Unhandled graphics context.");

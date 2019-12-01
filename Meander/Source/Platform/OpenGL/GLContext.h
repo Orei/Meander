@@ -38,6 +38,9 @@ namespace Meander
 
 		/* Renders a mesh. */
 		virtual void Render(const Shared<VertexArray>& vertexArray) override;
+		
+		/* Renders a full-screen quad, mainly used to render framebuffers to the screen. */
+		virtual void FillScreen() override;
 
 		/* Returns the Context API, OpenGL in this case. */
 		virtual const ContextAPI& GetContextAPI() const override
@@ -47,5 +50,6 @@ namespace Meander
 
 	private:
 		ContextAPI m_API = ContextAPI::OpenGL;
+
 	};
 }
