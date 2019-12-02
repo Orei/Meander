@@ -9,6 +9,7 @@ namespace Meander
 	class Context;
 	class FrameBuffer;
 	class Shader;
+	class CubeMap;
 	enum class ClearFlags;
 
 	class Renderer

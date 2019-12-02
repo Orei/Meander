@@ -95,9 +95,9 @@ namespace Meander
 			return;
 		}
 
-		material->GetShader()->Set("u_View", m_RenderData.ViewMatrix);
 		material->GetShader()->Set("u_Projection", m_RenderData.ProjectionMatrix);
-		material->GetShader()->Set("u_Transform", transform.GetMatrix());
+		material->GetShader()->Set("u_View", m_RenderData.ViewMatrix);
+		material->GetShader()->Set("u_Model", transform.GetMatrix());
 
 		material->Bind();
 		m_RenderData.Context->Render(mesh->GetVertexArray());

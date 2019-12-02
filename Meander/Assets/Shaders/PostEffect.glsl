@@ -45,6 +45,6 @@ Fragment
         vec3 color = texture(u_Color, fs_in.UV).rgb;
         vec3 depth = texture(u_Depth, fs_in.UV).rgb;
 
-		o_Color = vec4(mix(color, depth, 0.5), 1.0);
+		o_Color = vec4(color, 1.0);
     }
 }

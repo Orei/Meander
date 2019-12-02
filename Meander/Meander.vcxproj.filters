@@ -30,6 +30,8 @@
     <ClCompile Include="Source\Meander\Graphics\Renderer.cpp" />
     <ClCompile Include="Source\Platform\OpenGL\GLFrameBuffer.cpp" />
     <ClCompile Include="Source\Meander\Graphics\FrameBuffer.cpp" />
+    <ClCompile Include="Source\Meander\Graphics\CubeMap.cpp" />
+    <ClCompile Include="Source\Platform\OpenGL\GLCubeMap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\pch.h" />
@@ -67,5 +69,7 @@
     <ClInclude Include="Source\Meander\Graphics\Renderer.h" />
     <ClInclude Include="Source\Platform\OpenGL\GLFrameBuffer.h" />
     <ClInclude Include="Source\Meander\Graphics\FrameBuffer.h" />
+    <ClInclude Include="Source\Meander\Graphics\CubeMap.h" />
+    <ClInclude Include="Source\Platform\OpenGL\GLCubeMap.h" />
   </ItemGroup>
 </Project>

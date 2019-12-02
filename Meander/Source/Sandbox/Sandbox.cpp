@@ -11,14 +11,26 @@
 #include "Meander/Graphics/Primitives.h"
 #include "Meander/Graphics/Renderer.h"
 #include "Meander/Graphics/FrameBuffer.h"
+#include "Meander/Graphics/CubeMap.h"
 
 namespace Meander
 {
 	Shared<FrameBuffer> fbo;
 	Shared<Shader> procShader;
-	Shared<Material> testMaterial;
+	Shared<Material> testMaterial, skyboxMaterial;
+	Shared<CubeMap> skybox;
 	Transform meshTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
+
+	const char* sixFaces[] =
+	{
+		"Assets/Textures/SkyNight/X+.png", // X+ (Right)
+		"Assets/Textures/SkyNight/X-.png", // X- (Left)
+		"Assets/Textures/SkyNight/Y+.png", // Y+ (Top)
+		"Assets/Textures/SkyNight/Y-.png", // Y- (Bottom)
+		"Assets/Textures/SkyNight/Z+.png", // Z+ (Front)
+		"Assets/Textures/SkyNight/Z-.png", // Z- (Back)
+	};
 
 	void Sandbox::Initialize()
 	{
@@ -31,7 +43,7 @@ namespace Meander
 		m_Context->SetWindingOrder(WindingOrder::CounterClockwise);
 		m_Context->SetCullDirection(CullDirection::Back);
 
-		fbo = FrameBuffer::Create(4096, 4096);
+		fbo = FrameBuffer::Create(1280, 720);
 
 		// Move the camera back, so we can see the center
 		camera.GetTransform().Translate(WORLD_FORWARD * -5.f);
@@ -43,6 +55,9 @@ namespace Meander
 			Texture::Create("Assets/Textures/Debug_White.png")));
 
 		procShader = Shader::Create("Assets/Shaders/PostEffect.glsl");
+
+		skybox = CubeMap::Create(sixFaces);
+		skyboxMaterial.reset(new Material(Shader::Create("Assets/Shaders/Skybox.glsl")));
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -75,6 +90,7 @@ namespace Meander
 		Renderer::Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
 		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
 		Renderer::Render(meshTransform, Primitives::GetCube(), testMaterial);
+		Renderer::Render({}, Primitives::GetCube(), skyboxMaterial);
 		Renderer::End();
 
 		// Render the frame buffer to the screen

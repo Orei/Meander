@@ -25,8 +25,8 @@ namespace Meander
 			float cubeVertices[] =
 			{
 				-0.5f, -0.5f,  0.5f,    0.f,  0.f,  1.f,    0.0f, 0.0f, // Front face
-				 0.5f, -0.5f,  0.5f,    0.f,  0.f,  1.f,    1.0f, 0.0f, 
-				 0.5f,  0.5f,  0.5f,    0.f,  0.f,  1.f,    1.0f, 1.0f, 
+				 0.5f, -0.5f,  0.5f,    0.f,  0.f,  1.f,    1.0f, 0.0f,
+				 0.5f,  0.5f,  0.5f,    0.f,  0.f,  1.f,    1.0f, 1.0f,
 				-0.5f,  0.5f,  0.5f,    0.f,  0.f,  1.f,    0.0f, 1.0f,
 
 				 0.5f, -0.5f, -0.5f,    0.f,  0.f, -1.f,    0.0f, 0.0f, // Back face
@@ -35,8 +35,8 @@ namespace Meander
 				 0.5f,  0.5f, -0.5f,    0.f,  0.f, -1.f,    0.0f, 1.0f,
 
 				 0.5f, -0.5f,  0.5f,    1.f,  0.f,  0.f,    0.0f, 0.0f, // Right face
-				 0.5f, -0.5f, -0.5f,    1.f,  0.f,  0.f,    1.0f, 0.0f, 
-				 0.5f,  0.5f, -0.5f,    1.f,  0.f,  0.f,    1.0f, 1.0f, 
+				 0.5f, -0.5f, -0.5f,    1.f,  0.f,  0.f,    1.0f, 0.0f,
+				 0.5f,  0.5f, -0.5f,    1.f,  0.f,  0.f,    1.0f, 1.0f,
 				 0.5f,  0.5f,  0.5f,    1.f,  0.f,  0.f,    0.0f, 1.0f,
 
 				-0.5f, -0.5f, -0.5f,   -1.f,  0.f,  0.f,    0.0f, 0.0f, // Left face
@@ -57,18 +57,12 @@ namespace Meander
 
 			unsigned int cubeIndices[] =
 			{
-				// Front 
-				0, 1, 2, 0, 2, 3,
-				// Back
-				4, 5, 6, 4, 6, 7,
-				// Right
-				8, 9, 10, 8, 10, 11,
-				// Left
-				12, 13, 14,	12, 14, 15,
-				// Top
-				16, 17, 18, 16, 18, 19,
-				// Bottom
-				20, 21, 22, 20, 22, 23
+				0, 1, 2, 0, 2, 3, // Front 
+				4, 5, 6, 4, 6, 7, // Back
+				8, 9, 10, 8, 10, 11, // Right
+				12, 13, 14,	12, 14, 15, // Left
+				16, 17, 18, 16, 18, 19, // Top
+				20, 21, 22, 20, 22, 23 // Bottom
 			};
 
 			m_Quad.reset(new Mesh(quadVertices, sizeof(quadVertices), quadIndices, sizeof(quadIndices),
