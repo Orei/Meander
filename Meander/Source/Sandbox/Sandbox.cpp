@@ -17,9 +17,9 @@ namespace Meander
 {
 	Shared<FrameBuffer> fbo;
 	Shared<Shader> procShader;
-	Shared<Material> testMaterial, skyboxMaterial;
 	Shared<CubeMap> skybox;
-	Transform meshTransform;
+	Shared<Material> meshMaterial, skyboxMaterial, groundMaterial;
+	Transform meshTransform, groundTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
 
 	const char* sixFaces[] =
@@ -35,6 +35,7 @@ namespace Meander
 	void Sandbox::Initialize()
 	{
 		m_Window->SetCursorState(false);
+		m_Window->SetVerticalSync(true);
 
 		m_Context->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.f));
 		m_Context->SetDepthTest(true);
@@ -51,13 +52,19 @@ namespace Meander
 
 	void Sandbox::Load()
 	{
-		testMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"), 
+		meshMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"), 
 			Texture::Create("Assets/Textures/Debug_White.png")));
 
 		procShader = Shader::Create("Assets/Shaders/PostEffect.glsl");
 
 		skybox = CubeMap::Create(sixFaces);
 		skyboxMaterial.reset(new Material(Shader::Create("Assets/Shaders/Skybox.glsl")));
+
+		groundMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"),
+			Texture::Create("Assets/Textures/Debug_Black.png")));
+
+		groundTransform.Translate(-WORLD_UP / 2.f);
+		groundTransform.Rotate(glm::radians(-90.f), WORLD_RIGHT);
 	}
 
 	void Sandbox::Update(GameTime& gameTime)
@@ -89,7 +96,9 @@ namespace Meander
 
 		Renderer::Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
 		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
-		Renderer::Render(meshTransform, Primitives::GetCube(), testMaterial);
+		Renderer::Render(meshTransform, Primitives::GetCube(), meshMaterial);
+		Renderer::Render(groundTransform, Primitives::GetPlane(), groundMaterial);
+		//Renderer::Render(groundTransform, Primitives::GetQuad(), groundMaterial);
 		Renderer::Render({}, Primitives::GetCube(), skyboxMaterial);
 		Renderer::End();
 

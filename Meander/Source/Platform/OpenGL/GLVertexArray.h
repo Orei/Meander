@@ -4,30 +4,6 @@
 
 namespace Meander
 {
-	static GLenum BufferTypeToOpenGL(const BufferDataType& type)
-	{
-		switch (type)
-		{
-		case BufferDataType::Float:
-		case BufferDataType::Float2:
-		case BufferDataType::Float3:
-		case BufferDataType::Float4:
-		case BufferDataType::Mat3:
-		case BufferDataType::Mat4:
-			return GL_FLOAT;
-		case BufferDataType::Int:
-		case BufferDataType::Int2:
-		case BufferDataType::Int3:
-		case BufferDataType::Int4:
-			return GL_INT;
-		case BufferDataType::Bool:
-			return GL_BOOL;
-		}
-
-		MN_ASSERT(false, "Unhandled BufferDataType.");
-		return 0;
-	}
-
 	class GLVertexArray : public VertexArray
 	{
 	public:

@@ -17,12 +17,12 @@ namespace Meander
 		return nullptr;
 	}
 
-	Shared<IndexBuffer> IndexBuffer::Create(unsigned int* vertices, unsigned int count)
+	Shared<IndexBuffer> IndexBuffer::Create(unsigned int* indices, unsigned int count)
 	{
 		switch (Context::Get()->GetContextAPI())
 		{
 		case ContextAPI::OpenGL:
-			return CreateShared<GLIndexBuffer>(vertices, count);
+			return CreateShared<GLIndexBuffer>(indices, count);
 		}
 
 		MN_ASSERT(false, "Unhandled graphics context.");
