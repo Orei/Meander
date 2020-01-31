@@ -78,8 +78,8 @@ namespace Meander
 		return glfwWindowShouldClose(m_NativeWindow);
 	}
 
-	void* GLFWWindow::GetProcessAddress()
+	void GLFWWindow::Resize(unsigned int width, unsigned int height)
 	{
-		return glfwGetProcAddress;
+		MN_ASSERT(false, "Resizing has not been implemented yet.");
 	}
 }

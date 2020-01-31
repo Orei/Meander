@@ -10,11 +10,7 @@ namespace Meander
 	void GLContext::Initialize()
 	{
 		MN_INFO("Creating GLAD context...");
-
-		int status = gladLoadGLLoader((GLADloadproc)Window::Get()->GetProcessAddress());
-
-		MN_ASSERT(status, "Unable to initialize GLAD.");
-
+		MN_ASSERT(gladLoadGL(), "Unable to initialize GLAD.");
 		MN_INFO("OpenGL {0}", glGetString(GL_VERSION));
 		MN_INFO("Renderer: {0}", glGetString(GL_RENDERER));
 	}

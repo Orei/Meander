@@ -45,9 +45,8 @@ namespace Meander
 		/* Whether the window is requesting the program to close. */
 		virtual bool IsClosing() = 0;
 
-		// NOTE: Required by GLAD, unsure if this is a good way to handle this
-		/* Returns the process address. */
-		virtual void* GetProcessAddress() = 0;
+		/* Resizes the window. */
+		virtual void Resize(unsigned int width, unsigned int height) = 0;
 
 		/* Returns the width of the window. */
 		inline unsigned int GetWidth() const { return s_Properties.Width; }

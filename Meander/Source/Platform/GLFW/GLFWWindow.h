@@ -26,8 +26,8 @@ namespace Meander
 		/* Whether the window is requesting the program to close. */
 		virtual bool IsClosing() override;
 
-		/* Returns the process address. */
-		virtual void* GetProcessAddress() override;
+		/* Resizes the window. */
+		virtual void Resize(unsigned int width, unsigned int height) override;
 
 		/* Returns a pointer to the native GLFW window. */
 		inline const GLFWwindow* GetNativeWindow() const { return m_NativeWindow; }
