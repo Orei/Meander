@@ -6,7 +6,6 @@
 #include "Context.h"
 #include "Meander/Transform.h"
 #include "Meander/Graphics/FrameBuffer.h"
-#include "Lights.h"
 
 namespace Meander
 {
