@@ -6,28 +6,15 @@
 #include "Context.h"
 #include "Meander/Transform.h"
 #include "Meander/Graphics/FrameBuffer.h"
+#include "Lights.h"
 
 namespace Meander
 {
 	Renderer::RenderData Renderer::m_RenderData;
-	bool Renderer::m_HasBegun = false;
-
-	void Renderer::Begin()
-	{
-		if (m_HasBegun)
-		{
-			MN_WARN("Renderer::Begin has already been called, call Renderer::End first.");
-			return;
-		}
-
-		m_RenderData.Context = Context::Get();
-
-		m_HasBegun = true;
-	}
 
 	void Renderer::Begin(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 	{
-		if (m_HasBegun)
+		if (IsReady())
 		{
 			MN_WARN("Renderer::Begin has already been called, call Renderer::End first.");
 			return;
@@ -36,13 +23,11 @@ namespace Meander
 		m_RenderData.Context = Context::Get();
 		m_RenderData.ViewMatrix = viewMatrix;
 		m_RenderData.ProjectionMatrix = projectionMatrix;
-
-		m_HasBegun = true;
 	}
 
 	void Renderer::End()
 	{
-		if (!m_HasBegun)
+		if (!IsReady())
 		{
 			MN_WARN("Renderer::Begin must be called before Renderer::End.");
 			return;
@@ -51,13 +36,11 @@ namespace Meander
 		m_RenderData.Context = nullptr;
 		m_RenderData.ViewMatrix = glm::mat4(1.f);
 		m_RenderData.ProjectionMatrix = glm::mat4(1.f);
-		
-		m_HasBegun = false;
 	}
 
 	void Renderer::SetRenderTarget(const Shared<FrameBuffer>& frameBuffer)
 	{
-		if (m_HasBegun)
+		if (IsReady())
 		{
 			MN_WARN("Set render target before calling Renderer::Begin.");
 			return;
@@ -78,7 +61,7 @@ namespace Meander
 
 	void Renderer::Clear(const ClearFlags& flags)
 	{
-		if (!m_HasBegun)
+		if (!IsReady())
 		{
 			MN_WARN("Call Renderer::Begin before clearing.");
 			return;
@@ -89,7 +72,7 @@ namespace Meander
 
 	void Renderer::Render(const Transform& transform, const Shared<Mesh>& mesh, const Shared<Material>& material)
 	{
-		if (!m_HasBegun)
+		if (!IsReady())
 		{
 			MN_WARN("Call Renderer::Begin before rendering.");
 			return;
@@ -106,7 +89,7 @@ namespace Meander
 
 	void Renderer::Render(const Shared<FrameBuffer>& frameBuffer, const Shared<Shader>& shader)
 	{
-		if (!m_HasBegun)
+		if (!IsReady())
 		{
 			MN_WARN("Call Renderer::Begin before rendering.");
 			return;
