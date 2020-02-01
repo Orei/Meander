@@ -3,7 +3,7 @@
 
 namespace Sandbox
 {
-	class App : public Meander::Application
+	class Game : public Meander::Application
 	{
 	public:
 		virtual void Initialize() override;

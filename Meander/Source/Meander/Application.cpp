@@ -6,11 +6,8 @@
 #include "Graphics/Primitives.h"
 #include "Input/Input.h"
 #include "Utility/Timer.h"
-
-#ifdef _WIN32
 #include "Platform/OpenGL/GLContext.h"
 #include "Platform/GLFW/GLFWWindow.h"
-#endif
 
 namespace Meander
 {
@@ -24,13 +21,9 @@ namespace Meander
 		// Has to be created first to error messages
 		Log::Initialize();
 
-#ifdef _WIN32
 		// Create window and graphics context
 		m_Window = new GLFWWindow();
 		m_Context = new GLContext();
-#else
-		MN_ASSERT(false, "Meander doesn't support this operating system.");
-#endif
 
 		// TODO: Allow the client application to modify properties
 		m_Window->Initialize(WindowProperties());

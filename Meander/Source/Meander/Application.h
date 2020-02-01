@@ -29,6 +29,4 @@ namespace Meander
 
 		static Application* s_Instance;
 	};
-
-	Application* CreateApplication();
 }

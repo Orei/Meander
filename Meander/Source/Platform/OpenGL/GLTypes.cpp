@@ -14,7 +14,7 @@ namespace Meander
 		{
 		case 1 << 0: return 0x00000100;
 		case 1 << 1: return 0x00004000;
-		case (1 << 0 + 1 << 1): return 0x00000100 + 0x00004000;
+		case ((1 << 0) + (1 << 1)): return 0x00000100 + 0x00004000;
 		}
 
 		return value;
