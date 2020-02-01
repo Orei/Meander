@@ -2,7 +2,7 @@ workspace "Meander"
     language "C++"
     cppdialect "C++17"
     staticruntime "on"
-	architecture "x86_64"
+    architecture "x86_64"
     configurations { "Debug", "Release" }
     flags { "MultiProcessorCompile" }
     startproject "Sandbox"
@@ -88,6 +88,6 @@ project "Sandbox"
     includedirs
     {
         "Meander/Source",
-        "Meander/Dependencies/spdlog/include/",
         "Meander/Dependencies/glm/",
+        "Meander/Dependencies/spdlog/include/"
     }
