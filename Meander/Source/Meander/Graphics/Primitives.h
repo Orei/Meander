@@ -83,7 +83,6 @@ namespace Meander
 				m_Layout));
 
 			GeneratePlane(10, 10, m_Plane);
-			//m_Plane.reset(GeneratePlane(10, 10));
 		}
 
 		static void GeneratePlane(int rows, int columns, Shared<Mesh>& mesh)
@@ -152,7 +151,7 @@ namespace Meander
 				}
 			}
 
-			// We want the size of the vertices array, but only the the number of indices
+			// We want the size of the vertex array, but only the the number of indices
 			unsigned int vertexSize = (unsigned int)vertices.size() * sizeof(float);
 			unsigned int indexCount = (unsigned int)indices.size();
 

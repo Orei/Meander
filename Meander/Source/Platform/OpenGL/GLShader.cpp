@@ -171,14 +171,6 @@ namespace Meander
 		glUseProgram(0);
 	}
 
-	void GLShader::Set(const char* name, const glm::mat4& value) const
-	{
-		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
-		glUniformMatrix4fv(location, 1, false, glm::value_ptr(value));
-		glUseProgram(0);
-	}
-
 	void GLShader::Set(const char* name, const glm::vec2& value) const
 	{
 		glUseProgram(m_Handle);
@@ -200,6 +192,14 @@ namespace Meander
 		glUseProgram(m_Handle);
 		GLuint location = glGetUniformLocation(m_Handle, name);
 		glUniform4fv(location, 1, glm::value_ptr(value));
+		glUseProgram(0);
+	}
+
+	void GLShader::Set(const char* name, const glm::mat4& value) const
+	{
+		glUseProgram(m_Handle);
+		GLuint location = glGetUniformLocation(m_Handle, name);
+		glUniformMatrix4fv(location, 1, false, glm::value_ptr(value));
 		glUseProgram(0);
 	}
 }

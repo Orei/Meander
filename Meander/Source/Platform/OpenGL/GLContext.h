@@ -43,13 +43,9 @@ namespace Meander
 		virtual void FillScreen() override;
 
 		/* Returns the Context API, OpenGL in this case. */
-		virtual const ContextAPI& GetContextAPI() const override
-		{
-			return m_API;
-		}
+		virtual const ContextAPI& GetContextAPI() const override { return m_API; }
 
 	private:
 		ContextAPI m_API = ContextAPI::OpenGL;
-
 	};
 }

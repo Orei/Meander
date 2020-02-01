@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GLTypes.h"
-
-/* TODO: Should consider using GL's definitions directly (i.e GL_FRONT, GL_RGBA etc), rather than hard-copying their values. */
+#include <glad/glad.h>
 
 namespace Meander
 {
@@ -12,9 +11,9 @@ namespace Meander
 
 		switch (value)
 		{
-		case 1 << 0: return 0x00000100;
-		case 1 << 1: return 0x00004000;
-		case ((1 << 0) + (1 << 1)): return 0x00000100 + 0x00004000;
+		case 1 << 0: return GL_DEPTH_BUFFER_BIT;
+		case 1 << 1: return GL_COLOR_BUFFER_BIT;
+		case ((1 << 0) + (1 << 1)): return GL_DEPTH_BUFFER_BIT + GL_COLOR_BUFFER_BIT;
 		}
 
 		return value;
@@ -24,14 +23,15 @@ namespace Meander
 	{
 		switch (format)
 		{
-		case TextureFormat::RGB: return 0x1907;
-		case TextureFormat::RGBA: return 0x1908;
-		case TextureFormat::Luminance: return 0x1909;
-		case TextureFormat::LuminanceAlpha: return 0x190A;
-		case TextureFormat::Depth: return 0x1902;
-		case TextureFormat::Depth16: return 0x81A5;
-		case TextureFormat::Depth24: return 0x81A6;
-		case TextureFormat::Depth32: return 0x81A7;
+		case TextureFormat::R: return GL_RED;
+		case TextureFormat::RG: return GL_RG;
+		case TextureFormat::RGB: return GL_RGB;
+		case TextureFormat::RGBA: return GL_RGBA;
+		case TextureFormat::BGR: return GL_BGR;
+		case TextureFormat::BGRA: return GL_BGRA;
+		case TextureFormat::Depth: return GL_DEPTH_COMPONENT;
+		case TextureFormat::DepthStencil: return GL_DEPTH_STENCIL;
+		case TextureFormat::StencilIndex: return GL_STENCIL_INDEX;
 		}
 
 		MN_ASSERT(false, "Unknown texture format.");
@@ -42,8 +42,8 @@ namespace Meander
 	{
 		switch (order)
 		{
-		case WindingOrder::CounterClockwise: return 0x0900;
-		case WindingOrder::Clockwise: return 0x0901;
+		case WindingOrder::Clockwise: return GL_CW;
+		case WindingOrder::CounterClockwise: return GL_CCW;
 		}
 
 		MN_ASSERT(false, "Unknown winding order.");
@@ -54,9 +54,9 @@ namespace Meander
 	{
 		switch (direction)
 		{
-		case CullDirection::Back: return 0x0404;
-		case CullDirection::Front: return 0x0405;
-		case CullDirection::All: return 0x0408;
+		case CullDirection::Front: return GL_FRONT;
+		case CullDirection::Back: return GL_BACK;
+		case CullDirection::Both: return GL_FRONT_AND_BACK;
 		}
 
 		MN_ASSERT(false, "Unknown culling direction.");
@@ -67,11 +67,11 @@ namespace Meander
 	{
 		switch (wrap)
 		{
-		case TextureWrap::Clamp: return 0x2900;
-		case TextureWrap::ClampBorder: return 0x812F;
-		case TextureWrap::ClampEdge: return 0x812D;
-		case TextureWrap::Repeat: return 0x2901;
-		case TextureWrap::RepeatMirror: return 0x8370;
+		case TextureWrap::ClampBorder: return GL_CLAMP_TO_BORDER;
+		case TextureWrap::ClampEdge: return GL_CLAMP_TO_EDGE;
+		case TextureWrap::ClampEdgeMirror: return GL_MIRROR_CLAMP_TO_EDGE; 
+		case TextureWrap::Repeat: return GL_REPEAT;
+		case TextureWrap::RepeatMirror: return GL_MIRRORED_REPEAT; 
 		}
 
 		MN_ASSERT(false, "Unknown texture wrap mode.");
@@ -82,17 +82,14 @@ namespace Meander
 	{
 		switch (type)
 		{
-		case TextureDataType::Byte: return 0x1400;
-		case TextureDataType::UByte: return 0x1401;
-		case TextureDataType::Short: return 0x1402;
-		case TextureDataType::UShort: return 0x1403;
-		case TextureDataType::Int: return 0x1404;
-		case TextureDataType::UInt: return 0x1405;
-		case TextureDataType::Float: return 0x1406;
-		case TextureDataType::Byte2: return 0x1407;
-		case TextureDataType::Byte3: return 0x1408;
-		case TextureDataType::Byte4: return 0x1409;
-		case TextureDataType::Double: return 0x140A;
+		case TextureDataType::Byte: return GL_BYTE;
+		case TextureDataType::UByte: return GL_UNSIGNED_BYTE;
+		case TextureDataType::Short: return GL_SHORT;
+		case TextureDataType::UShort: return GL_UNSIGNED_SHORT;
+		case TextureDataType::Int: return GL_INT;
+		case TextureDataType::UInt: return GL_UNSIGNED_INT;
+		case TextureDataType::Float: return GL_FLOAT;
+		case TextureDataType::Double: return GL_DOUBLE;
 		}
 
 		MN_ASSERT(false, "Unknown texture data type.");

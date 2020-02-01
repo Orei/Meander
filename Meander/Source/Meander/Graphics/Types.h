@@ -25,14 +25,14 @@ namespace Meander
 	{
 		Back,
 		Front,
-		All
+		Both
 	};
 
 	/* Textures*/
 	enum class TextureWrap
 	{
-		Clamp,
 		ClampEdge,
+		ClampEdgeMirror,
 		ClampBorder,
 		Repeat,
 		RepeatMirror
@@ -40,14 +40,22 @@ namespace Meander
 
 	enum class TextureFormat
 	{
+		R,
+		RG,
 		RGB,
 		RGBA,
-		Luminance,
-		LuminanceAlpha,
+		BGR,
+		BGRA,
+
+		//R_Int,
+		//RG_Int,
+		//RGB_Int,
+		//BGR_Int,
+		//BGRA_Int,
+
+		StencilIndex,
 		Depth,
-		Depth16,
-		Depth24,
-		Depth32,
+		DepthStencil
 	};
 
 	enum class TextureDataType
@@ -59,9 +67,6 @@ namespace Meander
 		Int,
 		UInt,
 		Float,
-		Byte2,
-		Byte3,
-		Byte4,
 		Double
 	};
 }

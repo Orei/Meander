@@ -5,7 +5,6 @@ using namespace Meander;
 
 namespace Sandbox
 {
-
 	Shared<FrameBuffer> fbo;
 	Shared<Shader> procShader;
 	Shared<CubeMap> skybox;

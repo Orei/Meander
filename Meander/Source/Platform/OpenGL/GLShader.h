@@ -13,10 +13,10 @@ namespace Meander
 		virtual void Unbind() const override;
 		virtual void Set(const char* name, const int value) const override;
 		virtual void Set(const char* name, const float value) const override;
-		virtual void Set(const char* name, const glm::mat4& value) const override;
 		virtual void Set(const char* name, const glm::vec2& value) const override;
 		virtual void Set(const char* name, const glm::vec3& value) const override;
 		virtual void Set(const char* name, const glm::vec4& value) const override;
+		virtual void Set(const char* name, const glm::mat4& value) const override;
 
 	private:
 		unsigned int m_Handle = 0;

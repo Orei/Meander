@@ -1,5 +1,5 @@
 #include "pch.h"
-#include "Platform/GLFW/GLFWWindow.h"
+#include "Window.h"
 
 namespace Meander
 {
