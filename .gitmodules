@@ -4,3 +4,6 @@
 [submodule "Meander/Dependencies/spdlog"]
 	path = Meander/Dependencies/spdlog
 	url = https://github.com/gabime/spdlog.git
+[submodule "Meander/Dependencies/glfw"]
+	path = Meander/Dependencies/glfw
+	url = https://github.com/orei/glfw.git
