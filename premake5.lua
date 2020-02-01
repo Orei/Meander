@@ -30,6 +30,8 @@ workspace "Meander"
         include "Meander/Dependencies/glad"
         include "Meander/Dependencies/glfw"
 
+    group ""
+
 project "Meander"
     location "Meander"
     kind "StaticLib"
