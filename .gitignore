@@ -17,24 +17,16 @@
 mono_crash.*
 
 # Build results
-Meander/[Dd]ebug/
-Meander/[Dd]ebugPublic/
-Meander/[Rr]elease/
-Meander/[Rr]eleases/
-Meander/x64/
-Meander/x86/
-Meander/[Aa][Rr][Mm]/
-Meander/[Aa][Rr][Mm]64/
-Meander/bld/
-Meander/[Bb]in/
-Meander/[Oo]bj/
-Meander/[Ll]og/
-Meander/[Ll]ogs/
-Meander/[Bb]inaries/
-Meander/[Ii]ntermediate/
+[Bb]inaries/
+[Ii]ntermediate/
 
 # Visual Studio 2015/2017 cache/options directory
 .vs/
+**.sln
+**.vcxproj
+**.vcxproj.filters
+**.vcxproj.user
+
 # Uncomment if you have tasks that create the project's static files in wwwroot
 #wwwroot/
 

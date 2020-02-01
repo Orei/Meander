@@ -32,7 +32,7 @@ namespace Meander
 
 	void GLContext::Clear(const ClearFlags& flags)
 	{
-		glClear((int)flags);
+		glClear(GLTypes::GetClearFlags(flags));
 	}
 
 	void GLContext::Render(const Shared<VertexArray>& vertexArray)

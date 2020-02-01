@@ -5,6 +5,21 @@
 
 namespace Meander
 {
+	// TODO: Very temporary, needed a quick fix; also, how do I convert flags efficiently?
+	unsigned int GLTypes::GetClearFlags(const ClearFlags& flags)
+	{
+		int value = static_cast<int>(flags);
+
+		switch (value)
+		{
+		case 1 << 0: return 0x00000100;
+		case 1 << 1: return 0x00004000;
+		case (1 << 0 + 1 << 1): return 0x00000100 + 0x00004000;
+		}
+
+		return value;
+	}
+
 	unsigned int GLTypes::GetTextureFormat(const TextureFormat& format)
 	{
 		switch (format)

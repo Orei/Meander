@@ -1,8 +1,5 @@
 #pragma once
 
-// CreateWindow is defined elsewhere
-#undef CreateWindow
-
 namespace Meander
 {
 	struct WindowProperties
@@ -61,6 +58,4 @@ namespace Meander
 		static WindowProperties s_Properties;
 		static Window* s_Instance;
 	};
-
-	Window* CreateWindow();
 }

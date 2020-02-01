@@ -4,17 +4,6 @@
 
 namespace Meander
 {
-	enum class ClearFlags : int
-	{
-		Depth = 0x00000100,
-		Color = 0x00004000
-	};
-
-	inline ClearFlags operator|(ClearFlags a, ClearFlags b)
-	{
-		return static_cast<ClearFlags>(static_cast<int>(a) | static_cast<int>(b));
-	}
-
 	enum class ContextAPI
 	{
 		OpenGL
@@ -73,6 +62,4 @@ namespace Meander
 	private:
 		static Context* s_Instance;
 	};
-
-	Context* CreateContext();
 }

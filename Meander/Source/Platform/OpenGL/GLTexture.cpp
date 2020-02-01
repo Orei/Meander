@@ -1,7 +1,7 @@
 #include "pch.h"
 #include "GLTexture.h"
 #include "Platform/OpenGL/GLTypes.h"
-#include <stb_image/stb_image.h>
+#include <stb_image.h>
 #include <glad/glad.h>
 
 namespace Meander
