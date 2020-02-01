@@ -1,0 +1,9 @@
+[submodule "Meander/Dependencies/glm"]
+	path = Meander/Dependencies/glm
+	url = https://github.com/g-truc/glm.git
+[submodule "Meander/Dependencies/glfw"]
+	path = Meander/Dependencies/glfw
+	url = https://github.com/glfw/glfw
+[submodule "Meander/Dependencies/spdlog"]
+	path = Meander/Dependencies/spdlog
+	url = https://github.com/gabime/spdlog.git
