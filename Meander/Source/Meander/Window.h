@@ -18,6 +18,11 @@ namespace Meander
 		}
 	};
 
+	enum class WindowAPI
+	{
+		GLFW
+	};
+
 	class Window
 	{
 	public:
@@ -51,6 +56,9 @@ namespace Meander
 		/* Returns the height of the window. */
 		inline unsigned int GetHeight() const { return s_Properties.Height; }
 
+		/* Returns the Window API. */
+		virtual WindowAPI GetWindowAPI() = 0;
+		
 		/* Returns the window instance. */
 		inline static Window* Get() { return s_Instance; }
 

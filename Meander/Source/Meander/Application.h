@@ -18,7 +18,8 @@ namespace Meander
 		virtual void Initialize() = 0;
 		virtual void Load() = 0;
 		virtual void Update(GameTime& gameTime) = 0;
-		virtual void Render() = 0;
+		virtual void Render(GameTime& gameTime) = 0;
+		virtual void OnGui(GameTime& gameTime) = 0;
 
 	protected:
 		Window* m_Window = nullptr;

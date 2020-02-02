@@ -29,6 +29,7 @@ workspace "Meander"
     group "Dependencies"
         include "Meander/Dependencies/glad"
         include "Meander/Dependencies/glfw"
+        include "Meander/Dependencies/imgui"
 
     group ""
 
@@ -52,7 +53,8 @@ project "Meander"
     {
         "opengl32.lib",
         "glad",
-        "glfw"
+        "glfw",
+        "imgui"
     }
 
     includedirs
@@ -62,7 +64,8 @@ project "Meander"
         "%{prj.name}/Dependencies/glfw/include/",
         "%{prj.name}/Dependencies/glm/",
         "%{prj.name}/Dependencies/spdlog/include/",
-        "%{prj.name}/Dependencies/stb/"
+        "%{prj.name}/Dependencies/stb/",
+        "%{prj.name}/Dependencies/imgui/"
     }
 
     filter "system:windows"
@@ -82,12 +85,13 @@ project "Sandbox"
     files
     {
         "%{prj.name}/Source/**.h",
-        "%{prj.name}/Source/**.cpp"
+        "%{prj.name}/Source/**.cpp",
     }
 
     includedirs
     {
         "Meander/Source",
+        "Meander/Dependencies/",
         "Meander/Dependencies/glm/",
-        "Meander/Dependencies/spdlog/include/"
+        "Meander/Dependencies/spdlog/include/",
     }

@@ -8,6 +8,7 @@
 #include "Utility/Timer.h"
 #include "Platform/OpenGL/GLContext.h"
 #include "Platform/GLFW/GLFWWindow.h"
+#include "ImGui/ImGuiRenderer.h"
 
 namespace Meander
 {
@@ -31,6 +32,7 @@ namespace Meander
 
 		// Created after the context
 		Primitives::Initialize();
+		ImGuiRenderer::Initialize();
 	}
 	
 	Application::~Application()
@@ -58,7 +60,11 @@ namespace Meander
 			timer.Start();
 
 			Update(gameTime);
-			Render();
+			Render(gameTime);
+
+			ImGuiRenderer::Begin();
+			OnGui(gameTime);
+			ImGuiRenderer::End();
 
 			Input::Update();
 			m_Window->Present();

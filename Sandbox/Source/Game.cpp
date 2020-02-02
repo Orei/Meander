@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <Meander/Meander.h>
+#include <imgui/imgui.h>
 
 using namespace Meander;
 
@@ -11,6 +12,7 @@ namespace Sandbox
 	Shared<Material> meshMaterial, skyboxMaterial, groundMaterial;
 	Transform meshTransform, groundTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
+	bool cursorDisabled = true;
 
 	const char* sixFaces[] =
 	{
@@ -24,7 +26,6 @@ namespace Sandbox
 
 	void Game::Initialize()
 	{
-		m_Window->SetCursorState(false);
 		m_Window->SetVerticalSync(true);
 
 		m_Context->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.f));
@@ -62,6 +63,11 @@ namespace Sandbox
 		if (Input::IsKeyPressed(Key::Escape))
 			Exit();
 
+		if (Input::IsMousePressed(MouseButton::Right))
+			m_Window->SetCursorState(cursorDisabled = false);
+		else if (Input::IsMouseReleased(MouseButton::Right))
+			m_Window->SetCursorState(cursorDisabled = true);
+
 		glm::quat rotation = glm::angleAxis(glm::radians(45.f * gameTime.GetDeltaSeconds()), meshTransform.GetUp() * Input::GetKeysAxis(Key::Left, Key::Right)) *
 			glm::angleAxis(glm::radians(45.f * gameTime.GetDeltaSeconds()), meshTransform.GetRight() * Input::GetKeysAxis(Key::Down, Key::Up));
 
@@ -73,13 +79,16 @@ namespace Sandbox
 
 		camera.GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
 
+		if (cursorDisabled)
+			return;
+
 		glm::vec2 look = Input::GetMouseDelta() * 0.05f;
 		camera.GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) *
 			camera.GetTransform().GetRotation() *
 			glm::angleAxis(glm::radians(look.x), WORLD_UP));
 	}
 
-	void Game::Render()
+	void Game::Render(GameTime& gameTime)
 	{
 		// Render the scene to the frame buffer
 		Renderer::SetRenderTarget(fbo);
@@ -98,5 +107,13 @@ namespace Sandbox
 		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
 		Renderer::Render(fbo, procShader);
 		Renderer::End();
+	}
+	
+	void Game::OnGui(GameTime& gameTime)
+	{
+		ImGui::Begin("Statistics", (bool*)0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+		ImGui::SetWindowPos({ 8.f, 8.f });
+		ImGui::Text("%f ms", gameTime.GetDeltaPure());
+		ImGui::End();
 	}
 }

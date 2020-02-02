@@ -9,6 +9,7 @@ namespace Sandbox
 		virtual void Initialize() override;
 		virtual void Load() override;
 		virtual void Update(Meander::GameTime& gameTime) override;
-		virtual void Render() override;
+		virtual void Render(Meander::GameTime& gameTime) override;
+		virtual void OnGui(Meander::GameTime& gameTime) override;
 	};
 }
