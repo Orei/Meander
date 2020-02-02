@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <Meander/Meander.h>
+#include <Platform/OpenGL/GLTexture.h>
 #include <imgui/imgui.h>
 
 using namespace Meander;
@@ -114,6 +115,12 @@ namespace Sandbox
 		ImGui::Begin("Statistics", (bool*)0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
 		ImGui::SetWindowPos({ 8.f, 8.f });
 		ImGui::Text("%f ms", gameTime.GetDeltaPure());
+		ImGui::End();
+
+		auto texture = fbo->GetDepth();
+		auto glTex = std::dynamic_pointer_cast<GLTexture>(texture);
+		ImGui::Begin("Depth Buffer");
+		ImGui::Image((void*)glTex->GetHandle(), { glTex->GetWidth() / 4.f, glTex->GetHeight() / 4.f }, { 0.f, 1.f }, { 1.f, 0.f });
 		ImGui::End();
 	}
 }
