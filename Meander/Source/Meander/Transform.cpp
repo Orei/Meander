@@ -6,35 +6,62 @@ namespace Meander
 {
 	void Transform::SetEuler(const glm::vec3& euler)
 	{
-		float pitch = euler.x * 0.5f;
-		float sinPitch = sin(pitch);
-		float cosPitch = cos(pitch);
+		glm::vec3 h = euler * 0.5f;
+		glm::vec3 s(sin(h.x), sin(h.y), sin(h.z));
+		glm::vec3 c(cos(h.x), cos(h.y), cos(h.z));
 
-		float yaw = euler.y * 0.5f;
-		float sinYaw = sin(yaw);
-		float cosYaw = cos(yaw);
-
-		float roll = euler.z * 0.5f;
-		float sinRoll = sin(roll);
-		float cosRoll = cos(roll);
-
-		m_Rotation.x = ((cosYaw * sinPitch) * cosRoll) + ((sinYaw * cosPitch) * sinRoll);
-		m_Rotation.y = ((sinYaw * cosPitch) * cosRoll) - ((cosYaw * sinPitch) * sinRoll);
-		m_Rotation.z = ((cosYaw * cosPitch) * sinRoll) - ((sinYaw * sinPitch) * cosRoll);
-		m_Rotation.w = ((cosYaw * cosPitch) * cosRoll) + ((sinYaw * sinPitch) * sinRoll);
+		m_Rotation.x = s.x * c.y * c.z - c.x * s.y * s.z;
+		m_Rotation.y = c.x * s.y * c.z + s.x * c.y * s.z;
+		m_Rotation.z = c.x * c.y * s.z - s.x * s.y * c.z;
+		m_Rotation.w = c.x * c.y * c.z + s.x * s.y * s.z;
 	}
-	
+
 	glm::vec3 Transform::GetEuler() const
 	{
-		float roll = atan2(2 * (m_Rotation.x * m_Rotation.y + m_Rotation.z * m_Rotation.w),
-			(1 - 2 * (m_Rotation.y * m_Rotation.y + m_Rotation.z * m_Rotation.z)));
-		float pitch = asin(2 * (m_Rotation.x * m_Rotation.z - m_Rotation.w * m_Rotation.y));
-		float yaw = atan2(2 * (m_Rotation.x * m_Rotation.w + m_Rotation.y * m_Rotation.z),
-			(1 - 2 * (m_Rotation.z * m_Rotation.z + m_Rotation.w * m_Rotation.w)));
-
-		return glm::vec3(pitch, yaw, roll);
+		return glm::vec3(GetPitch(), GetYaw(), GetRoll());
 	}
 
+	float Transform::GetPitch() const
+	{
+		const float x = m_Rotation.x;
+		const float y = m_Rotation.y;
+		const float z = m_Rotation.z;
+		const float w = m_Rotation.w;
+		const float xx = x * x;
+		const float yy = y * y;
+		const float zz = z * z;
+		const float ww = w * w;
+
+		return atan2(2.f * (y * z + w * x), ww - xx - yy + zz);
+	}
+
+	float Transform::GetYaw() const
+	{
+		const float x = m_Rotation.x;
+		const float y = m_Rotation.y;
+		const float z = m_Rotation.z;
+		const float w = m_Rotation.w;
+
+		float value = -2.f * (x * z - w * y);
+		value = fmin(fmax(-1.f, value), 1.f);
+
+		return asin(value);
+	}
+
+	float Transform::GetRoll() const
+	{
+		const float x = m_Rotation.x;
+		const float y = m_Rotation.y;
+		const float z = m_Rotation.z;
+		const float w = m_Rotation.w;
+		const float xx = x * x;
+		const float yy = y * y;
+		const float zz = z * z;
+		const float ww = w * w;
+
+		return atan2(2.f * (x * y + w * z), ww + xx - yy - zz);
+	}
+	
 	glm::mat4 Transform::GetMatrix() const
 	{
 		glm::mat4 scale = glm::scale(glm::mat4(1.f), m_Scale);

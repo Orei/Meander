@@ -69,11 +69,6 @@ namespace Sandbox
 		else if (Input::IsMouseReleased(MouseButton::Right))
 			m_Window->SetCursorState(cursorDisabled = true);
 
-		glm::quat rotation = glm::angleAxis(glm::radians(45.f * gameTime.GetDeltaSeconds()), meshTransform.GetUp() * Input::GetKeysAxis(Key::Left, Key::Right)) *
-			glm::angleAxis(glm::radians(45.f * gameTime.GetDeltaSeconds()), meshTransform.GetRight() * Input::GetKeysAxis(Key::Down, Key::Up));
-
-		meshTransform.Rotate(rotation);
-
 		glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera.GetTransform().GetRight() +
 			Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
 			Input::GetKeysAxis(Key::S, Key::W) * camera.GetTransform().GetForward();
@@ -110,17 +105,44 @@ namespace Sandbox
 		Renderer::End();
 	}
 	
+	unsigned int fboDepthHandle = 0; 
 	void Game::OnGui(GameTime& gameTime)
 	{
-		ImGui::Begin("Statistics", (bool*)0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs);
+		float deltaMs = gameTime.GetDeltaSeconds() * 1000.f;
+		int fps = (int)round(1.f / gameTime.GetDeltaSeconds());
+
+		ImGui::Begin("Statistics", (bool*)0, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize);
 		ImGui::SetWindowPos({ 8.f, 8.f });
-		ImGui::Text("%f ms", gameTime.GetDeltaPure());
+		ImGui::Text("%f ms (%i FPS)\nElapsed Time: %f", deltaMs, fps, gameTime.GetTimeElapsed());
 		ImGui::End();
 
-		auto texture = fbo->GetDepth();
-		auto glTex = std::dynamic_pointer_cast<GLTexture>(texture);
+		glm::vec3 position = camera.GetTransform().GetPosition();
+		glm::vec3 euler = camera.GetTransform().GetEuler();
+		glm::vec3 scale = camera.GetTransform().GetScale();
+		float p[3] = { position.x, position.y, position.z };
+		float r[3] = { glm::degrees(euler.x), glm::degrees(euler.y), glm::degrees(euler.z) };
+		float s[3] = { scale.x, scale.y, scale.z };
+
+		ImGui::Begin("Transform");
+		ImGui::SetWindowSize({ 300.f, ImGui::GetWindowHeight() });
+		ImGui::DragFloat3("Position", p);
+		ImGui::DragFloat3("Rotation", r);
+		ImGui::DragFloat3("Scale", s);
+		ImGui::End();
+
+		camera.GetTransform().SetPosition({ p[0], p[1], p[2] });
+		camera.GetTransform().SetEuler({ glm::radians(r[0]), glm::radians(r[1]), glm::radians(r[2]) });
+		camera.GetTransform().SetScale({ s[0], s[1], s[2] });
+
+		if (fboDepthHandle == 0 && fbo != nullptr && fbo->GetDepth() != nullptr)
+		{
+			auto texture = fbo->GetDepth();
+			auto glTex = std::dynamic_pointer_cast<GLTexture>(texture);
+			fboDepthHandle = glTex->GetHandle();
+		}
+
 		ImGui::Begin("Depth Buffer");
-		ImGui::Image((void*)glTex->GetHandle(), { glTex->GetWidth() / 4.f, glTex->GetHeight() / 4.f }, { 0.f, 1.f }, { 1.f, 0.f });
+		ImGui::Image((void*)fboDepthHandle, { 320, 180 }, { 0.f, 1.f }, { 1.f, 0.f });
 		ImGui::End();
 	}
 }

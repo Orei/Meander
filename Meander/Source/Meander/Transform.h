@@ -38,6 +38,10 @@ namespace Meander
 		glm::vec3 GetUp() const { return glm::conjugate(m_Rotation) * WORLD_UP; }
 		glm::vec3 GetEuler() const;
 
+		float GetPitch() const;
+		float GetYaw() const;
+		float GetRoll() const;
+
 		glm::mat4 GetMatrix() const;
 		Transform operator*(const Transform& other) const;
 		bool operator==(const Transform& other) const;

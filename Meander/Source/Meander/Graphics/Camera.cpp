@@ -6,7 +6,9 @@ namespace Meander
 	/* Generic */
 	void Camera::Recalculate()
 	{
-		m_ViewMatrix = glm::lookAt(GetTransform().GetPosition(), GetTransform().GetPosition() + GetTransform().GetForward(), GetTransform().GetUp());
+		m_ViewMatrix = glm::lookAt(GetTransform().GetPosition(), 
+			GetTransform().GetPosition() + GetTransform().GetForward(), 
+			GetTransform().GetUp());
 	}
 
 	/* Orthographic */

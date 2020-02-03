@@ -5,7 +5,6 @@
 #include "Graphics/Context.h"
 #include "Graphics/Primitives.h"
 #include "Input/Input.h"
-#include "Utility/Timer.h"
 #include "Platform/OpenGL/GLContext.h"
 #include "Platform/GLFW/GLFWWindow.h"
 #include "ImGui/ImGuiRenderer.h"
@@ -48,16 +47,10 @@ namespace Meander
 		Load();
 
 		GameTime gameTime;
-
-		// Avoid huge initial timestep
-		Timer timer;
-		timer.Start();
-
+		gameTime.Start();
 		while (m_Running && !m_Window->IsClosing())
 		{
-			timer.Stop();
-			gameTime.Update((float)timer.GetElapsed() / 1000.f);
-			timer.Start();
+			gameTime.Update();
 
 			Update(gameTime);
 			Render(gameTime);
