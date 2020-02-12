@@ -7,11 +7,11 @@ using namespace Meander;
 
 namespace Sandbox
 {
+	Scene scene;
 	Shared<FrameBuffer> fbo;
 	Shared<Shader> procShader;
 	Shared<CubeMap> skybox;
 	Shared<Material> meshMaterial, skyboxMaterial, groundMaterial;
-	Transform meshTransform, groundTransform;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
 	bool cursorDisabled = true;
 
@@ -55,8 +55,14 @@ namespace Sandbox
 		groundMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"),
 			Texture::Create("Assets/Textures/Debug_Black.png")));
 
-		groundTransform.Translate(-WORLD_UP / 2.f);
-		groundTransform.Rotate(glm::radians(-90.f), WORLD_RIGHT);
+		// Move down half a unit and rotate plane so it faces upwards
+		Transform groundTransform(-WORLD_UP / 2.f, 
+			glm::angleAxis(glm::radians(-90.f), WORLD_RIGHT));
+
+		// Create nodes for all objects
+		scene.CreateNode(groundTransform, Primitives::GetPlane(), groundMaterial);
+		scene.CreateNode({}, Primitives::GetCube(), meshMaterial);
+		scene.CreateNode({}, Primitives::GetCube(), skyboxMaterial);
 	}
 
 	void Game::Update(GameTime& gameTime)
@@ -91,9 +97,14 @@ namespace Sandbox
 
 		Renderer::Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
 		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
-		Renderer::Render(meshTransform, Primitives::GetCube(), meshMaterial);
-		Renderer::Render(groundTransform, Primitives::GetPlane(), groundMaterial);
-		Renderer::Render({}, Primitives::GetCube(), skyboxMaterial);
+		for (const auto& node : scene.GetNodes())
+		{
+			// We can't render if it has no material or mesh, nodes always have a transform
+			if (!node->HasMesh() || !node->HasMaterial())
+				continue;
+
+			Renderer::Render(node->GetTransform(), node->GetMesh(), node->GetMaterial());
+		}
 		Renderer::End();
 
 		// Render the frame buffer to the screen
@@ -108,6 +119,7 @@ namespace Sandbox
 	unsigned int fboDepthHandle = 0; 
 	void Game::OnGui(GameTime& gameTime)
 	{
+		/* Statistics */
 		float deltaMs = gameTime.GetDeltaSeconds() * 1000.f;
 		int fps = (int)round(1.f / gameTime.GetDeltaSeconds());
 
@@ -116,24 +128,7 @@ namespace Sandbox
 		ImGui::Text("%f ms (%i FPS)\nElapsed Time: %f", deltaMs, fps, gameTime.GetTimeElapsed());
 		ImGui::End();
 
-		glm::vec3 position = camera.GetTransform().GetPosition();
-		glm::vec3 euler = camera.GetTransform().GetEuler();
-		glm::vec3 scale = camera.GetTransform().GetScale();
-		float p[3] = { position.x, position.y, position.z };
-		float r[3] = { glm::degrees(euler.x), glm::degrees(euler.y), glm::degrees(euler.z) };
-		float s[3] = { scale.x, scale.y, scale.z };
-
-		ImGui::Begin("Transform");
-		ImGui::SetWindowSize({ 300.f, ImGui::GetWindowHeight() });
-		ImGui::DragFloat3("Position", p);
-		ImGui::DragFloat3("Rotation", r);
-		ImGui::DragFloat3("Scale", s);
-		ImGui::End();
-
-		camera.GetTransform().SetPosition({ p[0], p[1], p[2] });
-		camera.GetTransform().SetEuler({ glm::radians(r[0]), glm::radians(r[1]), glm::radians(r[2]) });
-		camera.GetTransform().SetScale({ s[0], s[1], s[2] });
-
+		/* Depth Buffer */
 		if (fboDepthHandle == 0 && fbo != nullptr && fbo->GetDepth() != nullptr)
 		{
 			auto texture = fbo->GetDepth();
@@ -144,5 +139,51 @@ namespace Sandbox
 		ImGui::Begin("Depth Buffer");
 		ImGui::Image((void*)fboDepthHandle, { 320, 180 }, { 0.f, 1.f }, { 1.f, 0.f });
 		ImGui::End();
+
+		/* Nodes */
+		static int selectedNode = 0;
+		std::vector<SceneNode*> nodes = scene.GetNodes();
+		int numNodes = (int)nodes.size();
+
+		ImGui::Begin("Nodes");
+		ImGui::ListBoxHeader("", numNodes);
+
+		int i = 0;
+		for (const auto& node : nodes)
+		{
+			if (ImGui::Selectable(node->GetName(), selectedNode == i))
+				selectedNode = i;
+
+			i++;
+		}
+		ImGui::ListBoxFooter();
+		ImGui::End();
+
+		/* Transform */
+		SceneNode* activeNode = nullptr;
+
+		if (selectedNode >= 0 && selectedNode < numNodes)
+			activeNode = nodes[selectedNode];
+
+		if (activeNode != nullptr)
+		{
+			glm::vec3 position = activeNode->GetTransform().GetPosition();
+			glm::vec3 euler = activeNode->GetTransform().GetEuler();
+			glm::vec3 scale = activeNode->GetTransform().GetScale();
+			float p[3] = { position.x, position.y, position.z };
+			float r[3] = { glm::degrees(euler.x), glm::degrees(euler.y), glm::degrees(euler.z) };
+			float s[3] = { scale.x, scale.y, scale.z };
+
+			ImGui::Begin("Transform");
+			ImGui::SetWindowSize({ 300.f, ImGui::GetWindowHeight() });
+			ImGui::DragFloat3("Position", p);
+			ImGui::DragFloat3("Rotation", r);
+			ImGui::DragFloat3("Scale", s);
+			ImGui::End();
+
+			activeNode->GetTransform().SetPosition({ p[0], p[1], p[2] });
+			activeNode->GetTransform().SetEuler({ glm::radians(r[0]), glm::radians(r[1]), glm::radians(r[2]) });
+			activeNode->GetTransform().SetScale({ s[0], s[1], s[2] });
+		}
 	}
 }

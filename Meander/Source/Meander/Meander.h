@@ -21,3 +21,5 @@
 #include "Meander/Graphics/Camera.h"
 #include "Meander/Graphics/Types.h"
 #include "Meander/Graphics/Primitives.h"
+
+#include "Meander/Framework/Scene.h"

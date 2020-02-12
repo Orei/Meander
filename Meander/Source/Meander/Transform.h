@@ -41,8 +41,8 @@ namespace Meander
 		float GetPitch() const;
 		float GetYaw() const;
 		float GetRoll() const;
-
 		glm::mat4 GetMatrix() const;
+		
 		Transform operator*(const Transform& other) const;
 		bool operator==(const Transform& other) const;
 		bool operator!=(const Transform& other) const { return !(*this == other); }
