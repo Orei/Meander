@@ -56,6 +56,9 @@ namespace Meander
 		/* Returns the height of the window. */
 		inline unsigned int GetHeight() const { return s_Properties.Height; }
 
+		/* Returns the window aspect ratio. */
+		inline float GetAspectRatio() const { return (float)GetWidth() / GetHeight(); }
+
 		/* Returns the Window API. */
 		virtual WindowAPI GetWindowAPI() = 0;
 		

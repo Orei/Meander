@@ -40,7 +40,7 @@ namespace Sandbox
 		m_Context->SetWindingOrder(WindingOrder::CounterClockwise);
 		m_Context->SetCullDirection(CullDirection::Back);
 
-		camera = new PerspectiveCamera(70.f, (float)m_Window->GetWidth() / m_Window->GetHeight());
+		camera = new PerspectiveCamera(70.f, m_Window->GetAspectRatio());
 		fbo = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetHeight());
 
 		// Move the camera back, so we can see the center
@@ -77,6 +77,7 @@ namespace Sandbox
 		{
 			glm::vec3 position = { random.Float(-3.f, 3.f), random.Float(10.f, 20.f), random.Float(-3.f, 3.f) };
 			glm::vec3 rotation = { glm::radians(random.Float(0.f, 360.f)), glm::radians(random.Float(0.f, 360.f)), glm::radians(random.Float(0.f, 360.f)) };
+
 			scene.CreateNode({ position, rotation }, Primitives::GetCube(), meshMaterial);
 		}
 	}
@@ -87,9 +88,16 @@ namespace Sandbox
 			Exit();
 
 		if (Input::IsMousePressed(MouseButton::Right))
+		{
+			// Camera does some funky rotation stuff if we don't return here
 			m_Window->SetCursorState(cursorDisabled = false);
+			return;
+		}
 		else if (Input::IsMouseReleased(MouseButton::Right))
+		{
 			m_Window->SetCursorState(cursorDisabled = true);
+			return;
+		}
 
 		glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera->GetTransform().GetRight() +
 			Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
