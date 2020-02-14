@@ -6,6 +6,8 @@
 #include "Meander/Transform.h"
 #include "Meander/GameTime.h"
 
+#include "Meander/Math/Random.h"
+
 #include "Meander/Input/Input.h"
 #include "Meander/Input/Key.h"
 #include "Meander/Input/MouseButton.h"

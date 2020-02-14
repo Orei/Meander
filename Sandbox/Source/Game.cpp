@@ -17,6 +17,7 @@ namespace Sandbox
 	PerspectiveCamera* camera;
 	ForwardRenderer renderer;
 	bool cursorDisabled = true;
+	Random random;
 
 	const char* sixFaces[] =
 	{
@@ -70,6 +71,14 @@ namespace Sandbox
 		scene.CreateNode(groundTransform, Primitives::GetPlane(), groundMaterial);
 		scene.CreateNode({}, Primitives::GetCube(), meshMaterial);
 		scene.CreateNode({}, Primitives::GetCube(), skyboxMaterial);
+
+		// Spawn some random cubes in the air
+		for (int i = 0; i < 6; i++)
+		{
+			glm::vec3 position = { random.Float(-3.f, 3.f), random.Float(10.f, 20.f), random.Float(-3.f, 3.f) };
+			glm::vec3 rotation = { glm::radians(random.Float(0.f, 360.f)), glm::radians(random.Float(0.f, 360.f)), glm::radians(random.Float(0.f, 360.f)) };
+			scene.CreateNode({ position, rotation }, Primitives::GetCube(), meshMaterial);
+		}
 	}
 
 	void Game::Update(GameTime& gameTime)
