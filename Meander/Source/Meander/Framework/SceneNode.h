@@ -28,10 +28,9 @@ namespace Meander
 		const char* GetName() const { return m_Name; }
 
 	private:
-		unsigned int m_UniqueId;
-		
+		unsigned int m_UniqueId = 0;
 		char* m_Name = nullptr;
-		Transform m_Transform;
+		Transform m_Transform = {};
 		Mesh* m_Mesh = nullptr;
 		Material* m_Material = nullptr;
 

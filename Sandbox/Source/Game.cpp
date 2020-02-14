@@ -14,7 +14,7 @@ namespace Sandbox
 	Material* meshMaterial;
 	Material* skyboxMaterial;
 	Material* groundMaterial;
-	PerspectiveCamera camera(70.f, (float)1280 / 720);
+	PerspectiveCamera* camera;
 	ForwardRenderer renderer;
 	bool cursorDisabled = true;
 
@@ -39,10 +39,11 @@ namespace Sandbox
 		m_Context->SetWindingOrder(WindingOrder::CounterClockwise);
 		m_Context->SetCullDirection(CullDirection::Back);
 
-		fbo = FrameBuffer::Create(1280, 720);
+		camera = new PerspectiveCamera(70.f, (float)m_Window->GetWidth() / m_Window->GetHeight());
+		fbo = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetHeight());
 
 		// Move the camera back, so we can see the center
-		camera.GetTransform().Translate(WORLD_FORWARD * -5.f);
+		camera->GetTransform().Translate(WORLD_FORWARD * -5.f);
 	}
 
 	void Game::Load()
@@ -81,18 +82,18 @@ namespace Sandbox
 		else if (Input::IsMouseReleased(MouseButton::Right))
 			m_Window->SetCursorState(cursorDisabled = true);
 
-		glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera.GetTransform().GetRight() +
+		glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera->GetTransform().GetRight() +
 			Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
-			Input::GetKeysAxis(Key::S, Key::W) * camera.GetTransform().GetForward();
+			Input::GetKeysAxis(Key::S, Key::W) * camera->GetTransform().GetForward();
 
-		camera.GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
+		camera->GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
 
 		if (cursorDisabled)
 			return;
 
 		glm::vec2 look = Input::GetMouseDelta() * 0.05f;
-		camera.GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) *
-			camera.GetTransform().GetRotation() *
+		camera->GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) *
+			camera->GetTransform().GetRotation() *
 			glm::angleAxis(glm::radians(look.x), WORLD_UP));
 	}
 
@@ -101,7 +102,7 @@ namespace Sandbox
 		// Render scene to framebuffer
 		renderer.SetRenderTarget(fbo);
 
-		renderer.Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+		renderer.Begin(camera->GetViewMatrix(), camera->GetProjectionMatrix());
 		renderer.Clear(ClearFlags::Color | ClearFlags::Depth);
 		for (const auto& node : scene.GetNodes())
 		{
