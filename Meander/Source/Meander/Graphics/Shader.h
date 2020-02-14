@@ -27,6 +27,6 @@ namespace Meander
 		virtual void Set(const char* name, const glm::vec4& value) const = 0;
 		virtual void Set(const char* name, const glm::mat4& value) const = 0;
 
-		static Shared<Shader> Create(const char* path);
+		static Shader* Create(const char* path);
 	};
 }

@@ -19,8 +19,8 @@ namespace Meander
 		/* Returns the height of the texture. */
 		unsigned int GetHeight() const { return m_Height; }
 
-		static Shared<Texture> Create(const char* path);
-		static Shared<Texture> Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format = TextureFormat::RGBA,
+		static Texture* Create(const char* path);
+		static Texture* Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format = TextureFormat::RGBA,
 			const TextureDataType& dataType = TextureDataType::UByte);
 
 	protected:

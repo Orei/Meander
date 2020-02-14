@@ -5,12 +5,12 @@
 
 namespace Meander
 {
-	Shared<Shader> Shader::Create(const char* path)
+	Shader* Shader::Create(const char* path)
 	{
 		switch (Context::Get()->GetContextAPI())
 		{
 		case ContextAPI::OpenGL:
-			return CreateShared<GLShader>(path);
+			return new GLShader(path);
 		}
 
 		MN_ASSERT(false, "Unhandled graphics context.");

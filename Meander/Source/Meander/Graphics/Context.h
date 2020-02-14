@@ -48,12 +48,12 @@ namespace Meander
 		virtual void Clear(const ClearFlags& flags) = 0;
 
 		/* Renders a vertex array. */
-		virtual void Render(const Shared<VertexArray>& vertexArray) = 0;
+		virtual void Render(const VertexArray* vertexArray) = 0;
 
 		/* Renders a full-screen quad, mainly used to render framebuffers to the screen. */
 		virtual void FillScreen() = 0;
 
-		/* Returns the Context API. */
+		/* Returns the context API. */
 		virtual const ContextAPI& GetContextAPI() const = 0;
 
 		/* Returns the context instance. */

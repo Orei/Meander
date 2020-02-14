@@ -35,7 +35,7 @@ namespace Meander
 		glClear(GLTypes::GetClearFlags(flags));
 	}
 
-	void GLContext::Render(const Shared<VertexArray>& vertexArray)
+	void GLContext::Render(const VertexArray* vertexArray)
 	{
 		vertexArray->Bind();
 		glDrawElements(GL_TRIANGLES, vertexArray->GetIndexBuffer()->GetCount(), GL_UNSIGNED_INT, nullptr);

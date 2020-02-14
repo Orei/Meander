@@ -36,8 +36,8 @@ namespace Meander
 		/* Clears the specified buffers. */
 		virtual void Clear(const ClearFlags& flags) override;
 
-		/* Renders a mesh. */
-		virtual void Render(const Shared<VertexArray>& vertexArray) override;
+		/* Renders a vertex array. */
+		virtual void Render(const VertexArray* vertexArray) override;
 		
 		/* Renders a full-screen quad, mainly used to render framebuffers to the screen. */
 		virtual void FillScreen() override;

@@ -1,53 +1,70 @@
 #pragma once
+#include "Meander/Transform.h"
 #include <glm/mat4x4.hpp>
 
 namespace Meander
 {
 	class Mesh;
-	class Transform;
 	class Material;
 	class Context;
 	class FrameBuffer;
 	class Shader;
 	class CubeMap;
-	class DirectionalLight;
 	enum class ClearFlags;
 
 	class Renderer
 	{
 	public:
-		/* Must be called prior to rendering. */
-		static void Begin(const glm::mat4& viewMatrix = glm::mat4(1.f), const glm::mat4& projectionMatrix = glm::mat4(1.f));
+		/* Begins a new render-scene. */
+		void Begin(const glm::mat4& viewMatrix = glm::mat4(1.f), const glm::mat4& projectionMatrix = glm::mat4(1.f));
+		
+		/* Ends the active render-scene; renders submitted objects. */
+		void End();
 
-		/* Must be called after rendering. */
-		static void End();
-
-		/* Set the active framebuffer which will be rendered to. Use a nullptr to reset to default framebuffer. */
-		static void SetRenderTarget(const Shared<FrameBuffer>& frameBuffer);
+		/* Sets the active framebuffer which will be rendered to. Reset using a nullptr. */
+		void SetRenderTarget(FrameBuffer* frameBuffer);
 
 		/* Clears the active framebuffer. */
-		static void Clear(const ClearFlags& flags);
+		void Clear(const ClearFlags& flags);
 
-		/* Renders a mesh. */
-		static void Render(const Transform& transform, const Shared<Mesh>& mesh, const Shared<Material>& material);
-		
-		/* Renders a framebuffer. */
-		static void Render(const Shared<FrameBuffer>& frameBuffer, const Shared<Shader>& shader);
+		/* Submits a mesh to the render-queue. */
+		void Submit(const Transform& transform, Mesh* mesh, Material* material);
 
-		/* Checks whether the renderer has begun. */
-		static bool IsReady() { return m_RenderData.Context != nullptr; }
+		/* Renders a framebuffer to screen. */
+		void Render(const FrameBuffer* frameBuffer, const Shader* shader);
+
+		/* Whether the render-scene has begun. */
+		bool HasBegun() { return m_RenderData.Context != nullptr; }
 
 	protected:
 		struct RenderData
 		{
 			Context* Context = nullptr;
-
-			glm::mat4 ViewMatrix;
-			glm::mat4 ProjectionMatrix;
-
-			Shared<FrameBuffer> FrameBuffer;
+			glm::mat4 ViewMatrix = glm::mat4(1.f);
+			glm::mat4 ProjectionMatrix = glm::mat4(1.f);
+			FrameBuffer* FrameBuffer = nullptr;
 		};
 
-		static RenderData m_RenderData;
+		struct RenderObject
+		{
+			RenderObject(const Transform& transform, Mesh* mesh, Material* material)
+				: Transform(transform), Mesh(mesh), Material(material)
+			{
+			}
+
+			Transform Transform = {};
+			Mesh* Mesh = nullptr;
+			Material* Material = nullptr;
+		};
+
+		/* Sorts the objects prior to rendering. */
+		virtual void Sort() = 0;
+
+		/* Renders the render-object. */
+		void Render(const RenderObject& object);
+
+		/* Contains render-scene data. */
+		RenderData m_RenderData;
+		std::vector<RenderObject> m_RenderObjects;
 	};
 }

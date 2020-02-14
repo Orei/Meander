@@ -19,8 +19,8 @@ namespace Meander
 
 		// NOTE: We have to cast to GLTexture in order to get the handle, is there a better way to do this?
 		// It only happens once on construction though, so it shouldn't cause issues
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, std::static_pointer_cast<GLTexture>(m_Color)->GetHandle(), 0);
-		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, std::static_pointer_cast<GLTexture>(m_Depth)->GetHandle(), 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, static_cast<GLTexture*>(m_Color)->GetHandle(), 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, static_cast<GLTexture*>(m_Depth)->GetHandle(), 0);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}

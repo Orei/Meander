@@ -8,11 +8,14 @@ using namespace Meander;
 namespace Sandbox
 {
 	Scene scene;
-	Shared<FrameBuffer> fbo;
-	Shared<Shader> procShader;
-	Shared<CubeMap> skybox;
-	Shared<Material> meshMaterial, skyboxMaterial, groundMaterial;
+	FrameBuffer* fbo;
+	Shader* procShader;
+	CubeMap* skybox;
+	Material* meshMaterial;
+	Material* skyboxMaterial;
+	Material* groundMaterial;
 	PerspectiveCamera camera(70.f, (float)1280 / 720);
+	ForwardRenderer renderer;
 	bool cursorDisabled = true;
 
 	const char* sixFaces[] =
@@ -44,16 +47,19 @@ namespace Sandbox
 
 	void Game::Load()
 	{
-		meshMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"),
-			Texture::Create("Assets/Textures/Debug_White.png")));
+		// TODO: Skybox cubemap is bound forever, but we might want to bind other cubemaps at some point
+		// Renderer should be able to handle rendering skyboxes properly
+		skyboxMaterial = new Material(Shader::Create("Assets/Shaders/Skybox.glsl"));
+		skybox = CubeMap::Create(sixFaces);
+		skybox->Bind();
+
+		meshMaterial = new Material(Shader::Create("Assets/Shaders/Test.glsl"),
+			Texture::Create("Assets/Textures/Debug_White.png"));
+
+		groundMaterial = new Material(Shader::Create("Assets/Shaders/Test.glsl"),
+			Texture::Create("Assets/Textures/Debug_Black.png"));
 
 		procShader = Shader::Create("Assets/Shaders/PostEffect.glsl");
-
-		skybox = CubeMap::Create(sixFaces);
-		skyboxMaterial.reset(new Material(Shader::Create("Assets/Shaders/Skybox.glsl")));
-
-		groundMaterial.reset(new Material(Shader::Create("Assets/Shaders/Test.glsl"),
-			Texture::Create("Assets/Textures/Debug_Black.png")));
 
 		// Move down half a unit and rotate plane so it faces upwards
 		Transform groundTransform(-WORLD_UP / 2.f, 
@@ -92,28 +98,28 @@ namespace Sandbox
 
 	void Game::Render(GameTime& gameTime)
 	{
-		// Render the scene to the frame buffer
-		Renderer::SetRenderTarget(fbo);
+		// Render scene to framebuffer
+		renderer.SetRenderTarget(fbo);
 
-		Renderer::Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
-		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
+		renderer.Begin(camera.GetViewMatrix(), camera.GetProjectionMatrix());
+		renderer.Clear(ClearFlags::Color | ClearFlags::Depth);
 		for (const auto& node : scene.GetNodes())
 		{
 			// We can't render if it has no material or mesh, nodes always have a transform
-			if (!node->HasMesh() || !node->HasMaterial())
+			if (!node->GetMesh() || !node->GetMaterial())
 				continue;
 
-			Renderer::Render(node->GetTransform(), node->GetMesh(), node->GetMaterial());
+			renderer.Submit(node->GetTransform(), node->GetMesh(), node->GetMaterial());
 		}
-		Renderer::End();
+		renderer.End();
 
-		// Render the frame buffer to the screen
-		Renderer::SetRenderTarget(nullptr);
+		// Render framebuffer to screen
+		renderer.SetRenderTarget(nullptr);
 
-		Renderer::Begin();
-		Renderer::Clear(ClearFlags::Color | ClearFlags::Depth);
-		Renderer::Render(fbo, procShader);
-		Renderer::End();
+		renderer.Begin();
+		renderer.Clear(ClearFlags::Color | ClearFlags::Depth);
+		renderer.Render(fbo, procShader);
+		renderer.End();
 	}
 	
 	unsigned int fboDepthHandle = 0; 
@@ -132,7 +138,7 @@ namespace Sandbox
 		if (fboDepthHandle == 0 && fbo != nullptr && fbo->GetDepth() != nullptr)
 		{
 			auto texture = fbo->GetDepth();
-			auto glTex = std::dynamic_pointer_cast<GLTexture>(texture);
+			auto glTex = static_cast<GLTexture*>(texture);
 			fboDepthHandle = glTex->GetHandle();
 		}
 
@@ -156,6 +162,7 @@ namespace Sandbox
 
 			i++;
 		}
+
 		ImGui::ListBoxFooter();
 		ImGui::End();
 
@@ -176,9 +183,9 @@ namespace Sandbox
 
 			ImGui::Begin("Transform");
 			ImGui::SetWindowSize({ 300.f, ImGui::GetWindowHeight() });
-			ImGui::DragFloat3("Position", p);
-			ImGui::DragFloat3("Rotation", r);
-			ImGui::DragFloat3("Scale", s);
+			ImGui::DragFloat3("Position", p, 0.1f);
+			ImGui::DragFloat3("Rotation", r, 0.1f);
+			ImGui::DragFloat3("Scale", s, 0.1f);
 			ImGui::End();
 
 			activeNode->GetTransform().SetPosition({ p[0], p[1], p[2] });

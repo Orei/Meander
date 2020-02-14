@@ -74,18 +74,18 @@ namespace Meander
 				20, 21, 22, 20, 22, 23 // Bottom
 			};
 
-			m_Quad.reset(new Mesh(quadVertices, sizeof(quadVertices), 
+			m_Quad = new Mesh(quadVertices, sizeof(quadVertices), 
 				quadIndices, sizeof(quadIndices) / sizeof(unsigned int),
-				m_Layout));
+				m_Layout);
 
-			m_Cube.reset(new Mesh(cubeVertices, sizeof(cubeVertices), 
+			m_Cube = new Mesh(cubeVertices, sizeof(cubeVertices), 
 				cubeIndices, sizeof(cubeIndices) / sizeof(unsigned int), 
-				m_Layout));
+				m_Layout);
 
-			GeneratePlane(10, 10, m_Plane);
+			m_Plane = GeneratePlane(10, 10);
 		}
 
-		static void GeneratePlane(int rows, int columns, Shared<Mesh>& mesh)
+		static Mesh* GeneratePlane(int rows, int columns)
 		{
 			// TODO: Store this elsewhere for the entire class, this is a copy of the initializer quad
 			float quadVertices[] =
@@ -155,19 +155,20 @@ namespace Meander
 			unsigned int vertexSize = (unsigned int)vertices.size() * sizeof(float);
 			unsigned int indexCount = (unsigned int)indices.size();
 
-			mesh.reset(new Mesh(&vertices[0], vertexSize, 
+			// Create mesh and return
+			return new Mesh(&vertices[0], vertexSize, 
 				&indices[0], indexCount, 
-				m_Layout));
+				m_Layout);
 		}
 
-		static const Shared<Mesh>& GetQuad() { return m_Quad; }
-		static const Shared<Mesh>& GetCube() { return m_Cube; }
-		static const Shared<Mesh>& GetPlane() { return m_Plane; }
+		static Mesh* GetQuad() { return m_Quad; }
+		static Mesh* GetCube() { return m_Cube; }
+		static Mesh* GetPlane() { return m_Plane; }
 
 	private:
-		static Shared<Mesh> m_Quad;
-		static Shared<Mesh> m_Cube;
-		static Shared<Mesh> m_Plane;
+		static Mesh* m_Quad;
+		static Mesh* m_Cube;
+		static Mesh* m_Plane;
 		static BufferLayout m_Layout;
 	};
 }

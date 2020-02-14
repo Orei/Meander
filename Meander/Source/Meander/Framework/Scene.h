@@ -10,8 +10,7 @@ namespace Meander
 	{
 	public:
 		SceneNode* CreateNode();
-		SceneNode* CreateNode(const Transform& transform);
-		SceneNode* CreateNode(const Transform& transform, const Shared<Mesh> mesh, const Shared<Material> material);
+		SceneNode* CreateNode(const Transform& transform, Mesh* mesh = nullptr, Material* material = nullptr);
 
 		std::vector<SceneNode*> GetNodes() const { return m_Nodes; }
 

@@ -134,7 +134,7 @@ namespace Meander
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
-		static Shared<VertexBuffer> Create(float* vertices, unsigned int size);
+		static VertexBuffer* Create(float* vertices, unsigned int size);
 	};
 
 	class IndexBuffer
@@ -147,6 +147,6 @@ namespace Meander
 
 		virtual unsigned int GetCount() const = 0;
 
-		static Shared<IndexBuffer> Create(unsigned int* vertices, unsigned int count);
+		static IndexBuffer* Create(unsigned int* vertices, unsigned int count);
 	};
 }

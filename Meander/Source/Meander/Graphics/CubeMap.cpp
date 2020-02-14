@@ -5,12 +5,12 @@
 
 namespace Meander
 {
-	Shared<CubeMap> CubeMap::Create(const char** sixFacePaths)
+	CubeMap* CubeMap::Create(const char** sixFacePaths)
 	{
 		switch (Context::Get()->GetContextAPI())
 		{
 		case ContextAPI::OpenGL:
-			return CreateShared<GLCubeMap>(sixFacePaths);
+			return new GLCubeMap(sixFacePaths);
 		}
 
 		MN_ASSERT(false, "Unhandled graphics context.");

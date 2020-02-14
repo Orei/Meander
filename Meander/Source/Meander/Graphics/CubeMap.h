@@ -9,6 +9,6 @@ namespace Meander
 		virtual void Bind(int slot = 0) const = 0;
 		virtual void Unbind(int slot = 0) const = 0;
 
-		static Shared<CubeMap> Create(const char** sixFacePaths);
+		static CubeMap* Create(const char** sixFacePaths);
 	};
 }

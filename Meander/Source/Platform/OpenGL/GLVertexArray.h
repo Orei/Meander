@@ -13,15 +13,15 @@ namespace Meander
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		virtual void AddVertexBuffer(const Shared<VertexBuffer>& buffer) override;
-		virtual void SetIndexBuffer(const Shared<IndexBuffer>& buffer) override;
+		virtual void AddVertexBuffer(VertexBuffer* buffer) override;
+		virtual void SetIndexBuffer(IndexBuffer* buffer) override;
 
-		virtual const std::vector<Shared<VertexBuffer>>& GetVertexBuffers() const override
+		virtual const std::vector<VertexBuffer*>& GetVertexBuffers() const override
 		{
 			return m_VertexBuffers;
 		}
 
-		virtual const Shared<IndexBuffer>& GetIndexBuffer() const override
+		virtual IndexBuffer* GetIndexBuffer() const override
 		{
 			return m_IndexBuffer;
 		}
@@ -29,7 +29,7 @@ namespace Meander
 	private:
 		unsigned int m_Handle = 0;
 		unsigned int m_VertexBufferIndex = 0;
-		std::vector<Shared<VertexBuffer>> m_VertexBuffers;
-		Shared<IndexBuffer> m_IndexBuffer = nullptr;
+		std::vector<VertexBuffer*> m_VertexBuffers;
+		IndexBuffer* m_IndexBuffer = nullptr;
 	};
 }

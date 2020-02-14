@@ -17,15 +17,12 @@ namespace Meander
 			sprintf_s(m_Name, 32, "Node %i", m_UniqueId);
 		}
 
-		void SetMesh(Shared<Mesh> mesh) { m_Mesh = mesh; }
-		void SetMaterial(Shared<Material> material) { m_Material = material; }
+		void SetMesh(Mesh* mesh) { m_Mesh = mesh; }
+		void SetMaterial(Material* material) { m_Material = material; }
 
 		Transform& GetTransform() { return m_Transform; }
-		const Shared<Mesh> GetMesh() const { return m_Mesh; }
-		const Shared<Material> GetMaterial() const { return m_Material; }
-
-		bool HasMesh() const { return m_Mesh != nullptr; }
-		bool HasMaterial() const { return m_Material != nullptr; }
+		Mesh* GetMesh() const { return m_Mesh; }
+		Material* GetMaterial() const { return m_Material; }
 
 		unsigned int GetUniqueId() const { return m_UniqueId; }
 		const char* GetName() const { return m_Name; }
@@ -33,10 +30,10 @@ namespace Meander
 	private:
 		unsigned int m_UniqueId;
 		
-		char* m_Name;
+		char* m_Name = nullptr;
 		Transform m_Transform;
-		Shared<Mesh> m_Mesh;
-		Shared<Material> m_Material;
+		Mesh* m_Mesh = nullptr;
+		Material* m_Material = nullptr;
 
 		static unsigned int s_UidFactory;
 	};

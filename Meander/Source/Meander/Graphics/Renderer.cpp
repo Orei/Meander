@@ -9,11 +9,9 @@
 
 namespace Meander
 {
-	Renderer::RenderData Renderer::m_RenderData;
-
 	void Renderer::Begin(const glm::mat4& viewMatrix, const glm::mat4& projectionMatrix)
 	{
-		if (IsReady())
+		if (HasBegun())
 		{
 			MN_WARN("Renderer::Begin has already been called, call Renderer::End first.");
 			return;
@@ -26,20 +24,29 @@ namespace Meander
 
 	void Renderer::End()
 	{
-		if (!IsReady())
+		if (!HasBegun())
 		{
 			MN_WARN("Renderer::Begin must be called before Renderer::End.");
 			return;
 		}
 
+		// Let inheriting classes sort objects
+		Sort();
+
+		// Render objects
+		for (int i = 0; i < m_RenderObjects.size(); i++)
+			Render(m_RenderObjects[i]);
+
+		// Flush data, we want a clean slate
 		m_RenderData.Context = nullptr;
 		m_RenderData.ViewMatrix = glm::mat4(1.f);
 		m_RenderData.ProjectionMatrix = glm::mat4(1.f);
+		m_RenderObjects.clear();
 	}
 
-	void Renderer::SetRenderTarget(const Shared<FrameBuffer>& frameBuffer)
+	void Renderer::SetRenderTarget(FrameBuffer* frameBuffer)
 	{
-		if (IsReady())
+		if (HasBegun())
 		{
 			MN_WARN("Set render target before calling Renderer::Begin.");
 			return;
@@ -60,7 +67,7 @@ namespace Meander
 
 	void Renderer::Clear(const ClearFlags& flags)
 	{
-		if (!IsReady())
+		if (!HasBegun())
 		{
 			MN_WARN("Call Renderer::Begin before clearing.");
 			return;
@@ -69,26 +76,20 @@ namespace Meander
 		m_RenderData.Context->Clear(flags);
 	}
 
-	void Renderer::Render(const Transform& transform, const Shared<Mesh>& mesh, const Shared<Material>& material)
+	void Renderer::Submit(const Transform& transform, Mesh* mesh, Material* material)
 	{
-		if (!IsReady())
+		if (!HasBegun())
 		{
-			MN_WARN("Call Renderer::Begin before rendering.");
+			MN_WARN("Call Renderer::Begin before submitting.");
 			return;
 		}
 
-		material->GetShader()->Set("u_Projection", m_RenderData.ProjectionMatrix);
-		material->GetShader()->Set("u_View", m_RenderData.ViewMatrix);
-		material->GetShader()->Set("u_Model", transform.GetMatrix());
-
-		material->Bind();
-		m_RenderData.Context->Render(mesh->GetVertexArray());
-		material->Unbind();
+		m_RenderObjects.push_back({ transform, mesh, material });
 	}
 
-	void Renderer::Render(const Shared<FrameBuffer>& frameBuffer, const Shared<Shader>& shader)
+	void Renderer::Render(const FrameBuffer* frameBuffer, const Shader* shader)
 	{
-		if (!IsReady())
+		if (!HasBegun())
 		{
 			MN_WARN("Call Renderer::Begin before rendering.");
 			return;
@@ -104,5 +105,17 @@ namespace Meander
 		frameBuffer->GetDepth()->Unbind(DEPTH_BUFFER_SLOT);
 		frameBuffer->GetColor()->Unbind(COLOR_BUFFER_SLOT);
 		shader->Unbind();
+	}
+
+	void Renderer::Render(const RenderObject& object)
+	{
+		auto& material = object.Material;
+		material->GetShader()->Set("u_Projection", m_RenderData.ProjectionMatrix);
+		material->GetShader()->Set("u_View", m_RenderData.ViewMatrix);
+		material->GetShader()->Set("u_Model", object.Transform.GetMatrix());
+
+		material->Bind();
+		m_RenderData.Context->Render(object.Mesh->GetVertexArray());
+		material->Unbind();
 	}
 }

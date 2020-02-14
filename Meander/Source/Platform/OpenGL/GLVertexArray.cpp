@@ -48,7 +48,7 @@ namespace Meander
 		glBindVertexArray(0);
 	}
 
-	void GLVertexArray::AddVertexBuffer(const Shared<VertexBuffer>& buffer)
+	void GLVertexArray::AddVertexBuffer(VertexBuffer* buffer)
 	{
 		MN_ASSERT(buffer->GetLayout().GetElements().size(), "Vertex buffer contains no layout.");
 
@@ -74,7 +74,7 @@ namespace Meander
 		Unbind();
 	}
 
-	void GLVertexArray::SetIndexBuffer(const Shared<IndexBuffer>& buffer)
+	void GLVertexArray::SetIndexBuffer(IndexBuffer* buffer)
 	{
 		Bind();
 		buffer->Bind();
