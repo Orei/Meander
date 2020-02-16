@@ -1,6 +1,7 @@
 #pragma once
-#include "Meander/Common.h"
 #include "Meander/Transform.h"
+
+#define SCENE_NODE_NAME_LENGTH 32
 
 namespace Meander
 {
@@ -10,13 +11,14 @@ namespace Meander
 	class SceneNode
 	{
 	public:
-		SceneNode()
+		SceneNode(const char* name = nullptr) 
 			: m_UniqueId(s_UidFactory++)
 		{
-			m_Name = new char[32];
-			sprintf_s(m_Name, 32, "Node %i", m_UniqueId);
+			m_Name = new char[SCENE_NODE_NAME_LENGTH];
+			SetName(name);
 		}
 
+		void SetName(const char* name);
 		void SetMesh(Mesh* mesh) { m_Mesh = mesh; }
 		void SetMaterial(Material* material) { m_Material = material; }
 
@@ -24,8 +26,8 @@ namespace Meander
 		Mesh* GetMesh() const { return m_Mesh; }
 		Material* GetMaterial() const { return m_Material; }
 
-		unsigned int GetUniqueId() const { return m_UniqueId; }
 		const char* GetName() const { return m_Name; }
+		unsigned int GetUniqueId() const { return m_UniqueId; }
 
 	private:
 		unsigned int m_UniqueId = 0;

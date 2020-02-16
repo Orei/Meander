@@ -3,9 +3,9 @@
 
 namespace Meander
 {
-	SceneNode* Scene::CreateNode()
+	SceneNode* Scene::CreateNode(const char* name)
 	{
-		SceneNode* node = new SceneNode();
+		SceneNode* node = new SceneNode(name);
 		m_Nodes.push_back(node);
 		return node;
 	}
@@ -22,6 +22,22 @@ namespace Meander
 		node->SetMaterial(material);
 
 		m_Nodes.push_back(node);
+		return node;
+	}
+
+	SceneNode* Scene::CreateNode(const char* name, const Transform& transform, Mesh* mesh, Material* material)
+	{
+		SceneNode* node = new SceneNode(name);
+
+		// Copy transform data
+		node->GetTransform().SetPosition(transform.GetPosition());
+		node->GetTransform().SetRotation(transform.GetRotation());
+		node->GetTransform().SetScale(transform.GetScale());
+		node->SetMesh(mesh);
+		node->SetMaterial(material);
+
+		m_Nodes.push_back(node);
+
 		return node;
 	}
 }

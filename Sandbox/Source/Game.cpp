@@ -9,6 +9,7 @@ namespace Sandbox
 {
 	Scene scene;
 	FrameBuffer* fbo;
+	Shader* testShader;
 	Shader* procShader;
 	CubeMap* skybox;
 	Material* meshMaterial;
@@ -55,22 +56,20 @@ namespace Sandbox
 		skybox = CubeMap::Create(sixFaces);
 		skybox->Bind();
 
-		meshMaterial = new Material(Shader::Create("Assets/Shaders/Test.glsl"),
-			Texture::Create("Assets/Textures/Debug_White.png"));
-
-		groundMaterial = new Material(Shader::Create("Assets/Shaders/Test.glsl"),
-			Texture::Create("Assets/Textures/Debug_Black.png"));
-
+		// Load shaders and create materials
+		testShader = Shader::Create("Assets/Shaders/Test.glsl");
 		procShader = Shader::Create("Assets/Shaders/PostEffect.glsl");
+		meshMaterial = new Material(testShader, Texture::Create("Assets/Textures/Debug_White.png"));
+		groundMaterial = new Material(testShader, Texture::Create("Assets/Textures/Debug_Black.png"));
 
 		// Move down half a unit and rotate plane so it faces upwards
 		Transform groundTransform(-WORLD_UP / 2.f, 
 			glm::angleAxis(glm::radians(-90.f), WORLD_RIGHT));
 
 		// Create nodes for all objects
-		scene.CreateNode(groundTransform, Primitives::GetPlane(), groundMaterial);
-		scene.CreateNode({}, Primitives::GetCube(), meshMaterial);
-		scene.CreateNode({}, Primitives::GetCube(), skyboxMaterial);
+		scene.CreateNode("Ground", groundTransform, Primitives::GetPlane(), groundMaterial);
+		scene.CreateNode("Mesh", {}, Primitives::GetCube(), meshMaterial);
+		scene.CreateNode("Skybox", {}, Primitives::GetCube(), skyboxMaterial);
 
 		// Spawn some random cubes in the air
 		for (int i = 0; i < 6; i++)
@@ -78,7 +77,9 @@ namespace Sandbox
 			glm::vec3 position = { random.Float(-3.f, 3.f), random.Float(10.f, 20.f), random.Float(-3.f, 3.f) };
 			glm::vec3 rotation = { glm::radians(random.Float(0.f, 360.f)), glm::radians(random.Float(0.f, 360.f)), glm::radians(random.Float(0.f, 360.f)) };
 
-			scene.CreateNode({ position, rotation }, Primitives::GetCube(), meshMaterial);
+			char name[SCENE_NODE_NAME_LENGTH];
+			sprintf_s(name, SCENE_NODE_NAME_LENGTH, "Cube %i", i + 1);
+			scene.CreateNode(name, { position, rotation }, Primitives::GetCube(), meshMaterial);
 		}
 	}
 

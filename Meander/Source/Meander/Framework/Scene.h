@@ -9,8 +9,9 @@ namespace Meander
 	class Scene
 	{
 	public:
-		SceneNode* CreateNode();
+		SceneNode* CreateNode(const char* name = nullptr);
 		SceneNode* CreateNode(const Transform& transform, Mesh* mesh = nullptr, Material* material = nullptr);
+		SceneNode* CreateNode(const char* name, const Transform& transform, Mesh* mesh = nullptr, Material* material = nullptr);
 
 		std::vector<SceneNode*> GetNodes() const { return m_Nodes; }
 
