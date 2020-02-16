@@ -22,7 +22,7 @@ namespace Meander
 		void SetDiffuse(Texture* diffuse) { m_Diffuse = diffuse; }
 		void SetNormal(Texture* normal) { m_Normal = normal; }
 
-		const Shader* GetShader() const { return m_Shader; }
+		Shader* GetShader() const { return m_Shader; }
 		const Texture* GetDiffuse() const { return m_Diffuse; }
 		const Texture* GetNormal() const { return m_Normal; }
 

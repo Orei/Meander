@@ -87,7 +87,7 @@ namespace Meander
 		m_RenderObjects.push_back({ transform, mesh, material });
 	}
 
-	void Renderer::Render(const FrameBuffer* frameBuffer, const Shader* shader)
+	void Renderer::Render(const FrameBuffer* frameBuffer, Shader* shader)
 	{
 		if (!HasBegun())
 		{

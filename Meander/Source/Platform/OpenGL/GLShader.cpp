@@ -127,10 +127,10 @@ namespace Meander
 
 		if (!status)
 		{
-			char LogBuffer[1024];
-			glGetProgramInfoLog(m_Handle, 1024, nullptr, LogBuffer);
+			char logBuffer[1024];
+			glGetProgramInfoLog(m_Handle, 1024, nullptr, logBuffer);
 
-			MN_ERROR("Unable to compile shader: {0}", LogBuffer);
+			MN_ERROR("Unable to compile shader: {0}", logBuffer);
 			return false;
 		}
 
@@ -144,10 +144,10 @@ namespace Meander
 
 		if (!status)
 		{
-			char LogBuffer[1024];
-			glGetProgramInfoLog(m_Handle, 1024, nullptr, LogBuffer);
+			char logBuffer[1024];
+			glGetProgramInfoLog(m_Handle, 1024, nullptr, logBuffer);
 
-			MN_ERROR("Unable to link shader program: {0}", LogBuffer);
+			MN_ERROR("Unable to link shader program: {0}", logBuffer);
 			return false;
 		}
 
@@ -155,51 +155,65 @@ namespace Meander
 	}
 
 	/* Uniforms */
-	void GLShader::Set(const char* name, const int value) const
+	void GLShader::Set(const char* name, const int value)
 	{
 		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
+		unsigned int location = GetUniformLocation(name);
 		glUniform1i(location, value);
 		glUseProgram(0);
 	}
 
-	void GLShader::Set(const char* name, const float value) const
+	void GLShader::Set(const char* name, const float value)
 	{
 		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
+		unsigned int location = GetUniformLocation(name);
 		glUniform1f(location, value);
 		glUseProgram(0);
 	}
 
-	void GLShader::Set(const char* name, const glm::vec2& value) const
+	void GLShader::Set(const char* name, const glm::vec2& value)
 	{
 		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
+		unsigned int location = GetUniformLocation(name);
 		glUniform2fv(location, 1, glm::value_ptr(value));
 		glUseProgram(0);
 	}
 
-	void GLShader::Set(const char* name, const glm::vec3& value) const
+	void GLShader::Set(const char* name, const glm::vec3& value)
 	{
 		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
+		unsigned int location = GetUniformLocation(name);
 		glUniform3fv(location, 1, glm::value_ptr(value));
 		glUseProgram(0);
 	}
 
-	void GLShader::Set(const char* name, const glm::vec4& value) const
+	void GLShader::Set(const char* name, const glm::vec4& value)
 	{
 		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
+		unsigned int location = GetUniformLocation(name);
 		glUniform4fv(location, 1, glm::value_ptr(value));
 		glUseProgram(0);
 	}
 
-	void GLShader::Set(const char* name, const glm::mat4& value) const
+	void GLShader::Set(const char* name, const glm::mat4& value)
 	{
 		glUseProgram(m_Handle);
-		GLuint location = glGetUniformLocation(m_Handle, name);
+		unsigned int location = GetUniformLocation(name);
 		glUniformMatrix4fv(location, 1, false, glm::value_ptr(value));
 		glUseProgram(0);
+	}
+
+	unsigned int GLShader::GetUniformLocation(const char* name)
+	{
+		std::string str(name);
+
+		if (m_Uniforms.find(str) != m_Uniforms.end())
+			return m_Uniforms[str];
+
+		MN_TRACE("Uniform cached");
+		
+		unsigned int location = (unsigned int)glGetUniformLocation(m_Handle, name);
+		m_Uniforms[str] = location;
+		return location;
 	}
 }

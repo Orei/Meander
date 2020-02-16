@@ -31,7 +31,7 @@ namespace Meander
 		void Submit(const Transform& transform, Mesh* mesh, Material* material);
 
 		/* Renders a framebuffer to screen. */
-		void Render(const FrameBuffer* frameBuffer, const Shader* shader);
+		void Render(const FrameBuffer* frameBuffer, Shader* shader);
 
 		/* Whether the render-scene has begun. */
 		bool HasBegun() { return m_RenderData.Context != nullptr; }

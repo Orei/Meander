@@ -20,12 +20,12 @@ namespace Meander
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		virtual void Set(const char* name, const int value) const = 0;
-		virtual void Set(const char* name, const float value) const = 0;
-		virtual void Set(const char* name, const glm::vec2& value) const = 0;
-		virtual void Set(const char* name, const glm::vec3& value) const = 0;
-		virtual void Set(const char* name, const glm::vec4& value) const = 0;
-		virtual void Set(const char* name, const glm::mat4& value) const = 0;
+		virtual void Set(const char* name, const int value) = 0;
+		virtual void Set(const char* name, const float value) = 0;
+		virtual void Set(const char* name, const glm::vec2& value) = 0;
+		virtual void Set(const char* name, const glm::vec3& value) = 0;
+		virtual void Set(const char* name, const glm::vec4& value) = 0;
+		virtual void Set(const char* name, const glm::mat4& value) = 0;
 
 		static Shader* Create(const char* path);
 	};
