@@ -1,5 +1,6 @@
 #pragma once
 #include <random>
+#include <glm/vec3.hpp>
 
 namespace Meander
 {
@@ -7,7 +8,7 @@ namespace Meander
 	{
 	public:
 		Random() 
-			: m_RNG((unsigned int)time(0))
+			: m_RNG((unsigned int)time(nullptr))
 		{
 		}
 
@@ -39,6 +40,9 @@ namespace Meander
 
 		/* Returns either true or false. */
 		bool Flip();
+
+		/* Returns a random normalized axis. */
+		glm::vec3 Axis();
 
 	private:
 		std::mt19937 m_RNG;

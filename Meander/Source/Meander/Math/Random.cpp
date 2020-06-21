@@ -1,5 +1,6 @@
 #include "pch.h"
 #include "Random.h"
+#include <glm/detail/func_geometric.inl>
 
 namespace Meander
 {
@@ -41,5 +42,14 @@ namespace Meander
 	bool Random::Flip()
 	{
 		return std::uniform_int_distribution(0, 1)(m_RNG);
+	}
+
+	glm::vec3 Random::Axis()
+	{
+		glm::vec3 axis;
+		axis.x = Float(-1.f, 1.f);
+		axis.y = Float(-1.f, 1.f);
+		axis.z = Float(-1.f, 1.f);
+		return glm::normalize(axis);
 	}
 }
