@@ -47,8 +47,11 @@ namespace Meander
 		/* Whether the window is requesting the program to close. */
 		virtual bool IsClosing() = 0;
 
-		/* Resizes the window. */
+		/* Resizes the window. Ensure callback is called. */
 		virtual void Resize(unsigned int width, unsigned int height) = 0;
+
+		/* Sets the callback function called when the window is resized. */
+		void SetOnResizeCallback(std::function<void(unsigned int, unsigned int)> callback) { m_OnResize = callback; }
 
 		/* Returns the width of the window. */
 		inline unsigned int GetWidth() const { return s_Properties.Width; }
@@ -57,7 +60,7 @@ namespace Meander
 		inline unsigned int GetHeight() const { return s_Properties.Height; }
 
 		/* Returns the window aspect ratio. */
-		inline float GetAspectRatio() const { return (float)GetWidth() / GetHeight(); }
+		inline float GetAspectRatio() const { return GetWidth() / (float)GetHeight(); }
 
 		/* Returns the Window API. */
 		virtual WindowAPI GetWindowAPI() = 0;
@@ -66,6 +69,8 @@ namespace Meander
 		inline static Window* Get() { return s_Instance; }
 
 	protected:
+		std::function<void(unsigned int, unsigned int)> m_OnResize;
+
 		static WindowProperties s_Properties;
 		static Window* s_Instance;
 	};

@@ -29,7 +29,7 @@ namespace Meander
 		/* Resizes the window. */
 		virtual void Resize(unsigned int width, unsigned int height) override;
 
-		/* Returns the Window API. */
+		/* Returns the window API. */
 		virtual WindowAPI GetWindowAPI() override { return WindowAPI::GLFW; }
 
 		/* Returns a pointer to the native GLFW window. */

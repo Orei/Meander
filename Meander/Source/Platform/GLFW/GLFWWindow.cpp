@@ -5,28 +5,6 @@
 
 namespace Meander
 {
-	/* Callbacks */
-	static void KeyCallback(GLFWwindow* window, int key, int scancode, int action, int mods)
-	{
-		Input::SetKeyState((Key)key, (InputAction)action);
-	}
-
-	static void MouseButtonCallback(GLFWwindow* window, int button, int action, int mods)
-	{
-		Input::SetMouseButtonState((MouseButton)button, (InputAction)action);
-	}
-
-	static void MousePositionCallback(GLFWwindow* window, double xpos, double ypos)
-	{
-		Input::SetMousePosition({ (float)xpos, (float)ypos });
-	}
-
-	void ErrorCallback(int error, const char* description)
-	{
-		MN_ERROR("GLFW Error: %s\n", description);
-	}
-	/* Callbacks */
-
 	void GLFWWindow::Initialize(const WindowProperties& properties)
 	{
 		MN_INFO("Creating GLFW window...");
@@ -47,10 +25,30 @@ namespace Meander
 
 		glfwMakeContextCurrent(m_NativeWindow);
 
-		glfwSetErrorCallback(ErrorCallback);
-		glfwSetKeyCallback(m_NativeWindow, KeyCallback);
-		glfwSetMouseButtonCallback(m_NativeWindow, MouseButtonCallback);
-		glfwSetCursorPosCallback(m_NativeWindow, MousePositionCallback);
+		glfwSetErrorCallback([](int error, const char* description)
+		{
+			MN_ERROR("GLFW Error: %s\n", description);
+		});
+		
+		glfwSetKeyCallback(m_NativeWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
+		{
+			Input::SetKeyState((Key)key, (InputAction)action);
+		});
+		
+		glfwSetMouseButtonCallback(m_NativeWindow, [](GLFWwindow* window, int button, int action, int mods)
+		{
+			Input::SetMouseButtonState((MouseButton)button, (InputAction)action);
+		});
+		
+		glfwSetCursorPosCallback(m_NativeWindow, [](GLFWwindow* window, double xpos, double ypos)
+		{
+			Input::SetMousePosition({ (float)xpos, (float)ypos });
+		});
+		
+		glfwSetWindowSizeCallback(m_NativeWindow, [](GLFWwindow* const window, int width, int height)
+		{
+			Window::Get()->Resize(width, height);
+		});
 	}
 
 	void GLFWWindow::SetVerticalSync(bool enabled)
@@ -80,6 +78,10 @@ namespace Meander
 
 	void GLFWWindow::Resize(unsigned int width, unsigned int height)
 	{
-		MN_ASSERT(false, "Resizing has not been implemented yet.");
+		s_Properties.Width = width;
+		s_Properties.Height = height;
+
+		if (m_OnResize != nullptr)
+			m_OnResize(width, height);
 	}
 }
