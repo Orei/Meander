@@ -62,6 +62,58 @@ namespace Meander
 		return Clean(result);
 	}
 
+	std::string Path::GetExtension(const std::string& path)
+	{
+		std::string result;
+
+		for (size_t i = path.length(); i > 0; --i)
+		{
+			// We've hit a path delimiter before a dot
+			// meaning there is no extension
+			if (IS_PATH_DELIMITER(path[i]))
+				break;
+
+			if (path[i] == '.')
+			{
+				result = path.substr(i + 1);
+				break;
+			}
+		}
+		
+		return result;
+	}
+
+	std::string Path::GetFileName(const std::string& path, bool extension)
+	{
+		int start = path.length();
+		int end = start;
+
+		std::string result;
+		if (IS_PATH_DELIMITER(path[start]))
+			return result;
+
+		for (size_t i = path.length(); i > 0; --i)
+		{
+			if (IS_PATH_DELIMITER(path[i]))
+			{
+				start = i + 1;
+				result = path.substr(start, end - start);
+				return result;
+			}
+			
+			// Exclude extension by offsetting end
+			if (!extension && path[i] == '.')
+				end = i;
+		}
+		
+		// Didn't find any delimiters at all, entire path is filename
+		// we still might want to remove the extension though
+		start = 0;
+		result = path.substr(start, end);
+
+		return result;
+	}
+
 	std::string Path::GetWorkingDirectory()
 	{
 		static char buffer[256];
