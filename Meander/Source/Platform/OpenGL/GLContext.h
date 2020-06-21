@@ -1,9 +1,9 @@
 #pragma once
-#include "Meander/Graphics/Context.h"
+#include "Meander/Graphics/RenderContext.h"
 
 namespace Meander
 {
-	class GLContext : public Context
+	class GLContext : public RenderContext
 	{
 	public:
 		/* Initializes the graphics context. */
@@ -43,9 +43,9 @@ namespace Meander
 		virtual void FillScreen() override;
 
 		/* Returns the Context API, OpenGL in this case. */
-		virtual const ContextAPI& GetContextAPI() const override { return m_API; }
+		virtual const RenderContextAPI& GetContextAPI() const override { return m_API; }
 
 	private:
-		ContextAPI m_API = ContextAPI::OpenGL;
+		RenderContextAPI m_API = RenderContextAPI::OpenGL;
 	};
 }

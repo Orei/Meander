@@ -6,13 +6,16 @@
 #include "Meander/Transform.h"
 #include "Meander/GameTime.h"
 
+#include "Meander/Utility/Path.h"
+
+#include "Meander/Math/Math.h"
 #include "Meander/Math/Random.h"
 
 #include "Meander/Input/Input.h"
 #include "Meander/Input/Key.h"
 #include "Meander/Input/MouseButton.h"
 
-#include "Meander/Graphics/Context.h"
+#include "Meander/Graphics/RenderContext.h"
 #include "Meander/Graphics/ForwardRenderer.h"
 #include "Meander/Graphics/Texture.h"
 #include "Meander/Graphics/Shader.h"
@@ -24,4 +27,9 @@
 #include "Meander/Graphics/Types.h"
 #include "Meander/Graphics/Primitives.h"
 
-#include "Meander/Framework/Scene.h"
+#include "Meander/Resources/Resources.h"
+
+#include "Meander/Framework/World.h"
+#include "Meander/Framework/Entity.h"
+#include "Meander/Framework/Components/Component.h"
+#include "Meander/Framework/Components/StaticMesh.h"

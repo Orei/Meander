@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "FrameBuffer.h"
-#include "Context.h"
+#include "RenderContext.h"
 #include "Platform/OpenGL/GLFrameBuffer.h"
 
 namespace Meander
 {
 	FrameBuffer* FrameBuffer::Create(unsigned int width, unsigned int height)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case Context::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLFrameBuffer(width, height);
 		}
 

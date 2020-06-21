@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "Buffer.h"
-#include "Context.h"
+#include "RenderContext.h"
 #include "Platform/OpenGL/GLBuffer.h"
 
 namespace Meander
 {
 	VertexBuffer* VertexBuffer::Create(float* vertices, unsigned int size)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLVertexBuffer(vertices, size);
 		}
 
@@ -19,9 +19,9 @@ namespace Meander
 
 	IndexBuffer* IndexBuffer::Create(unsigned int* indices, unsigned int count)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLIndexBuffer(indices, count);
 		}
 

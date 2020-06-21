@@ -205,15 +205,7 @@ namespace Meander
 
 	unsigned int GLShader::GetUniformLocation(const char* name)
 	{
-		std::string str(name);
-
-		if (m_Uniforms.find(str) != m_Uniforms.end())
-			return m_Uniforms[str];
-
-		MN_TRACE("Uniform cached");
-		
 		unsigned int location = (unsigned int)glGetUniformLocation(m_Handle, name);
-		m_Uniforms[str] = location;
 		return location;
 	}
 }

@@ -1,10 +1,10 @@
 #pragma once
-#include "GameTime.h"
+#include "ClientContext.h"
 
 namespace Meander
 {
 	class Window;
-	class Context;
+	class RenderContext;
 
 	class Application
 	{
@@ -12,21 +12,18 @@ namespace Meander
 		Application();
 		virtual ~Application();
 
-		void Run();
+		void Run(ClientContext* context);
 		void Exit();
+		
+		inline Window* GetWindow() { return m_Window; }
+		inline RenderContext* GetRenderContext() { return m_RenderContext; }
 
-		virtual void Initialize() = 0;
-		virtual void Load() = 0;
-		virtual void Update(GameTime& gameTime) = 0;
-		virtual void Render(GameTime& gameTime) = 0;
-		virtual void OnGui(GameTime& gameTime) = 0;
-
-	protected:
-		Window* m_Window = nullptr;
-		Context* m_Context = nullptr;
+		inline static Application* Get() { return s_Instance; }
 
 	private:
 		bool m_Running = false;
+		Window* m_Window = nullptr;
+		RenderContext* m_RenderContext = nullptr;
 
 		static Application* s_Instance;
 	};

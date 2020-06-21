@@ -1,10 +1,10 @@
 #include "pch.h"
 #include "ImGuiRenderer.h"
-#include "Meander/Graphics/Context.h"
+#include "Meander/Graphics/RenderContext.h"
 #include "Platform/GLFW/GLFWWindow.h"
 
-#include <imgui.h>
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
+#include <imgui.h>
 #include <examples/imgui_impl_opengl3.cpp>
 #include <examples/imgui_impl_glfw.cpp>
 #include <examples/imgui_impl_opengl3.h>
@@ -20,11 +20,11 @@ namespace Meander
 		ImGui::StyleColorsDark();
 
 		Window* window = Window::Get();
-		Context* context = Context::Get();
+		RenderContext* context = RenderContext::Get();
 
 		switch (context->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			ImGui_ImplOpenGL3_Init("#version 410");
 			break;
 		}

@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "Shader.h"
-#include "Context.h"
+#include "RenderContext.h"
 #include "Platform/OpenGL/GLShader.h"
 
 namespace Meander
 {
 	Shader* Shader::Create(const char* path)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLShader(path);
 		}
 

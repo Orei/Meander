@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "VertexArray.h"
-#include "Context.h"
+#include "RenderContext.h"
 #include "Platform/OpenGL/GLVertexArray.h"
 
 namespace Meander
 {
 	VertexArray* VertexArray::Create()
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLVertexArray();
 		}
 

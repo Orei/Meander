@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "Texture.h"
-#include "Meander/Graphics/Context.h"
+#include "Meander/Graphics/RenderContext.h"
 #include "Platform/OpenGL/GLTexture.h"
 
 namespace Meander
 {
 	Texture* Texture::Create(const char* path)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLTexture(path);
 		}
 
@@ -19,9 +19,9 @@ namespace Meander
 
 	Texture* Texture::Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLTexture(width, height, pixels, format, dataType);
 		}
 

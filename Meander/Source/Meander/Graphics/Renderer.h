@@ -6,7 +6,7 @@ namespace Meander
 {
 	class Mesh;
 	class Material;
-	class Context;
+	class RenderContext;
 	class FrameBuffer;
 	class Shader;
 	class CubeMap;
@@ -39,7 +39,7 @@ namespace Meander
 	protected:
 		struct RenderData
 		{
-			Context* Context = nullptr;
+			RenderContext* Context = nullptr;
 			glm::mat4 ViewMatrix = glm::mat4(1.f);
 			glm::mat4 ProjectionMatrix = glm::mat4(1.f);
 			FrameBuffer* FrameBuffer = nullptr;

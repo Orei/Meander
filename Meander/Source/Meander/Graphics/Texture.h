@@ -1,5 +1,4 @@
 #pragma once
-#include "Meander/Common.h"
 #include "Meander/Graphics/Types.h"
 
 namespace Meander

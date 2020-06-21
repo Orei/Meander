@@ -3,7 +3,7 @@
 #include "Mesh.h"
 #include "Material.h"
 #include "Shader.h"
-#include "Context.h"
+#include "RenderContext.h"
 #include "Meander/Transform.h"
 #include "Meander/Graphics/FrameBuffer.h"
 
@@ -17,7 +17,7 @@ namespace Meander
 			return;
 		}
 
-		m_RenderData.Context = Context::Get();
+		m_RenderData.Context = RenderContext::Get();
 		m_RenderData.ViewMatrix = viewMatrix;
 		m_RenderData.ProjectionMatrix = projectionMatrix;
 	}

@@ -1,15 +1,15 @@
 #include "pch.h"
 #include "CubeMap.h"
-#include "Meander/Graphics/Context.h"
+#include "Meander/Graphics/RenderContext.h"
 #include "Platform/OpenGL/GLCubeMap.h"
 
 namespace Meander
 {
 	CubeMap* CubeMap::Create(const char** sixFacePaths)
 	{
-		switch (Context::Get()->GetContextAPI())
+		switch (RenderContext::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case RenderContextAPI::OpenGL:
 			return new GLCubeMap(sixFacePaths);
 		}
 

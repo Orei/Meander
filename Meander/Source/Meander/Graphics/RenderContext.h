@@ -4,18 +4,18 @@
 
 namespace Meander
 {
-	enum class ContextAPI
+	enum class RenderContextAPI
 	{
 		OpenGL
 	};
 
 	class VertexArray;
 
-	class Context
+	class RenderContext
 	{
 	public:
-		Context();
-		virtual ~Context();
+		RenderContext();
+		virtual ~RenderContext();
 
 		/* Initializes the graphics context. */
 		virtual void Initialize() = 0;
@@ -54,12 +54,12 @@ namespace Meander
 		virtual void FillScreen() = 0;
 
 		/* Returns the context API. */
-		virtual const ContextAPI& GetContextAPI() const = 0;
+		virtual const RenderContextAPI& GetContextAPI() const = 0;
 
 		/* Returns the context instance. */
-		inline static Context* Get() { return s_Instance; }
+		inline static RenderContext* Get() { return s_Instance; }
 
 	private:
-		static Context* s_Instance;
+		static RenderContext* s_Instance;
 	};
 }

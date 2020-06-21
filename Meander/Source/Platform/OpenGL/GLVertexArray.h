@@ -1,6 +1,5 @@
 #pragma once
 #include "Meander/Graphics/VertexArray.h"
-#include <glad/glad.h>
 
 namespace Meander
 {

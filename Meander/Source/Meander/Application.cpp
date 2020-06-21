@@ -2,7 +2,6 @@
 #include "Application.h"
 #include "Window.h"
 #include "GameTime.h"
-#include "Graphics/Context.h"
 #include "Graphics/Primitives.h"
 #include "Input/Input.h"
 #include "Platform/OpenGL/GLContext.h"
@@ -23,13 +22,13 @@ namespace Meander
 
 		// Create window and graphics context
 		m_Window = new GLFWWindow();
-		m_Context = new GLContext();
+		m_RenderContext = new GLContext();
 
 		// TODO: Allow the client application to modify properties
 		m_Window->Initialize(WindowProperties());
-		m_Context->Initialize();
+		m_RenderContext->Initialize();
 
-		// Created after the context
+		// Initialize after context
 		Primitives::Initialize();
 		ImGuiRenderer::Initialize();
 	}
@@ -39,12 +38,13 @@ namespace Meander
 		s_Instance = nullptr;
 	}
 
-	void Application::Run()
+	void Application::Run(ClientContext* context)
 	{
 		m_Running = true;
 
-		Initialize();
-		Load();
+		context->Initialize_Internal(this, m_RenderContext, m_Window);
+		context->Initialize();
+		context->Load();
 
 		GameTime gameTime;
 		gameTime.Start();
@@ -52,11 +52,11 @@ namespace Meander
 		{
 			gameTime.Update();
 
-			Update(gameTime);
-			Render(gameTime);
+			context->Update(gameTime);
+			context->Render(gameTime);
 
 			ImGuiRenderer::Begin();
-			OnGui(gameTime);
+			context->RenderUI(gameTime);
 			ImGuiRenderer::End();
 
 			Input::Update();

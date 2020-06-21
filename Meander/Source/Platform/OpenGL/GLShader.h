@@ -20,7 +20,6 @@ namespace Meander
 	
 	private:
 		unsigned int m_Handle = 0;
-		std::unordered_map<std::string, unsigned int> m_Uniforms;
 
 		void ParseShaders(const char* path, std::string& vertexSource, std::string& fragmentSource);
 		void CreateProgram(const char* vertexSource, const char* fragmentSource);

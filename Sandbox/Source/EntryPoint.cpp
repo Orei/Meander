@@ -1,8 +1,10 @@
 #include "Game.h"
+#include "Meander/Application.h"
 
 int main()
 {
-	Sandbox::Game game;
-	game.Run();
+	Meander::Application app;
+	Sandbox::Game context;
+	app.Run(&context);
 	return 0;
 }

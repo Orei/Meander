@@ -6,7 +6,7 @@ workspace "Meander"
     configurations { "Debug", "Release" }
     flags { "MultiProcessorCompile" }
     startproject "Sandbox"
-    
+
     cfgoutdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
     targetdir "Binaries/%{cfgoutdir}/%{prj.name}/"
     objdir "Intermediate/%{cfgoutdir}/%{prj.name}/"
@@ -48,7 +48,7 @@ project "Meander"
         "%{prj.name}/Dependencies/stb/**.h",
         "%{prj.name}/Dependencies/stb/**.cpp",
     }
-    
+
     links
     {
         "opengl32.lib",
