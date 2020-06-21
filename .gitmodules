@@ -7,6 +7,3 @@
 [submodule "Meander/Dependencies/glfw"]
 	path = Meander/Dependencies/glfw
 	url = https://github.com/orei/glfw.git
-[submodule "Meander/Dependencies/imgui"]
-	path = Meander/Dependencies/imgui
-	url = https://github.com/orei/imgui.git
