@@ -9,7 +9,7 @@ namespace Meander
 	{
 		switch (Context::Get()->GetContextAPI())
 		{
-		case ContextAPI::OpenGL:
+		case Context::OpenGL:
 			return new GLFrameBuffer(width, height);
 		}
 

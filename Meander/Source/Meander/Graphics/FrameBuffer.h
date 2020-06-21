@@ -6,8 +6,12 @@ namespace Meander
 	class FrameBuffer
 	{
 	public:
-		virtual void Bind() const = 0;
+		FrameBuffer() { }
+		virtual ~FrameBuffer() { }
+		
+ 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
+		virtual void Resize(unsigned int width, unsigned int height) = 0;
 
 		unsigned int GetWidth() const { return m_Width; }
 		unsigned int GetHeight() const { return m_Height; }

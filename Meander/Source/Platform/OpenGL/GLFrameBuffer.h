@@ -7,10 +7,11 @@ namespace Meander
 	{
 	public:
 		GLFrameBuffer(unsigned int width, unsigned int height);
-		~GLFrameBuffer();
+		virtual ~GLFrameBuffer();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
+		virtual void Resize(unsigned int width, unsigned int height) override;
 
 	private:
 		unsigned int m_Handle = 0;

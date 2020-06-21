@@ -27,6 +27,8 @@ namespace Meander
 
 	GLFrameBuffer::~GLFrameBuffer()
 	{
+		delete m_Color;
+		delete m_Depth;
 		glDeleteFramebuffers(1, &m_Handle);
 	}
 
@@ -38,12 +40,28 @@ namespace Meander
 
 	void GLFrameBuffer::Unbind() const
 	{
-		// TODO: Figure out a better way to do this
-		Window* window = Window::Get();
-		unsigned int width = window->GetWidth();
-		unsigned int height = window->GetHeight();
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	void GLFrameBuffer::Resize(unsigned int width, unsigned int height)
+	{
+		// Delete previous data
+		delete m_Color;
+		delete m_Depth;
+		glDeleteFramebuffers(1, &m_Handle);
+
+		// Reconstruct with new size
+		m_Width = width;
+		m_Height = height;
+
+		glGenFramebuffers(1, &m_Handle);
+		glBindFramebuffer(GL_FRAMEBUFFER, m_Handle);
+
+		m_Color = Texture::Create(m_Width, m_Height, nullptr, TextureFormat::RGBA, TextureDataType::UByte);
+		m_Depth = Texture::Create(m_Width, m_Height, nullptr, TextureFormat::Depth, TextureDataType::Float);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, static_cast<GLTexture*>(m_Color)->GetHandle(), 0);
+		glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, static_cast<GLTexture*>(m_Depth)->GetHandle(), 0);
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		glViewport(0, 0, width, height);
 	}
 }
