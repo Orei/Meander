@@ -5,10 +5,10 @@
 
 #define IMGUI_IMPL_OPENGL_LOADER_GLAD
 #include <imgui.h>
-#include <examples/imgui_impl_opengl3.cpp>
-#include <examples/imgui_impl_glfw.cpp>
-#include <examples/imgui_impl_opengl3.h>
-#include <examples/imgui_impl_glfw.h>
+#include <imgui_impl_opengl3.cpp>
+#include <imgui_impl_glfw.cpp>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_glfw.h>
 
 namespace Meander
 {

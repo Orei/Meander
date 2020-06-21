@@ -1,10 +1,9 @@
 #include "Game.h"
+#include "Components/CRotate.h"
+#include "Entities/BasicEntity.h"
 #include <Meander/Meander.h>
 #include <Platform/OpenGL/GLTexture.h>
 #include <imgui/imgui.h>
-
-#include "Components/CRotate.h"
-#include "Entities/BasicEntity.h"
 
 using namespace Meander;
 
