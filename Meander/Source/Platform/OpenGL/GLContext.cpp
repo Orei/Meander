@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GLContext.h"
 #include "GLTypes.h"
-#include "Meander/Window.h"
 #include "Meander/Graphics/VertexArray.h"
 #include <glad/glad.h>
 

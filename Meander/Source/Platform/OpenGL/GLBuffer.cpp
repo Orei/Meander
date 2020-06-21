@@ -1,6 +1,5 @@
 #include "pch.h"
 #include "GLBuffer.h"
-#include "GLContext.h"
 #include <glad/glad.h>
 
 namespace Meander
