@@ -37,11 +37,12 @@ namespace Sandbox
     	fbo = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetHeight());
 
         m_Window->SetVerticalSync(true);
-    	m_Window->SetOnResizeCallback([](unsigned int width, unsigned int height)
-    	{
-    		fbo->Resize(width, height);
-    		camera->SetAspectRatio(width / static_cast<float>(height));
-    	});
+
+    	// m_Window->SetOnResizeCallback([](unsigned int width, unsigned int height)
+    	// {
+    	// 	fbo->Resize(width, height);
+    	// 	camera->SetAspectRatio(width / static_cast<float>(height));
+    	// });
 
         m_RenderContext->SetClearColor(glm::vec4(0.1f, 0.1f, 0.1f, 1.f));
         m_RenderContext->SetDepthTest(true);
@@ -50,6 +51,70 @@ namespace Sandbox
         m_RenderContext->SetWindingOrder(WindingOrder::CounterClockwise);
         m_RenderContext->SetCullDirection(CullDirection::Back);
 
+    	ImGuiIO io = ImGui::GetIO();
+    	io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
+
+    	ImGuiStyle& style = ImGui::GetStyle();
+		style.WindowPadding = { 4.f, 4.f };
+		style.FramePadding = { 6.f, 6.f };
+    	style.WindowRounding = style.TabRounding = style.ChildRounding = 0.f;
+    	style.WindowBorderSize = style.ChildBorderSize = style.PopupBorderSize = 1.f;
+    	style.FrameBorderSize = 0.f;
+
+    	ImVec4* colors = style.Colors;
+		colors[ImGuiCol_Text]                   = { 1.f, 	1.f, 	1.f, 	1.f 	};
+		colors[ImGuiCol_TextDisabled]           = { 0.f, 	0.f, 	0.f, 	1.f 	};
+		colors[ImGuiCol_WindowBg]               = { 0.18f, 	0.18f, 	0.18f, 	1.f 	};
+		colors[ImGuiCol_ChildBg]                = { 0.28f, 	0.28f, 	0.28f, 	0.f 	};
+		colors[ImGuiCol_PopupBg]                = { 0.313f, 0.313f, 0.313f, 1.f 	};
+		colors[ImGuiCol_Border]                 = { 0.266f, 0.266f, 0.266f, 1.f 	};
+		colors[ImGuiCol_BorderShadow]           = { 0.f, 	0.f, 	0.f, 	0.f 	};
+		colors[ImGuiCol_FrameBg]                = { 0.16f, 	0.16f, 	0.16f, 	1.f 	};
+		colors[ImGuiCol_FrameBgHovered]         = { 0.f, 	0.f, 	0.f, 	1.f 	};
+		colors[ImGuiCol_FrameBgActive]          = { 0.28f, 	0.28f, 	0.28f, 	1.f 	};
+		colors[ImGuiCol_TitleBg]                = { 0.148f, 0.148f, 0.148f, 1.f 	};
+		colors[ImGuiCol_TitleBgActive]          = { 0.148f, 0.148f, 0.148f, 1.f 	};
+		colors[ImGuiCol_TitleBgCollapsed]       = { 0.148f, 0.148f, 0.148f, 1.f 	};
+		colors[ImGuiCol_MenuBarBg]              = { 0.195f, 0.195f, 0.195f, 1.f 	};
+		colors[ImGuiCol_ScrollbarBg]            = { 0.16f, 	0.16f, 	0.16f, 	1.f 	};
+		colors[ImGuiCol_ScrollbarGrab]          = { 0.277f, 0.277f, 0.277f, 1.f 	};
+		colors[ImGuiCol_ScrollbarGrabHovered]   = { 0.3f,	0.3f, 	0.3f, 	1.f 	};
+		colors[ImGuiCol_ScrollbarGrabActive]    = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_CheckMark]              = { 1.f, 	1.f, 	1.f, 	1.f 	};
+		colors[ImGuiCol_SliderGrab]             = { 0.391f, 0.391f, 0.391f, 1.f 	};
+		colors[ImGuiCol_SliderGrabActive]       = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_Button]                 = { 1.f, 	1.f, 	1.f, 	0.f 	};
+		colors[ImGuiCol_ButtonHovered]          = { 1.f, 	1.f, 	1.f, 	0.156f 	};
+		colors[ImGuiCol_ButtonActive]           = { 1.f, 	1.f, 	1.f, 	0.391f 	};
+		colors[ImGuiCol_Header]                 = { 0.313f, 0.313f, 0.313f, 1.f 	};
+		colors[ImGuiCol_HeaderHovered]          = { 0.469f, 0.469f, 0.469f, 1.f 	};
+		colors[ImGuiCol_HeaderActive]           = { 0.469f, 0.469f, 0.469f, 1.f 	};
+		colors[ImGuiCol_Separator]              = colors[ImGuiCol_Border];
+		colors[ImGuiCol_SeparatorHovered]       = { 0.391f, 0.391f, 0.391f, 1.f 	};
+		colors[ImGuiCol_SeparatorActive]        = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_ResizeGrip]             = { 1.f, 	1.f, 	1.f, 	0.25f 	};
+		colors[ImGuiCol_ResizeGripHovered]      = { 1.f, 	1.f, 	1.f, 	0.67f 	};
+		colors[ImGuiCol_ResizeGripActive]       = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_Tab]                    = { 0.098f, 0.098f, 0.098f, 1.f 	};
+		colors[ImGuiCol_TabHovered]             = { 0.352f, 0.352f, 0.352f, 1.f 	};
+		colors[ImGuiCol_TabActive]              = { 0.195f, 0.195f, 0.195f, 1.f 	};
+		colors[ImGuiCol_TabUnfocused]           = { 0.098f, 0.098f, 0.098f, 1.f 	};
+		colors[ImGuiCol_TabUnfocusedActive]     = { 0.195f, 0.195f, 0.195f, 1.f 	};
+		colors[ImGuiCol_DockingPreview]         = { 1.f, 	0.391f, 0.f, 	0.781f	};
+		colors[ImGuiCol_DockingEmptyBg]         = { 0.180f, 0.180f, 0.180f, 1.f 	};
+		colors[ImGuiCol_PlotLines]              = { 0.469f, 0.469f, 0.469f, 1.f 	};
+		colors[ImGuiCol_PlotLinesHovered]       = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_PlotHistogram]          = { 0.586f, 0.586f, 0.586f, 1.f 	};
+		colors[ImGuiCol_PlotHistogramHovered]   = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_TextSelectedBg]         = { 1.f, 	1.f, 	1.f, 	0.156f	};
+		colors[ImGuiCol_DragDropTarget]         = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_NavHighlight]           = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_NavWindowingHighlight]  = { 1.f, 	0.391f, 0.f, 	1.f 	};
+		colors[ImGuiCol_NavWindowingDimBg]      = { 0.f, 	0.f, 	0.f, 	0.586f 	};
+		colors[ImGuiCol_ModalWindowDimBg]       = { 0.f, 	0.f, 	0.f, 	0.586f 	};
+
+    	io.Fonts->AddFontFromFileTTF("Assets/Fonts/Oxygen/Oxygen-Regular.ttf", 15.f);
+    	
 	    camera = new PerspectiveCamera(70.f, m_Window->GetAspectRatio());
 	    camera->GetTransform().Translate(WORLD_FORWARD * -5.f);
 
@@ -105,39 +170,32 @@ namespace Sandbox
 
     void Game::Update(Meander::GameTime& gameTime)
     {
-    	if (Input::IsKeyPressed(Key::Escape))
-    	{
-    		m_Application->Exit();
-    		return;
-    	}
+    	// TODO: Tick the world when "playing in editor"
+    	// world->Tick(gameTime.GetDeltaSeconds());
 
-    	world->Tick(gameTime.GetDeltaSeconds());
-    	
-    	if (Input::IsMousePressed(MouseButton::Right))
-    	{
-    		// Camera does some funky rotation stuff if we don't return here
-    		m_Window->SetCursorState(cursorDisabled = false);
-    		return;
-    	}
-    	else if (Input::IsMouseReleased(MouseButton::Right))
-    	{
-    		m_Window->SetCursorState(cursorDisabled = true);
-    		return;
-    	}
-    	
     	const glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera->GetTransform().GetRight() +
     		Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
     		Input::GetKeysAxis(Key::S, Key::W) * camera->GetTransform().GetForward();
     	
     	camera->GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
     	
-    	if (cursorDisabled)
-    		return;
-    	
-    	const glm::vec2 look = Input::GetMouseDelta() * 0.05f;
-    	camera->GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) *
-    		camera->GetTransform().GetRotation() *
-    		glm::angleAxis(glm::radians(look.x), WORLD_UP));
+    	if (!cursorDisabled)
+    	{
+    		const glm::vec2 look = Input::GetMouseDelta() * 0.05f;
+    		camera->GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) *
+    			camera->GetTransform().GetRotation() *
+    			glm::angleAxis(glm::radians(look.x), WORLD_UP));
+    	}
+
+    	// TODO: Needs to be called last, otherwise the camera will do some funky rotational stuff
+    	if (Input::IsMousePressed(MouseButton::Right))
+    	{
+    		m_Window->SetCursorState(cursorDisabled = false);
+    	}
+    	else if (Input::IsMouseReleased(MouseButton::Right))
+    	{
+    		m_Window->SetCursorState(cursorDisabled = true);
+    	}
     }
 
     void Game::Render(Meander::GameTime& gameTime)
@@ -162,173 +220,201 @@ namespace Sandbox
     	}
     	renderer.End();
 
-    	// Render framebuffer to screen
+    	// We're just clearing the screen, framebuffer will be rendered into a window
     	renderer.SetRenderTarget(nullptr);
 
     	renderer.Begin();
     	renderer.Clear(ClearFlags::Color | ClearFlags::Depth);
-    	renderer.Render(fbo, procShader);
     	renderer.End();
     }
 
-	static int selectedIndex = 0;
-	static Entity* selectedEntity = nullptr;	
-	void TransformWindow()
+	static Entity* selectedEntity = nullptr;
+	static bool showGameWindow = true;
+	static bool showHierarchyWindow = true;
+	static bool showDetailsWindow = true;
+	static bool showResourcesWindow = true;
+	static bool showConsoleWindow = true;
+	void ShowDockspace()
 	{
-		if (selectedEntity != nullptr)
+	    static bool opt_fullscreen_persistant = true;
+	    bool opt_fullscreen = opt_fullscreen_persistant;
+	    static ImGuiDockNodeFlags dockspaceFlags = ImGuiDockNodeFlags_None;
+
+	    ImGuiWindowFlags windowFlags = ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
+	    if (opt_fullscreen)
+	    {
+	        ImGuiViewport* viewport = ImGui::GetMainViewport();
+	        ImGui::SetNextWindowPos(viewport->GetWorkPos());
+	        ImGui::SetNextWindowSize(viewport->GetWorkSize());
+	        ImGui::SetNextWindowViewport(viewport->ID);
+	        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+	        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+	        windowFlags |= ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove;
+	        windowFlags |= ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus;
+	    }
+
+	    if (dockspaceFlags & ImGuiDockNodeFlags_PassthruCentralNode)
+	        windowFlags |= ImGuiWindowFlags_NoBackground;
+
+	    ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.f, 0.f });
+	    ImGui::Begin("Viewport", (bool*)true, windowFlags);
+	    ImGui::PopStyleVar();
+
+	    if (opt_fullscreen)
+	        ImGui::PopStyleVar(2);
+
+	    ImGuiIO& io = ImGui::GetIO();
+	    if (io.ConfigFlags & ImGuiConfigFlags_DockingEnable)
+	    {
+	        ImGuiID dockspaceId = ImGui::GetID("Dockspace");
+	        ImGui::DockSpace(dockspaceId, { 0.f, 0.f }, dockspaceFlags);
+	    }
+
+	    if (ImGui::BeginMenuBar())
+	    {
+	    	if (ImGui::BeginMenu("File"))
+	    	{
+	    		if (ImGui::MenuItem("Exit"))
+	    			Application::Get()->Exit();
+
+	    		ImGui::EndMenu();
+	    	}
+	    	
+	        if (ImGui::BeginMenu("Views"))
+	        {
+				ImGui::MenuItem("Game", 0, &showGameWindow);
+	        	ImGui::MenuItem("Hierarchy", 0, &showHierarchyWindow);
+	        	ImGui::MenuItem("Details", 0, &showDetailsWindow);
+	        	ImGui::MenuItem("Resources", 0, &showResourcesWindow);
+	        	
+	            ImGui::EndMenu();
+	        }
+
+	        ImGui::EndMenuBar();
+	    }
+
+	    ImGui::End();
+	}
+
+	void ShowGameWindow()
+	{
+		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, { 0.f, 0.f });
+		if (ImGui::Begin("Game"))
+		{
+			GLTexture* texture = static_cast<GLTexture*>(fbo->GetColor());
+			unsigned int handle = texture->GetHandle();
+
+			const ImVec2& size = ImGui::GetContentRegionAvail();
+			if (texture->GetWidth() != size.x || texture->GetHeight() != size.y)
+			{
+				fbo->Resize(size.x, size.y);
+				camera->SetAspectRatio(size.x / size.y);
+			}
+
+			ImGui::Image((void*)handle, size, { 0.f, 1.f }, { 1.f, 0.f });
+		}
+		ImGui::End();
+		ImGui::PopStyleVar();
+	}
+
+	void ShowTransformModule(Transform& transform)
+	{
+		if (ImGui::CollapsingHeader("Transform"))
 		{
 			const float itemHeight = ImGui::CalcTextSize("A", NULL, true).y + ImGui::GetStyle().FramePadding.y * 2.0f;
 
-			const glm::vec3 position = selectedEntity->GetTransform().GetPosition();
-			const glm::vec3 euler = selectedEntity->GetTransform().GetEuler();
-			const glm::vec3 scale = selectedEntity->GetTransform().GetScale();
+			const glm::vec3 position = transform.GetPosition();
+			const glm::vec3 euler = transform.GetEuler();
+			const glm::vec3 scale = transform.GetScale();
 			float p[3] = { position.x, position.y, position.z };
 			float r[3] = { glm::degrees(euler.x), glm::degrees(euler.y), glm::degrees(euler.z) };
 			float s[3] = { scale.x, scale.y, scale.z };
-
-			ImGui::Begin("Transform");
+				
 			float x = Math::Max(ImGui::GetWindowSize().x, 300.f);
 			float y = Math::Max(ImGui::GetWindowSize().y, itemHeight * 5.2f);
-			ImGui::SetWindowSize({ x, y });
 			ImGui::DragFloat3("Position", p, 0.1f);
 			ImGui::DragFloat3("Rotation", r, 0.1f);
 			ImGui::DragFloat3("Scale", s, 0.1f);
-			ImGui::End();
-		
-			selectedEntity->GetTransform().SetPosition({ p[0], p[1], p[2] });
-			selectedEntity->GetTransform().SetEuler({ glm::radians(r[0]), glm::radians(r[1]), glm::radians(r[2]) });
-			selectedEntity->GetTransform().SetScale({ s[0], s[1], s[2] });
+			
+			transform.SetPosition({ p[0], p[1], p[2] });
+			transform.SetEuler({ glm::radians(r[0]), glm::radians(r[1]), glm::radians(r[2]) });
+			transform.SetScale({ s[0], s[1], s[2] });
 		}
 	}
 
-	void EntitiesWindow()
+	void ShowComponentModule(Component* component)
 	{
-		const float actionButtonHeight = ImGui::CalcTextSize("A", NULL, true).y + ImGui::GetStyle().FramePadding.y * 2.0f;
-		
-        std::vector<Entity*> entities = world->GetEntities();
-        
-        ImGui::Begin("Entities");
-        ImGui::ListBoxHeader("", { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y - actionButtonHeight * 1.2f });
-        
-        for (int i = 0; i < entities.size(); ++i)
-        	if (ImGui::Selectable(entities[i]->GetName(), i == selectedIndex))
-        		selectedIndex = i;
-
-        ImGui::ListBoxFooter();
-
-		const int numActions = 2;
-		const float actionButtonWidth = ImGui::GetContentRegionAvail().x / numActions - ImGui::GetStyle().FramePadding.x;
-        if (ImGui::Button("Spawn", { actionButtonWidth, actionButtonHeight }))
-        {
-        	static Material* spawnedMaterial = new Material(testShader, Texture::Create("Assets/Textures/Debug_Red.png"));
-        	
-        	if (!Input::IsKeyDown(Key::LeftShift))
-        	{
-        		const auto& spawned = world->Spawn<BasicEntity>("Entity");
-        		spawned->GetMesh()->SetMesh(Primitives::GetCube());
-        		spawned->GetMesh()->SetMaterial(spawnedMaterial);
-        		spawned->Create<CRotate>();
-        	}
-        	else
-        	{
-        		for (int i = 0; i < 10; ++i)
-        		{
-        			const auto& spawned = world->Spawn<BasicEntity>("Entity");
-        			spawned->GetMesh()->SetMesh(Primitives::GetCube());
-        			spawned->GetMesh()->SetMaterial(spawnedMaterial);
-        			spawned->Create<CRotate>();
-        		}
-        	}
-        }
-
-        selectedEntity = nullptr;
-        if (selectedIndex >= 0 && selectedIndex < entities.size())
-        	selectedEntity = entities[selectedIndex];
-        
-        if (selectedEntity != nullptr)
-        {
-        	ImGui::SameLine();
-        	if (ImGui::Button("Destroy", { actionButtonWidth, actionButtonHeight }))
-        		selectedEntity->Destroy();
-        }
-        
-        ImGui::End();
+		if (ImGui::CollapsingHeader(component->GetType().Name))
+		{
+		}
 	}
 	
-	void ResourcesWindow()
+	void ShowDetailsWindow()
 	{
-		ImGui::Begin("Resources");
-		ImGui::ListBoxHeader("", { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
-
-		auto res = Resources::GetResources();
-		for (auto it = res.begin(); it != res.end(); ++it)
-			ImGui::Text("%s", Path::GetFileName(it->first).c_str());
-
-		ImGui::ListBoxFooter();
-		ImGui::End();
-	}
-
-	void StatisticsWindow(GameTime& gameTime)
-	{
-		const float deltaMs = gameTime.GetDeltaSeconds() * 1000.f;
-		const int fps = (int)round(1.f / gameTime.GetDeltaSeconds());
-
-		ImGui::Begin("Statistics", nullptr, ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoInputs | ImGuiWindowFlags_AlwaysAutoResize);
-		ImGui::SetWindowPos({ 8.f, 24.f });
-		ImGui::Text("%f ms (%i FPS)\nElapsed Time: %f\nEntities: %i\nSelected Index: %i",
-            deltaMs, fps, gameTime.GetTimeElapsed(), world->NumEntities(), selectedIndex);
-		ImGui::End();
-	}
-
-	void DepthBufferWindow()
-	{
-		static unsigned int fboDepthHandle = 0; 
-		if (fboDepthHandle == 0 && fbo != nullptr && fbo->GetDepth() != nullptr)
+		if (ImGui::Begin("Details"))
 		{
-			const auto texture = fbo->GetDepth();
-
-			if (texture != nullptr)
+			if (selectedEntity != nullptr)
 			{
-				const auto glTex = static_cast<GLTexture*>(texture);
-				fboDepthHandle = glTex->GetHandle();
+				ShowTransformModule(selectedEntity->GetTransform());
+
+				for (const auto& pair : selectedEntity->GetComponents())
+					ShowComponentModule(pair.second);
 			}
 		}
-
-		if (fboDepthHandle != 0)
+		ImGui::End();
+	}
+	
+	void ShowHierarchyWindow()
+	{
+		if (ImGui::Begin("Hierarchy"))
 		{
-			ImGui::Begin("Depth Buffer");
-			ImGui::Image((void*)fboDepthHandle, ImGui::GetContentRegionAvail(), { 0.f, 1.f }, { 1.f, 0.f });
-			ImGui::End();
+			const ImVec2& size = ImGui::GetContentRegionAvail();
+			ImGui::ListBoxHeader("", size);
+			
+			static int selectedIndex = 0;
+			const std::vector<Entity*>& entities = world->GetEntities();
+			for (int i = 0; i < entities.size(); ++i)
+				if (ImGui::Selectable(entities[i]->GetName(), i == selectedIndex))
+					selectedIndex = i;
+
+			if (selectedIndex >= 0 && selectedIndex < entities.size())
+				selectedEntity = entities[selectedIndex];
+
+			ImGui::ListBoxFooter();
 		}
+		ImGui::End();
 	}
 
+	void ShowResourcesWindow()
+	{
+		if (ImGui::Begin("Resources"))
+		{
+			ImGui::ListBoxHeader("", { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
+
+			auto res = Resources::GetResources();
+			for (auto it = res.begin(); it != res.end(); ++it)
+				ImGui::TextUnformatted(Path::GetFileName(it->first).c_str());
+
+			ImGui::ListBoxFooter();
+		}
+		ImGui::End();
+	}
+
+	void ShowConsoleWindow()
+	{
+		if (ImGui::Begin("Console"))
+		{
+		}
+		ImGui::End();
+	}
+	
 	void Game::RenderUI(GameTime& gameTime)
 	{
-		static bool showTrans = false;
-		static bool showEnts = false;
-		static bool showRes = false;
-		static bool showStats = true;
-		static bool showDepth = false;
-
-		if (ImGui::BeginMainMenuBar())
-		{
-			if (ImGui::BeginMenu("Views"))
-			{
-				ImGui::MenuItem("Transform", NULL, &showTrans);
-				ImGui::MenuItem("Entities", NULL, &showEnts);
-				ImGui::MenuItem("Resources", NULL, &showRes);
-				ImGui::Separator();
-				ImGui::MenuItem("Statistics", NULL, &showStats);
-				ImGui::MenuItem("Depth Buffer", NULL, &showDepth);
-				ImGui::EndMenu();
-			}
-			ImGui::EndMainMenuBar();
-		}
-
-		if (showTrans) TransformWindow();
-		if (showEnts) EntitiesWindow();
-		if (showRes) ResourcesWindow();
-		if (showStats) StatisticsWindow(gameTime);
-		if (showDepth) DepthBufferWindow();
+		ShowDockspace();
+		if (showGameWindow) ShowGameWindow();
+		if (showHierarchyWindow) ShowHierarchyWindow();
+		if (showDetailsWindow) ShowDetailsWindow();
+		if (showResourcesWindow) ShowResourcesWindow();
+		if (showConsoleWindow) ShowConsoleWindow();
 	}
 }

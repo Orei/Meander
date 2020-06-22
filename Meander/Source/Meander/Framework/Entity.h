@@ -65,6 +65,8 @@ namespace Meander
         inline Transform& GetTransform() { return m_Transform; }
         inline bool IsEnabled() const { return bIsEnabled; }
         inline bool IsDestroyed() const { return bIsDestroyed; }
+        
+        const std::unordered_map<std::string, Component*>& GetComponents() const { return m_Components; }
 
     private:
         unsigned int m_UniqueId = 0;

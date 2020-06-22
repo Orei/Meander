@@ -6,7 +6,7 @@ namespace Sandbox
 {
     void CRotate::Awake()
     {
-        Meander::Random RNG(GetEntity()->GetUniqueId() * ((float)time(0) + 1.f));
+        Meander::Random RNG;
         Axis = RNG.Axis();
     }
 

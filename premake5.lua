@@ -5,6 +5,7 @@ workspace "Meander"
     architecture "x86_64"
     configurations { "Debug", "Release" }
     flags { "MultiProcessorCompile" }
+    defines { "_CRT_SECURE_NO_WARNINGS" }
     startproject "Sandbox"
 
     cfgoutdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"

@@ -7,6 +7,8 @@
 #include "Meander/GameTime.h"
 
 #include "Meander/Utility/Path.h"
+#include "Meander/Utility/Timer.h"
+#include "Meander/Utility/Profiler.h"
 
 #include "Meander/Math/Math.h"
 #include "Meander/Math/Random.h"

@@ -85,8 +85,8 @@ namespace Meander
 
 	std::string Path::GetFileName(const std::string& path, bool extension)
 	{
-		int start = path.length();
-		int end = start;
+		size_t start = path.length();
+		size_t end = start;
 
 		std::string result;
 		if (IS_PATH_DELIMITER(path[start]))
