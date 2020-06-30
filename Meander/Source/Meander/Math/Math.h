@@ -5,6 +5,12 @@ namespace Meander
     class Math
     {
     public:
+        inline static const float Pi = 3.14159265358979323846264338327950288f;
+        inline static const float TwoPi = Pi * 2.f;
+        inline static const float HalfPi = Pi * 0.5f;
+        inline static const float DegToRad = Pi / 180.f;
+        inline static const float RadToDeg = 1.f / DegToRad;
+
         static float Sin(float value) { return sinf(value); }
         static float Cos(float value) { return cosf(value); }
         static float Tan(float value) { return tanf(value);}
@@ -60,6 +66,12 @@ namespace Meander
             }
             
             return (value < min) ? min : (value > max) ? max : value;
+        }
+
+        template<typename T>
+        inline static bool IsNear(T a, T b, T tolerance)
+        {
+            return Abs(b - a) <= tolerance;
         }
     };
 }
