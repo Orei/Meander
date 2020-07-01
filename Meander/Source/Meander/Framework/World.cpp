@@ -14,7 +14,7 @@ namespace Meander
 
     void World::Tick(float deltaTime)
     {
-        for (int i = m_Entities.size() - 1; i >= 0; --i)
+        for (size_t i = m_Entities.size() - 1; i > 0; --i)
         {
             const auto entity = m_Entities[i];
 
