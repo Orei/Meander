@@ -33,7 +33,10 @@ namespace Meander
         std::string string("{");
         for (int i = 0; i < N; ++i)
         {
-            string.append(std::to_string(Data[i]) + ", ");
+            string.append(std::to_string(Data[i]));
+            
+            if (i < N - 1)
+                string.append(", ");
         }
         string.append("}");
         return string;
@@ -253,7 +256,7 @@ namespace Meander
     Vector<T, 2>::Vector(const T& value) : X(value), Y(value) { }
 
     template<typename T>
-    Vector<T, 2>::Vector(const std::initializer_list<T>& elements) : X((T)0), Y((T)0)
+    Vector<T, 2>::Vector(const std::initializer_list<T>& elements)
     {
         uint8_t index = 0;
         for (auto it = elements.begin(); it != elements.end(); ++it)
