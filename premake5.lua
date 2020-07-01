@@ -43,6 +43,7 @@ project "Meander"
     files
     {
         "%{prj.name}/Source/**.h",
+        "%{prj.name}/Source/**.inl",
         "%{prj.name}/Source/**.cpp",
         "%{prj.name}/Dependencies/glm/glm/**.hpp",
         "%{prj.name}/Dependencies/glm/glm/**.inl",
@@ -66,7 +67,7 @@ project "Meander"
         "%{prj.name}/Dependencies/glm/",
         "%{prj.name}/Dependencies/spdlog/include/",
         "%{prj.name}/Dependencies/stb/",
-        "%{prj.name}/Dependencies/imgui/"
+        "%{prj.name}/Dependencies/imgui/",
     }
 
     filter "system:windows"
@@ -91,6 +92,8 @@ project "Sandbox"
 
     includedirs
     {
+        "%{prj.name}/Source/",
+
         "Meander/Source",
         "Meander/Dependencies/",
         "Meander/Dependencies/glm/",
