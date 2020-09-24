@@ -4,7 +4,6 @@
 #include "Material.h"
 #include "Shader.h"
 #include "RenderContext.h"
-#include "Meander/Transform.h"
 #include "Meander/Graphics/FrameBuffer.h"
 
 namespace Meander
