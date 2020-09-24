@@ -3,7 +3,6 @@
 #include "Meander/Common.h"
 #include "Meander/Application.h"
 #include "Meander/Window.h"
-#include "Meander/Transform.h"
 #include "Meander/GameTime.h"
 
 #include "Meander/Utility/Path.h"
@@ -12,6 +11,7 @@
 
 #include "Meander/Math/Math.h"
 #include "Meander/Math/Random.h"
+#include "Meander/Math/Transform.h"
 
 #include "Meander/Input/Input.h"
 #include "Meander/Input/Key.h"
