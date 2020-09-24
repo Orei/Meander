@@ -1,6 +1,7 @@
 #include "Game.h"
 #include "Components/CRotate.h"
 #include "Entities/BasicEntity.h"
+#include "EditorSink.h"
 #include <Meander/Meander.h>
 #include <Platform/OpenGL/GLTexture.h>
 #include <imgui/imgui.h>
@@ -9,6 +10,7 @@ using namespace Meander;
 
 namespace Sandbox
 {
+	std::shared_ptr<EditorSink> consoleSink;
     World* world;
     FrameBuffer* fbo;
     Shader* testShader;
@@ -17,6 +19,7 @@ namespace Sandbox
     Material* meshMaterial;
     Material* skyboxMaterial;
     Material* groundMaterial;
+	Texture* consoleIcons = nullptr;
     PerspectiveCamera* camera;
     ForwardRenderer renderer;
     Random random;
@@ -34,6 +37,16 @@ namespace Sandbox
 
     void Game::Initialize()
     {
+    	// Push back our editor sink, which will handle messages for our console window
+    	Log::Get()->sinks().push_back(consoleSink = std::make_shared<EditorSink>(300));
+    	consoleSink->set_pattern("[%H:%M:%S] %v");
+
+    	MN_TRACE("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+    	MN_INFO("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+    	MN_WARN("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+    	MN_ERROR("Lorem ipsum dolor sit amet, consectetur adipiscing elit.");
+
+    	// Create frame buffer
     	fbo = FrameBuffer::Create(m_Window->GetWidth(), m_Window->GetHeight());
 
         m_Window->SetVerticalSync(true);
@@ -123,6 +136,9 @@ namespace Sandbox
 
     void Game::Load()
     {
+    	// Load UI stuff
+    	consoleIcons = Resources::Load<Texture>("Assets/UI/Console_Icons.png");
+    	
     	// TODO: Skybox cubemap is bound forever, but we might want to bind other cubemaps at some point
 		// Renderer should be able to handle rendering skyboxes properly
 		skyboxMaterial = new Material(Resources::Load<Shader>("Assets/Shaders/Skybox.glsl"));
@@ -286,7 +302,8 @@ namespace Sandbox
 	        	ImGui::MenuItem("Hierarchy", 0, &showHierarchyWindow);
 	        	ImGui::MenuItem("Details", 0, &showDetailsWindow);
 	        	ImGui::MenuItem("Resources", 0, &showResourcesWindow);
-	        	
+	        	ImGui::MenuItem("Console", 0, &showConsoleWindow);
+
 	            ImGui::EndMenu();
 	        }
 
@@ -312,8 +329,8 @@ namespace Sandbox
 			}
 
 			ImGui::Image((void*)handle, size, { 0.f, 1.f }, { 1.f, 0.f });
+			ImGui::End();
 		}
-		ImGui::End();
 		ImGui::PopStyleVar();
 	}
 
@@ -360,8 +377,8 @@ namespace Sandbox
 				for (const auto& pair : selectedEntity->GetComponents())
 					ShowComponentModule(pair.second);
 			}
+			ImGui::End();
 		}
-		ImGui::End();
 	}
 	
 	void ShowHierarchyWindow()
@@ -381,8 +398,8 @@ namespace Sandbox
 				selectedEntity = entities[selectedIndex];
 
 			ImGui::ListBoxFooter();
+			ImGui::End();
 		}
-		ImGui::End();
 	}
 
 	void ShowResourcesWindow()
@@ -396,16 +413,52 @@ namespace Sandbox
 				ImGui::TextUnformatted(Path::GetFileName(it->first).c_str());
 
 			ImGui::ListBoxFooter();
+			ImGui::End();
 		}
-		ImGui::End();
 	}
 
 	void ShowConsoleWindow()
 	{
 		if (ImGui::Begin("Console"))
 		{
+			ImGui::ListBoxHeader("", { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
+			
+			float height = ImGui::GetTextLineHeightWithSpacing();
+			static unsigned int handle = static_cast<GLTexture*>(consoleIcons)->GetHandle();
+			static size_t numMessages = 0;
+
+			for (auto& msg : consoleSink->GetFormatted())
+			{
+				int iconId = -1;
+				switch (msg.Level)
+				{
+				default: break;
+				case spdlog::level::trace: iconId = 0; break;
+				case spdlog::level::info: iconId = 1; break;
+				case spdlog::level::warn: iconId = 2; break;
+				case spdlog::level::err: iconId = 3; break;
+				}
+				
+				float x0 = (iconId * 48.f) / consoleIcons->GetWidth();
+				float x1 = ((iconId + 1) * 48.f) / consoleIcons->GetWidth();
+
+				ImVec4 color = consoleSink->GetLevelColor(msg.Level);
+				ImGui::PushStyleColor(ImGuiCol_Text, color);
+				ImGui::Image((void*)handle, { height, height }, { x0, 1.f }, { x1, 0.f }, color);
+				ImGui::SameLine(0.f, 0.f);
+				ImGui::TextWrapped(msg.Text.c_str());
+				ImGui::PopStyleColor();
+			}
+			
+			if (numMessages != consoleSink->NumMessages() && ImGui::GetScrollY() == ImGui::GetScrollMaxY())
+			{
+				numMessages = consoleSink->NumMessages();
+				ImGui::SetScrollHereY(1.f);
+			}
+			
+			ImGui::ListBoxFooter();
+			ImGui::End();
 		}
-		ImGui::End();
 	}
 	
 	void Game::RenderUI(GameTime& gameTime)
