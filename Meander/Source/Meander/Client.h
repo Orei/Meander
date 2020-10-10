@@ -7,11 +7,11 @@ namespace Meander
     class RenderContext;
     class Window;
     
-    class ClientContext
+    class Client
     {
     public:
-        ClientContext() { }
-        virtual ~ClientContext() { }
+        Client() { }
+        virtual ~Client() { }
 
     protected:
         virtual void Initialize() = 0;

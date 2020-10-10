@@ -1,9 +1,9 @@
 #pragma once
-#include <Meander/ClientContext.h>
+#include <Meander/Client.h>
 
 namespace Sandbox
 {
-	class Game : public Meander::ClientContext
+	class Game : public Meander::Client
 	{
 	protected:
 		virtual void Initialize() override;

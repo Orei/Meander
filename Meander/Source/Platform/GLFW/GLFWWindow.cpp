@@ -76,7 +76,7 @@ namespace Meander
 		return glfwWindowShouldClose(m_NativeWindow);
 	}
 
-	void GLFWWindow::Resize(unsigned int width, unsigned int height)
+	void GLFWWindow::Resize(uint32_t width, uint32_t height)
 	{
 		s_Properties.Width = width;
 		s_Properties.Height = height;

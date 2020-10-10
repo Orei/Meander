@@ -27,7 +27,7 @@ namespace Meander
 		virtual bool IsClosing() override;
 
 		/* Resizes the window. */
-		virtual void Resize(unsigned int width, unsigned int height) override;
+		virtual void Resize(uint32_t width, uint32_t height) override;
 
 		/* Returns the window API. */
 		virtual WindowAPI GetWindowAPI() override { return WindowAPI::GLFW; }

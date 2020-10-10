@@ -12,33 +12,32 @@ namespace Meander
 {
 	Application* Application::s_Instance = nullptr;
 
-	Application::Application()
+	Application::Application(const WindowProperties& windowProperties)
 	{
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
 		s_Instance = this;
 
-		// Has to be created first to error messages
+		// Has to be created first to log messages
 		Log::Initialize();
 
 		// Create window and graphics context
 		m_Window = new GLFWWindow();
 		m_RenderContext = new GLContext();
 
-		// TODO: Allow the client application to modify properties
-		m_Window->Initialize(WindowProperties());
+		m_Window->Initialize(windowProperties);
 		m_RenderContext->Initialize();
 
 		// Initialize after context
 		Primitives::Initialize();
 		ImGuiRenderer::Initialize();
 	}
-	
+
 	Application::~Application()
 	{
 		s_Instance = nullptr;
 	}
 
-	void Application::Run(ClientContext* context)
+	void Application::Run(Client* context)
 	{
 		m_Running = true;
 

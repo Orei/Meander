@@ -1,23 +1,8 @@
 #pragma once
+#include "WindowProperties.h"
 
 namespace Meander
 {
-	struct WindowProperties
-	{
-		const char* Title;
-		unsigned int Width;
-		unsigned int Height;
-		bool VerticalSync;
-
-		WindowProperties(const char* title = "Meander", 
-			unsigned int width = 1280,
-			unsigned int height = 720,
-			bool verticalSync = true)
-			: Title(title), Width(width), Height(height), VerticalSync(verticalSync)
-		{
-		}
-	};
-
 	enum class WindowAPI
 	{
 		GLFW
@@ -48,16 +33,16 @@ namespace Meander
 		virtual bool IsClosing() = 0;
 
 		/* Resizes the window. Ensure callback is called. */
-		virtual void Resize(unsigned int width, unsigned int height) = 0;
+		virtual void Resize(uint32_t width, uint32_t height) = 0;
 
 		/* Sets the callback function called when the window is resized. */
-		void SetOnResizeCallback(std::function<void(unsigned int, unsigned int)> callback) { m_OnResize = callback; }
+		void SetOnResizeCallback(std::function<void(uint32_t, uint32_t)> callback) { m_OnResize = callback; }
 
 		/* Returns the width of the window. */
-		inline unsigned int GetWidth() const { return s_Properties.Width; }
+		inline uint32_t GetWidth() const { return s_Properties.Width; }
 
 		/* Returns the height of the window. */
-		inline unsigned int GetHeight() const { return s_Properties.Height; }
+		inline uint32_t GetHeight() const { return s_Properties.Height; }
 
 		/* Returns the window aspect ratio. */
 		inline float GetAspectRatio() const { return GetWidth() / (float)GetHeight(); }
@@ -69,7 +54,7 @@ namespace Meander
 		inline static Window* Get() { return s_Instance; }
 
 	protected:
-		std::function<void(unsigned int, unsigned int)> m_OnResize;
+		std::function<void(uint32_t, uint32_t)> m_OnResize;
 
 		static WindowProperties s_Properties;
 		static Window* s_Instance;

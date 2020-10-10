@@ -1,5 +1,6 @@
 #pragma once
-#include "ClientContext.h"
+#include "Client.h"
+#include "WindowProperties.h"
 
 namespace Meander
 {
@@ -9,10 +10,10 @@ namespace Meander
 	class Application
 	{
 	public:
-		Application();
+		Application(const WindowProperties& windowProperties = WindowProperties());
 		virtual ~Application();
 
-		void Run(ClientContext* context);
+		void Run(Client* context);
 		void Exit();
 		
 		inline Window* GetWindow() { return m_Window; }

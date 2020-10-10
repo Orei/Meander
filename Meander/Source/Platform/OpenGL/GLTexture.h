@@ -13,7 +13,7 @@ namespace Meander
 		virtual void Bind(int slot = 0) const override;
 		virtual void Unbind(int slot = 0) const override;
 
-		unsigned int GetHandle() const { return m_Handle; }
+		uint32_t GetHandle() const { return m_Handle; }
 
 	private:
 		unsigned int m_Handle = 0;
