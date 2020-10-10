@@ -21,10 +21,10 @@ namespace Meander
 		virtual void Initialize() = 0;
 
 		/* Enables a capability, should be used when a specific function is not yet added to the context. */
-		virtual void Enable(unsigned int capabilities) = 0;
+		virtual void Enable(uint32_t capabilities) = 0;
 
 		/* Disables a capability, should be used when a specific function is not yet added to the context. */
-		virtual void Disable(unsigned int capabilities) = 0;
+		virtual void Disable(uint32_t capabilities) = 0;
 
 		/* Sets the clear-color. */
 		virtual void SetClearColor(const glm::vec4& color) = 0;

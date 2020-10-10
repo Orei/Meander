@@ -50,7 +50,7 @@ namespace Sandbox
 
         m_Window->SetVerticalSync(true);
 
-    	// m_Window->SetOnResizeCallback([](unsigned int width, unsigned int height)
+    	// m_Window->SetOnResizeCallback([](uint32_t width, uint32_t height)
     	// {
     	// 	fbo->Resize(width, height);
     	// 	camera->SetAspectRatio(width / static_cast<float>(height));
@@ -318,12 +318,12 @@ namespace Sandbox
 		if (ImGui::Begin("Game"))
 		{
 			GLTexture* texture = static_cast<GLTexture*>(fbo->GetColor());
-			unsigned int handle = texture->GetHandle();
+			uint32_t handle = texture->GetHandle();
 
 			const ImVec2& size = ImGui::GetContentRegionAvail();
 			if (texture->GetWidth() != size.x || texture->GetHeight() != size.y)
 			{
-				fbo->Resize(size.x, size.y);
+				fbo->Resize((uint32_t)size.x, (uint32_t)size.y);
 				camera->SetAspectRatio(size.x / size.y);
 			}
 
@@ -423,7 +423,7 @@ namespace Sandbox
 			ImGui::ListBoxHeader("", { ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y });
 			
 			float height = ImGui::GetTextLineHeightWithSpacing();
-			static unsigned int handle = static_cast<GLTexture*>(consoleIcons)->GetHandle();
+			static uint32_t handle = static_cast<GLTexture*>(consoleIcons)->GetHandle();
 			static size_t numMessages = 0;
 
 			for (auto& msg : consoleSink->GetFormatted())

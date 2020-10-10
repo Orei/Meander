@@ -97,7 +97,7 @@ namespace Meander
 			CalculateOffsetAndStride();
 		}
 
-		inline unsigned int GetStride() const { return m_Stride; }
+		inline uint32_t GetStride() const { return m_Stride; }
 		inline const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 
 		std::vector<BufferElement>::iterator begin() { return m_Elements.begin(); }
@@ -107,13 +107,13 @@ namespace Meander
 
 	private:
 		std::vector<BufferElement> m_Elements;
-		unsigned int m_Stride = 0;
+		uint32_t m_Stride = 0;
 
 		void CalculateOffsetAndStride()
 		{
 			m_Stride = 0;
 			
-			unsigned int offset = 0;
+			uint32_t offset = 0;
 			for (auto& element : m_Elements)
 			{
 				element.Offset = offset;
@@ -134,7 +134,7 @@ namespace Meander
 		virtual void SetLayout(const BufferLayout& layout) = 0;
 		virtual const BufferLayout& GetLayout() const = 0;
 
-		static VertexBuffer* Create(float* vertices, unsigned int size);
+		static VertexBuffer* Create(float* vertices, uint32_t size);
 	};
 
 	class IndexBuffer
@@ -145,8 +145,8 @@ namespace Meander
 		virtual void Bind() const = 0;
 		virtual void Unbind() const = 0;
 
-		virtual unsigned int GetCount() const = 0;
+		virtual uint32_t GetCount() const = 0;
 
-		static IndexBuffer* Create(unsigned int* vertices, unsigned int count);
+		static IndexBuffer* Create(uint32_t* vertices, uint32_t count);
 	};
 }

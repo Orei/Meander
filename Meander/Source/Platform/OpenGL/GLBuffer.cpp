@@ -5,7 +5,7 @@
 namespace Meander
 {
 	/* Vertex Buffer */
-	GLVertexBuffer::GLVertexBuffer(float* vertices, unsigned int size)
+	GLVertexBuffer::GLVertexBuffer(float* vertices, uint32_t size)
 	{
 		glCreateBuffers(1, &m_Handle);
 		glBindBuffer(GL_ARRAY_BUFFER, m_Handle);
@@ -29,12 +29,12 @@ namespace Meander
 	}
 
 	/* Index Buffer */
-	GLIndexBuffer::GLIndexBuffer(unsigned int* indices, unsigned int count)
+	GLIndexBuffer::GLIndexBuffer(uint32_t* indices, uint32_t count)
 		: m_Count(count)
 	{
 		glCreateBuffers(1, &m_Handle);
 		glBindBuffer(GL_ARRAY_BUFFER, m_Handle);
-		glBufferData(GL_ARRAY_BUFFER, count * sizeof(unsigned int), indices, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, count * sizeof(uint32_t), indices, GL_STATIC_DRAW);
 		glBindBuffer(GL_ARRAY_BUFFER, 0);
 	}
 

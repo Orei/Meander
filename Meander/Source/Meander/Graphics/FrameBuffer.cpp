@@ -5,7 +5,7 @@
 
 namespace Meander
 {
-	FrameBuffer* FrameBuffer::Create(unsigned int width, unsigned int height)
+	FrameBuffer* FrameBuffer::Create(uint32_t width, uint32_t height)
 	{
 		switch (RenderContext::Get()->GetContextAPI())
 		{

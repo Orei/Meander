@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "Random.h"
 #include "RandomStream.h"
-#include <glm/detail/func_geometric.inl>
 
 namespace Meander
 {

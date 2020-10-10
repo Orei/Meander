@@ -5,7 +5,7 @@
 
 namespace Meander
 {
-	VertexBuffer* VertexBuffer::Create(float* vertices, unsigned int size)
+	VertexBuffer* VertexBuffer::Create(float* vertices, uint32_t size)
 	{
 		switch (RenderContext::Get()->GetContextAPI())
 		{
@@ -17,7 +17,7 @@ namespace Meander
 		return nullptr;
 	}
 
-	IndexBuffer* IndexBuffer::Create(unsigned int* indices, unsigned int count)
+	IndexBuffer* IndexBuffer::Create(uint32_t* indices, uint32_t count)
 	{
 		switch (RenderContext::Get()->GetContextAPI())
 		{

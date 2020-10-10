@@ -12,7 +12,7 @@ namespace Meander
 		static void Initialize();
 
 		/* Generates and returns a new unit rows-by-columns plane. */
-		static Mesh* GeneratePlane(int rows, int columns);
+		static Mesh* GeneratePlane(uint32_t rows, uint32_t columns);
 
 		/* Returns a unit-quad mesh. */
 		static Mesh* GetQuad() { return s_Quad; }

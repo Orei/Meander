@@ -1,6 +1,5 @@
 #pragma once
 #include "Meander/Math/Transform.h"
-#include <glm/mat4x4.hpp>
 
 namespace Meander
 {

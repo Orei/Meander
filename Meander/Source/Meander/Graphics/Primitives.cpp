@@ -24,7 +24,7 @@ namespace Meander
 		-0.5f,  0.5f, 0.f,   0.f, 0.f, 1.f,   0.0f, 1.0f
 	};
 
-	unsigned int s_QuadIndices[] =
+	uint32_t s_QuadIndices[] =
 	{
 		0, 1, 2, 0, 2, 3
 	};
@@ -62,7 +62,7 @@ namespace Meander
 		0.5f, -0.5f, -0.5f,    0.f, -1.f,  0.f,    0.0f, 1.0f,
 	};
 
-	unsigned int s_CubeIndices[] =
+	uint32_t s_CubeIndices[] =
 	{
 		0, 1, 2, 0, 2, 3, // Front 
 		4, 5, 6, 4, 6, 7, // Back
@@ -75,30 +75,30 @@ namespace Meander
 	void Primitives::Initialize()
 	{
 		s_Quad = new Mesh(s_QuadVertices, sizeof(s_QuadVertices),
-			s_QuadIndices, sizeof(s_QuadIndices) / sizeof(unsigned int),
+			s_QuadIndices, sizeof(s_QuadIndices) / sizeof(uint32_t),
 			s_Layout);
 
 		s_Cube = new Mesh(s_CubeVertices, sizeof(s_CubeVertices),
-			s_CubeIndices, sizeof(s_CubeIndices) / sizeof(unsigned int),
+			s_CubeIndices, sizeof(s_CubeIndices) / sizeof(uint32_t),
 			s_Layout);
 
 		s_Plane = GeneratePlane(10, 10);
 	}
 
-	Mesh* Primitives::GeneratePlane(int rows, int columns)
+	Mesh* Primitives::GeneratePlane(uint32_t rows, uint32_t columns)
 	{
 		std::vector<float> vertices;
-		std::vector<unsigned int> indices;
+		std::vector<uint32_t> indices;
 
 		float halfRows = (float)rows / 2.f;
 		float halfColumns = (float)columns / 2.f;
 
-		for (int y = 0; y < columns; ++y)
+		for (uint32_t y = 0; y < columns; ++y)
 		{
-			for (int x = 0; x < rows; ++x)
+			for (uint32_t x = 0; x < rows; ++x)
 			{
 				// There are 4 vertices per quad
-				for (int vertexIndex = 0; vertexIndex < 4; ++vertexIndex)
+				for (uint32_t vertexIndex = 0; vertexIndex < 4; ++vertexIndex)
 				{
 					// Multiply by number of components per vertex
 					int index = vertexIndex * 8;
@@ -130,7 +130,7 @@ namespace Meander
 				}
 
 				// Copy quad indices and offset
-				for (int i = 0; i < 6; ++i)
+				for (uint32_t i = 0; i < 6; ++i)
 				{
 					indices.push_back(s_QuadIndices[i] + (x + y * rows) * 4);
 				}
@@ -138,8 +138,8 @@ namespace Meander
 		}
 
 		// We want the size of the vertex array, but only the the number of indices
-		unsigned int vertexSize = (unsigned int)vertices.size() * sizeof(float);
-		unsigned int indexCount = (unsigned int)indices.size();
+		unsigned int vertexSize = (uint32_t)vertices.size() * sizeof(float);
+		unsigned int indexCount = (uint32_t)indices.size();
 
 		// Create mesh and return
 		return new Mesh(&vertices[0], vertexSize,

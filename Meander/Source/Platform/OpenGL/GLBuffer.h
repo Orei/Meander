@@ -6,7 +6,7 @@ namespace Meander
 	class GLVertexBuffer : public VertexBuffer
 	{
 	public:
-		GLVertexBuffer(float* vertices, unsigned int size);
+		GLVertexBuffer(float* vertices, uint32_t size);
 		virtual ~GLVertexBuffer();
 
 		virtual void Bind() const override;
@@ -23,26 +23,26 @@ namespace Meander
 		}
 
 	private:
-		unsigned int m_Handle = 0;
+		uint32_t m_Handle = 0;
 		BufferLayout m_Layout;
 	};
 
 	class GLIndexBuffer : public IndexBuffer
 	{
 	public:
-		GLIndexBuffer(unsigned int* indices, unsigned int count);
+		GLIndexBuffer(uint32_t* indices, uint32_t count);
 		virtual ~GLIndexBuffer();
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
 
-		virtual unsigned int GetCount() const override
+		virtual uint32_t GetCount() const override
 		{
 			return m_Count;
 		}
 
 	private:
-		unsigned int m_Handle = 0;
+		uint32_t m_Handle = 0;
 		unsigned int m_Count = 0;
 	};
 }

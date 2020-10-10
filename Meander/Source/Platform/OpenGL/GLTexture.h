@@ -7,7 +7,7 @@ namespace Meander
 	{
 	public:
 		GLTexture(const char* path);
-		GLTexture(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType);
+		GLTexture(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType);
 		~GLTexture();
 
 		virtual void Bind(int slot = 0) const override;
@@ -18,6 +18,6 @@ namespace Meander
 	private:
 		unsigned int m_Handle = 0;
 
-		void Generate(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType);
+		void Generate(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType);
 	};
 }

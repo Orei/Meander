@@ -17,7 +17,7 @@ namespace Meander
 		return nullptr;
 	}
 
-	Texture* Texture::Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType)
+	Texture* Texture::Create(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType)
 	{
 		switch (RenderContext::Get()->GetContextAPI())
 		{

@@ -13,17 +13,17 @@ namespace Meander
 		virtual void Unbind(int slot = 0) const = 0;
 
 		/* Returns the width of the texture. */
-		unsigned int GetWidth() const { return m_Width; }
+		uint32_t GetWidth() const { return m_Width; }
 
 		/* Returns the height of the texture. */
-		unsigned int GetHeight() const { return m_Height; }
+		uint32_t GetHeight() const { return m_Height; }
 
 		static Texture* Create(const char* path);
-		static Texture* Create(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format = TextureFormat::RGBA,
+		static Texture* Create(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format = TextureFormat::RGBA,
 			const TextureDataType& dataType = TextureDataType::UByte);
 
 	protected:
-		unsigned int m_Width = 0;
-		unsigned int m_Height = 0;
+		uint32_t m_Width = 0;
+		uint32_t m_Height = 0;
 	};
 }
