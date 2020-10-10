@@ -4,17 +4,15 @@
 
 namespace Meander
 {
-	// TODO: Very temporary, needed a quick fix; also, how do I convert flags efficiently?
 	unsigned int GLTypes::GetClearFlags(const ClearFlags& flags)
 	{
-		int value = static_cast<int>(flags);
+		int value = 0;
 
-		switch (value)
-		{
-		case 1 << 0: return GL_DEPTH_BUFFER_BIT;
-		case 1 << 1: return GL_COLOR_BUFFER_BIT;
-		case ((1 << 0) + (1 << 1)): return GL_DEPTH_BUFFER_BIT + GL_COLOR_BUFFER_BIT;
-		}
+		if ((int)flags & (int)ClearFlags::Depth)
+			value += GL_DEPTH_BUFFER_BIT;
+
+		if ((int)flags & (int)ClearFlags::Color)
+			value += GL_COLOR_BUFFER_BIT;
 
 		return value;
 	}
