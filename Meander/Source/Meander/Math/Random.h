@@ -1,5 +1,4 @@
 #pragma once
-#include <random>
 #include <glm/vec3.hpp>
 
 namespace Meander
@@ -7,44 +6,36 @@ namespace Meander
 	class Random
 	{
 	public:
-		Random() 
-			: m_RNG((unsigned int)time(nullptr))
-		{
-		}
-
-		Random(unsigned int seed) 
-			: m_RNG(seed)
-		{
-		}
-
-		/* Re-seeds the random number generator. */
-		void Seed(unsigned int seed);
+		/* Re-seeds the underlying random number generator. */
+		static void Seed(unsigned int seed);
 
 		/* Returns a random integer between 0 and upper integer limit. */
-		int Int();
+		static int Int();
 
 		/* Returns a random integer between range. */
-		int Int(int min, int max);
+		static int Int(int min, int max);
 
 		/* Returns a random float between 0 and 1.*/
-		float Float();
+		static float Float();
 
 		/* Returns a random float between range.*/
-		float Float(float min, float max);
+		static float Float(float min, float max);
 
 		/* Returns a random double between 0 and 1. */
-		double Double();
+		static double Double();
 
 		/* Returns a random double between range. */
-		double Double(double min, double max);
+		static double Double(double min, double max);
 
 		/* Returns either true or false. */
-		bool Flip();
+		static bool Flip();
 
 		/* Returns a random normalized axis. */
-		glm::vec3 Axis();
+		static glm::vec3 Axis();
 
 	private:
-		std::mt19937 m_RNG;
+		Random() = delete;
+		Random(const Random& r) = delete;
+		~Random() = delete;
 	};
 }

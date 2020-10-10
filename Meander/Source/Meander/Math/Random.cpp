@@ -1,55 +1,58 @@
 #include "pch.h"
 #include "Random.h"
+#include "RandomStream.h"
 #include <glm/detail/func_geometric.inl>
 
 namespace Meander
 {
-	void Random::Seed(unsigned int seed)
-	{
-		m_RNG.seed(seed);
-	}
+    RandomStream& GetRandomStream()
+    {
+        static RandomStream stream; 
+        return stream;
+    }
 
-	int Random::Int()
-	{
-		return std::uniform_int_distribution(0, std::numeric_limits<int>::max())(m_RNG);
-	}
+    void Random::Seed(unsigned seed)
+    {
+        GetRandomStream().Seed(seed);
+    }
 
-	int Random::Int(int min, int max)
-	{
-		return std::uniform_int_distribution(min, max)(m_RNG);
-	}
+    int Random::Int()
+    {
+        return GetRandomStream().Int();
+    }
 
-	float Random::Float()
-	{
-		return std::uniform_real_distribution<float>(0.f, 1.f)(m_RNG);
-	}
+    int Random::Int(int min, int max)
+    {
+        return GetRandomStream().Int(min, max);
+    }
 
-	float Random::Float(float min, float max)
-	{
-		return std::uniform_real_distribution<float>(min, max)(m_RNG);
-	}
+    float Random::Float()
+    {
+        return GetRandomStream().Float();
+    }
 
-	double Random::Double()
-	{
-		return std::uniform_real_distribution<double>(0.0, 1.0)(m_RNG);
-	}
+    float Random::Float(float min, float max)
+    {
+        return GetRandomStream().Float(min, max);
+    }
 
-	double Random::Double(double min, double max)
-	{
-		return std::uniform_real_distribution<double>(min, max)(m_RNG);
-	}
+    double Random::Double()
+    {
+        return GetRandomStream().Double();
+    }
 
-	bool Random::Flip()
-	{
-		return std::uniform_int_distribution(0, 1)(m_RNG);
-	}
+    double Random::Double(double min, double max)
+    {
+        return GetRandomStream().Double(min, max);
+    }
 
-	glm::vec3 Random::Axis()
-	{
-		glm::vec3 axis;
-		axis.x = Float(-1.f, 1.f);
-		axis.y = Float(-1.f, 1.f);
-		axis.z = Float(-1.f, 1.f);
-		return glm::normalize(axis);
-	}
+    bool Random::Flip()
+    {
+        return GetRandomStream().Flip();
+    }
+
+    glm::vec3 Random::Axis()
+    {
+        return GetRandomStream().Axis();
+    }
 }

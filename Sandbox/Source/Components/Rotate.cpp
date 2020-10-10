@@ -6,8 +6,7 @@ namespace Sandbox
 {
     void CRotate::Awake()
     {
-        Meander::Random RNG;
-        Axis = RNG.Axis();
+        Axis = Meander::Random::Axis();
     }
 
     void CRotate::Tick(float deltaTime)

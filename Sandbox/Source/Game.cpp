@@ -22,7 +22,6 @@ namespace Sandbox
 	Texture* consoleIcons = nullptr;
     PerspectiveCamera* camera;
     ForwardRenderer renderer;
-    Random random;
     bool cursorDisabled = true;
 
     const char* sixFaces[] =
@@ -171,8 +170,8 @@ namespace Sandbox
 		// Spawn some random cubes in the air
 		for (int i = 0; i < 6; ++i)
 		{
-			glm::vec3 position = random.Axis() * 5.f + WORLD_UP * 15.f;
-			glm::vec3 rotation = random.Axis();
+			glm::vec3 position = Random::Axis() * 5.f + WORLD_UP * 15.f;
+			glm::vec3 rotation = Random::Axis();
 		
 			char name[ENTITY_NAME_LENGTH];
 			sprintf_s(name, ENTITY_NAME_LENGTH, "Cube %i", i + 1);
