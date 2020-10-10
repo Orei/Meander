@@ -33,5 +33,6 @@
 
 #include "Meander/Framework/World.h"
 #include "Meander/Framework/Entity.h"
-#include "Meander/Framework/Components/Component.h"
+#include "Meander/Framework/Actor.h"
+#include "Meander/Framework/Component.h"
 #include "Meander/Framework/Components/StaticMesh.h"

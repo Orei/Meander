@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include <Meander/Framework/Components/Component.h>
+#include <Meander/Framework/Component.h>
 #include <Meander/Common.h>
 #include <glm/vec3.hpp>
 

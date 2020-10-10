@@ -1,6 +1,6 @@
 #include "Game.h"
-#include "Components/CRotate.h"
-#include "Entities/BasicEntity.h"
+#include "Components/Rotate.h"
+#include "Actors/MeshActor.h"
 #include "EditorSink.h"
 #include <Meander/Meander.h>
 #include <Platform/OpenGL/GLTexture.h>
@@ -155,18 +155,18 @@ namespace Sandbox
 		Transform groundTransform(-WORLD_UP / 2.f, 
 			glm::angleAxis(glm::radians(-90.f), WORLD_RIGHT));
 	 
-		// Create entities
-		auto ground = world->Spawn<BasicEntity>("Ground", groundTransform);
-		ground->GetMesh()->SetMesh(Primitives::GetPlane());
-		ground->GetMesh()->SetMaterial(groundMaterial);
+		// Spawn actors
+		auto ground = world->Spawn<MeshActor>("Ground", groundTransform);
+		ground->GetStaticMesh()->SetMesh(Primitives::GetPlane());
+		ground->GetStaticMesh()->SetMaterial(groundMaterial);
 	 
-		auto cube = world->Spawn<BasicEntity>("Cube");
-		cube->GetMesh()->SetMesh(Primitives::GetCube());
-		cube->GetMesh()->SetMaterial(meshMaterial);
+		auto cube = world->Spawn<MeshActor>("Cube");
+		cube->GetStaticMesh()->SetMesh(Primitives::GetCube());
+		cube->GetStaticMesh()->SetMaterial(meshMaterial);
 	 
-		auto skybox = world->Spawn<BasicEntity>("Skybox");
-		skybox->GetMesh()->SetMesh(Primitives::GetCube());
-		skybox->GetMesh()->SetMaterial(skyboxMaterial);
+		auto skybox = world->Spawn<MeshActor>("Skybox");
+		skybox->GetStaticMesh()->SetMesh(Primitives::GetCube());
+		skybox->GetStaticMesh()->SetMaterial(skyboxMaterial);
 	 
 		// Spawn some random cubes in the air
 		for (int i = 0; i < 6; ++i)
@@ -177,10 +177,10 @@ namespace Sandbox
 			char name[ENTITY_NAME_LENGTH];
 			sprintf_s(name, ENTITY_NAME_LENGTH, "Cube %i", i + 1);
 	 
-			auto rotatingCube = world->Spawn<BasicEntity>(name, { position, rotation });
+			auto rotatingCube = world->Spawn<MeshActor>(name, { position, rotation });
 			rotatingCube->Create<CRotate>();
-			rotatingCube->GetMesh()->SetMesh(Primitives::GetCube());
-			rotatingCube->GetMesh()->SetMaterial(meshMaterial);
+			rotatingCube->GetStaticMesh()->SetMesh(Primitives::GetCube());
+			rotatingCube->GetStaticMesh()->SetMaterial(meshMaterial);
 		}
     }
 
@@ -221,18 +221,18 @@ namespace Sandbox
 
     	renderer.Begin(camera->GetViewMatrix(), camera->GetProjectionMatrix());
     	renderer.Clear(ClearFlags::Color | ClearFlags::Depth);
-    	for (const auto& entity : world->GetEntities())
+    	for (const auto& actor : world->GetActors())
     	{
-    		if (!entity->IsEnabled())
+    		if (!actor->IsEnabled())
     			continue;
     		
-    		const auto& mesh = entity->Get<CStaticMesh>();
+    		const auto& mesh = actor->Get<CStaticMesh>();
     		
-    		// We can't render if it has no material or mesh, entities always have a transform
+    		// We can't render if it has no material or mesh, all entities have a transform
     		if (!mesh->GetMesh() || !mesh->GetMaterial())
     			continue;
 
-    		renderer.Submit(entity->GetTransform(), mesh->GetMesh(), mesh->GetMaterial());
+    		renderer.Submit(actor->GetTransform(), mesh->GetMesh(), mesh->GetMaterial());
     	}
     	renderer.End();
 
@@ -244,7 +244,7 @@ namespace Sandbox
     	renderer.End();
     }
 
-	static Entity* selectedEntity = nullptr;
+	static Actor* selectedActor = nullptr;
 	static bool showGameWindow = true;
 	static bool showHierarchyWindow = true;
 	static bool showDetailsWindow = true;
@@ -370,11 +370,11 @@ namespace Sandbox
 	{
 		if (ImGui::Begin("Details"))
 		{
-			if (selectedEntity != nullptr)
+			if (selectedActor != nullptr)
 			{
-				ShowTransformModule(selectedEntity->GetTransform());
+				ShowTransformModule(selectedActor->GetTransform());
 
-				for (const auto& pair : selectedEntity->GetComponents())
+				for (const auto& pair : selectedActor->GetComponents())
 					ShowComponentModule(pair.second);
 			}
 			ImGui::End();
@@ -389,13 +389,13 @@ namespace Sandbox
 			ImGui::ListBoxHeader("", size);
 			
 			static int selectedIndex = 0;
-			const std::vector<Entity*>& entities = world->GetEntities();
-			for (int i = 0; i < entities.size(); ++i)
-				if (ImGui::Selectable(entities[i]->GetName(), i == selectedIndex))
+			const std::vector<Actor*>& actors = world->GetActors();
+			for (int i = 0; i < actors.size(); ++i)
+				if (ImGui::Selectable(actors[i]->GetName(), i == selectedIndex))
 					selectedIndex = i;
 
-			if (selectedIndex >= 0 && selectedIndex < entities.size())
-				selectedEntity = entities[selectedIndex];
+			if (selectedIndex >= 0 && selectedIndex < actors.size())
+				selectedActor = actors[selectedIndex];
 
 			ImGui::ListBoxFooter();
 			ImGui::End();

@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Component.h"
+#include "Meander/Framework/Component.h"
 
 namespace Meander
 {
@@ -27,7 +27,7 @@ namespace Meander
         
         static const ComponentType& StaticType()
         {
-            static ComponentType type({ "Mesh" });
+            static ComponentType type({ "StaticMesh" });
             return type;
         }
     };

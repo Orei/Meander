@@ -3,6 +3,7 @@
 
 namespace Meander
 {
+    class Actor;
     class Transform;
     class Entity;
     
@@ -16,28 +17,34 @@ namespace Meander
         template<typename T>
         T* Spawn(const char* name)
         {
-            T* entity = new T(name);
-            entity->SetWorld(this);
-            m_Entities.push_back(entity);
-            entity->Awake();
-            return entity;
+            // TODO: Ensure T is actually actor
+            T* actor = new T(name);
+            actor->SetWorld(this);
+            m_Actors.push_back(actor);
+            actor->Awake();
+            return actor;
         }
         
         template<typename T>
         T* Spawn(const char* name, const Transform& transform)
         {
-            T* entity = new T(name);
-            entity->SetWorld(this);
-            entity->SetTransform(transform);
-            m_Entities.push_back(entity);
-            entity->Awake();
-            return entity;
+            // TODO: Ensure T is actually actor
+            T* actor = new T(name);
+            actor->SetWorld(this);
+            actor->SetTransform(transform);
+            m_Actors.push_back(actor);
+            actor->Awake();
+            return actor;
         }
 
-        std::vector<Entity*> GetEntities() const { return m_Entities; }
-        int NumEntities() const { return (int)m_Entities.size(); }
+        std::vector<Actor*> GetActors() const { return m_Actors; }
+        int NumEntities() const { return (int)m_Actors.size(); }
+
+        // Angelscript requirements.
+        inline void AddReference() { }
+        inline void Release() { }
 
     private:
-        std::vector<Entity*> m_Entities;
+        std::vector<Actor*> m_Actors;
     };
 }

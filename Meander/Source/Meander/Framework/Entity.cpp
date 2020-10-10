@@ -1,22 +1,9 @@
 ﻿#include "pch.h"
 #include "Entity.h"
-#include "Components/Component.h"
 
 namespace Meander
 {
-    unsigned int Entity::s_UidFactory = 0;
-
-    void Entity::Awake()
-    {
-        for (const auto& component : m_Components)
-            ((Component*)component.second)->Awake();
-    }
-
-    void Entity::Tick(float deltaTime)
-    {
-        for (const auto& component : m_Components)
-            ((Component*)component.second)->Tick(deltaTime);
-    }
+    uint32_t Entity::s_UidFactory = 0;
 
     void Entity::Enable()
     {
@@ -42,25 +29,21 @@ namespace Meander
 
     void Entity::SetName(const char* name)
     {
-        // Default name if nullptr, this can't exceed 32 characters
-        if (name == nullptr)
+        // Create a default name if passing a nullptr
+        // or if the name is just a null-terminator
+        if (name == nullptr || (strlen(name) == 1 && name[0] == '\0'))
         {
-            sprintf_s(m_Name, ENTITY_NAME_LENGTH, "Node %i", s_UidFactory);
+            sprintf_s(m_Name, ENTITY_NAME_LENGTH, "Entity %i", s_UidFactory);
             return;
         }
 
         // Ensure we're not exceeding length
         if (strlen(name) > ENTITY_NAME_LENGTH)
         {
-            MN_WARN("Scene Node name exceeds the expected length.");
+            MN_WARN("Entity name \"{}\" exceeds the expected length.", name);
             return;
         }
 
         sprintf_s(m_Name, ENTITY_NAME_LENGTH, name);
-    }
-
-    void Entity::Register(Component* component)
-    {
-        component->SetEntity(this);
     }
 }

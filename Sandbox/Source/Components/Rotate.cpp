@@ -1,5 +1,5 @@
-﻿#include "CRotate.h"
-#include <Meander/Framework/Entity.h>
+﻿#include "Rotate.h"
+#include <Meander/Framework/Actor.h>
 #include <Meander/Math/Random.h>
 
 namespace Sandbox
@@ -12,6 +12,6 @@ namespace Sandbox
 
     void CRotate::Tick(float deltaTime)
     {
-        GetEntity()->GetTransform().Rotate(glm::radians(DegreesPerSecond) * deltaTime, Axis);
+        GetOwner()->GetTransform().Rotate(glm::radians(DegreesPerSecond) * deltaTime, Axis);
     }
 }
