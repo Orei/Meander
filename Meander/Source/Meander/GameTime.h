@@ -33,14 +33,14 @@ namespace Meander
 		float GetTimeElapsed() const { return m_TimeElapsed; }
 
 		/* Returns the current frame. */
-		int GetFrame() const { return m_Frame; }
+		uint32_t GetFrame() const { return m_Frame; }
 
 	private:
 		time_point_t m_Start;
 		time_point_t m_End;
 		float m_DeltaSeconds = 0.f;
 		float m_TimeElapsed = 0.f;
-		int m_Frame = 0;
+		uint32_t m_Frame = 0;
 
 		/* Returns seconds passed between two time points. */
 		float GetDuration(time_point_t start, time_point_t end)

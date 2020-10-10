@@ -3,15 +3,15 @@
 
 namespace Meander
 {
-	InputState Input::m_KeyStates[(unsigned int)Key::MAX];
-	InputState Input::m_MouseStates[(unsigned int)MouseButton::MAX];
+	InputState Input::m_KeyStates[(uint32_t)Key::MAX];
+	InputState Input::m_MouseStates[(uint32_t)MouseButton::MAX];
 	glm::vec2 Input::m_MousePosition = glm::vec2(0.f);
 	glm::vec2 Input::m_PreviousMousePosition = glm::vec2(0.f);
-	unsigned int Input::m_CurrentFrame = 0;
+	uint32_t Input::m_CurrentFrame = 0;
 
 	bool Input::IsKeyDown(Key key)
 	{
-		const InputState& state = m_KeyStates[(unsigned int)key];
+		const InputState& state = m_KeyStates[(uint32_t)key];
 		return state.Action == InputAction::Press || state.Action == InputAction::Repeat;
 	}
 
@@ -22,13 +22,13 @@ namespace Meander
 
 	bool Input::IsKeyPressed(Key key)
 	{
-		const InputState& state = m_KeyStates[(unsigned int)key];
+		const InputState& state = m_KeyStates[(uint32_t)key];
 		return state.Action == InputAction::Press && state.Frame == m_CurrentFrame;
 	}
 
 	bool Input::IsKeyReleased(Key key)
 	{
-		const InputState& state = m_KeyStates[(unsigned int)key];
+		const InputState& state = m_KeyStates[(uint32_t)key];
 		return state.Action == InputAction::Release && state.Frame == m_CurrentFrame;
 	}
 
@@ -39,7 +39,7 @@ namespace Meander
 
 	bool Input::IsMouseDown(MouseButton button)
 	{
-		const InputState& state = m_KeyStates[(unsigned int)button];
+		const InputState& state = m_KeyStates[(uint32_t)button];
 		return state.Action == InputAction::Press;
 	}
 
@@ -50,26 +50,26 @@ namespace Meander
 
 	bool Input::IsMousePressed(MouseButton button)
 	{
-		const InputState& state = m_MouseStates[(unsigned int)button];
+		const InputState& state = m_MouseStates[(uint32_t)button];
 		return state.Action == InputAction::Press && state.Frame == m_CurrentFrame;
 	}
 
 	bool Input::IsMouseReleased(MouseButton button)
 	{
-		const InputState& state = m_MouseStates[(unsigned int)button];
+		const InputState& state = m_MouseStates[(uint32_t)button];
 		return state.Action == InputAction::Release && state.Frame == m_CurrentFrame;
 	}
 
 	void Input::SetKeyState(Key key, InputAction action)
 	{
-		InputState& state = m_KeyStates[(unsigned int)key];
+		InputState& state = m_KeyStates[(uint32_t)key];
 		state.Action = action;
 		state.Frame = m_CurrentFrame;
 	}
 
 	void Input::SetMouseButtonState(MouseButton button, InputAction action)
 	{
-		InputState& state = m_MouseStates[(unsigned int)button];
+		InputState& state = m_MouseStates[(uint32_t)button];
 		state.Action = action;
 		state.Frame = m_CurrentFrame;
 	}

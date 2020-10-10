@@ -10,10 +10,10 @@ namespace Meander
 	struct InputState
 	{
 		InputAction Action = InputAction::Release;
-		unsigned int Frame = -1;
+		uint32_t Frame = -1;
 
 		InputState(){}
-		InputState(InputAction action, unsigned int frame)
+		InputState(InputAction action, uint32_t frame)
 			: Action(action), Frame(frame)
 		{
 		}
@@ -59,11 +59,11 @@ namespace Meander
 		static const glm::vec2 GetMouseDelta() { return m_MousePosition - m_PreviousMousePosition; }
 
 	private:
-		static InputState m_KeyStates[(unsigned int)Key::MAX];
-		static InputState m_MouseStates[(unsigned int)MouseButton::MAX];
+		static InputState m_KeyStates[(uint32_t)Key::MAX];
+		static InputState m_MouseStates[(uint32_t)MouseButton::MAX];
 		static glm::vec2 m_MousePosition;
 		static glm::vec2 m_PreviousMousePosition;
-		static unsigned int m_CurrentFrame;
+		static uint32_t m_CurrentFrame;
 		
 		static void Update() { m_CurrentFrame++; m_PreviousMousePosition = m_MousePosition; }
 		
