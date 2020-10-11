@@ -14,6 +14,9 @@ namespace Meander
 		if ((uint32_t)flags & (uint32_t)ClearFlags::Color)
 			value += GL_COLOR_BUFFER_BIT;
 
+		if ((uint32_t)flags & (uint32_t)ClearFlags::Stencil)
+			value += GL_STENCIL_BUFFER_BIT;
+
 		return value;
 	}
 

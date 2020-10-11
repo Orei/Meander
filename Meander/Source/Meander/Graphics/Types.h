@@ -3,10 +3,11 @@
 namespace Meander
 {
 	/* Flags */
-	enum class ClearFlags : uint32_t
+	enum class ClearFlags : int
 	{
 		Depth = 1 << 0,
-		Color = 1 << 1
+		Color = 1 << 1,
+		Stencil = 1 << 2
 	};
 
 	inline ClearFlags operator|(ClearFlags a, ClearFlags b)
