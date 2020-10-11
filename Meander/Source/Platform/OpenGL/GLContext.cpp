@@ -16,12 +16,12 @@ namespace Meander
 		MN_INFO("Renderer: {0}", glGetString(GL_RENDERER));
 	}
 
-	void GLContext::Enable(unsigned int capabilities)
+	void GLContext::Enable(uint32_t capabilities)
 	{
 		glEnable(capabilities);
 	}
 
-	void GLContext::Disable(unsigned int capabilities)
+	void GLContext::Disable(uint32_t capabilities)
 	{
 		glDisable(capabilities);
 	}

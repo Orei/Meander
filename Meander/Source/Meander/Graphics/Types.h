@@ -3,7 +3,7 @@
 namespace Meander
 {
 	/* Flags */
-	enum class ClearFlags : int
+	enum class ClearFlags : uint32_t
 	{
 		Depth = 1 << 0,
 		Color = 1 << 1

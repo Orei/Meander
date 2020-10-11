@@ -17,7 +17,7 @@ namespace Meander
 		stbi_image_free(pixels);
 	}
 
-	GLTexture::GLTexture(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format,
+	GLTexture::GLTexture(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format,
 		const TextureDataType& dataType)
 	{
 		Generate(width, height, pixels, format, dataType);
@@ -41,7 +41,7 @@ namespace Meander
 	}
 
 	// NOTE: Construct proxy, we don't really want to copy-paste this, but it should be accessible from all constructors
-	void GLTexture::Generate(unsigned int width, unsigned int height, unsigned char* pixels, const TextureFormat& format, 
+	void GLTexture::Generate(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format, 
 		const TextureDataType& dataType)
 	{
 		m_Width = width;

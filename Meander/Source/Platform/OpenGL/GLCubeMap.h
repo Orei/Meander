@@ -12,6 +12,6 @@ namespace Meander
 		virtual void Unbind(int slot = 0) const override;
 
 	private:
-		unsigned int m_Handle = 0;
+		uint32_t m_Handle = 0;
 	};
 }

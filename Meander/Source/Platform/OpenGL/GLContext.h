@@ -10,10 +10,10 @@ namespace Meander
 		virtual void Initialize() override;
 
 		/* Enables a capability, should be used when a specific function is not yet added to the context. */
-		virtual void Enable(unsigned int capabilities) override;
+		virtual void Enable(uint32_t capabilities) override;
 
 		/* Disables a capability, should be used when a specific function is not yet added to the context. */
-		virtual void Disable(unsigned int capabilities) override;
+		virtual void Disable(uint32_t capabilities) override;
 		
 		/* Sets the clear-color. */
 		virtual void SetClearColor(const glm::vec4& color) override;

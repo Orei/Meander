@@ -109,7 +109,7 @@ namespace Meander
 		glDeleteShader(fragmentShader);
 	}
 
-	unsigned int GLShader::CreateShader(unsigned int glShaderType, const char* source)
+	uint32_t GLShader::CreateShader(uint32_t glShaderType, const char* source)
 	{
 		GLuint shader = glCreateShader(glShaderType);
 		glShaderSource(shader, 1, &source, nullptr);
@@ -120,7 +120,7 @@ namespace Meander
 		return shader;
 	}
 
-	bool GLShader::ValidateShader(unsigned int handle)
+	bool GLShader::ValidateShader(uint32_t handle)
 	{
 		GLint status;
 		glGetProgramiv(handle, GL_COMPILE_STATUS, &status);
@@ -158,7 +158,7 @@ namespace Meander
 	void GLShader::Set(const char* name, const int value)
 	{
 		glUseProgram(m_Handle);
-		unsigned int location = GetUniformLocation(name);
+		uint32_t location = GetUniformLocation(name);
 		glUniform1i(location, value);
 		glUseProgram(0);
 	}
@@ -166,7 +166,7 @@ namespace Meander
 	void GLShader::Set(const char* name, const float value)
 	{
 		glUseProgram(m_Handle);
-		unsigned int location = GetUniformLocation(name);
+		uint32_t location = GetUniformLocation(name);
 		glUniform1f(location, value);
 		glUseProgram(0);
 	}
@@ -174,7 +174,7 @@ namespace Meander
 	void GLShader::Set(const char* name, const glm::vec2& value)
 	{
 		glUseProgram(m_Handle);
-		unsigned int location = GetUniformLocation(name);
+		uint32_t location = GetUniformLocation(name);
 		glUniform2fv(location, 1, glm::value_ptr(value));
 		glUseProgram(0);
 	}
@@ -182,7 +182,7 @@ namespace Meander
 	void GLShader::Set(const char* name, const glm::vec3& value)
 	{
 		glUseProgram(m_Handle);
-		unsigned int location = GetUniformLocation(name);
+		uint32_t location = GetUniformLocation(name);
 		glUniform3fv(location, 1, glm::value_ptr(value));
 		glUseProgram(0);
 	}
@@ -190,7 +190,7 @@ namespace Meander
 	void GLShader::Set(const char* name, const glm::vec4& value)
 	{
 		glUseProgram(m_Handle);
-		unsigned int location = GetUniformLocation(name);
+		uint32_t location = GetUniformLocation(name);
 		glUniform4fv(location, 1, glm::value_ptr(value));
 		glUseProgram(0);
 	}
@@ -198,14 +198,14 @@ namespace Meander
 	void GLShader::Set(const char* name, const glm::mat4& value)
 	{
 		glUseProgram(m_Handle);
-		unsigned int location = GetUniformLocation(name);
+		uint32_t location = GetUniformLocation(name);
 		glUniformMatrix4fv(location, 1, false, glm::value_ptr(value));
 		glUseProgram(0);
 	}
 
-	unsigned int GLShader::GetUniformLocation(const char* name)
+	uint32_t GLShader::GetUniformLocation(const char* name)
 	{
-		unsigned int location = (unsigned int)glGetUniformLocation(m_Handle, name);
+		uint32_t location = (uint32_t)glGetUniformLocation(m_Handle, name);
 		return location;
 	}
 }

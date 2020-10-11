@@ -6,11 +6,11 @@ namespace Meander
 	class GLTypes
 	{
 	public:
-		static unsigned int GetClearFlags(const ClearFlags& flags);
-		static unsigned int GetTextureFormat(const TextureFormat& format);
-		static unsigned int GetWindingOrder(const WindingOrder& order);
-		static unsigned int GetCullDirection(const CullDirection& direction);
-		static unsigned int GetTextureWrap(const TextureWrap& wrap);
-		static unsigned int GetTextureDataType(const TextureDataType& type);
+		static uint32_t GetClearFlags(const ClearFlags& flags);
+		static uint32_t GetTextureFormat(const TextureFormat& format);
+		static uint32_t GetWindingOrder(const WindingOrder& order);
+		static uint32_t GetCullDirection(const CullDirection& direction);
+		static uint32_t GetTextureWrap(const TextureWrap& wrap);
+		static uint32_t GetTextureDataType(const TextureDataType& type);
 	};
 }

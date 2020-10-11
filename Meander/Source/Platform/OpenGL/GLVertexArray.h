@@ -26,8 +26,8 @@ namespace Meander
 		}
 
 	private:
-		unsigned int m_Handle = 0;
-		unsigned int m_VertexBufferIndex = 0;
+		uint32_t m_Handle = 0;
+		uint32_t m_VertexBufferIndex = 0;
 		std::vector<VertexBuffer*> m_VertexBuffers;
 		IndexBuffer* m_IndexBuffer = nullptr;
 	};

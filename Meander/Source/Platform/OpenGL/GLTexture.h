@@ -16,7 +16,7 @@ namespace Meander
 		uint32_t GetHandle() const { return m_Handle; }
 
 	private:
-		unsigned int m_Handle = 0;
+		uint32_t m_Handle = 0;
 
 		void Generate(uint32_t width, uint32_t height, unsigned char* pixels, const TextureFormat& format, const TextureDataType& dataType);
 	};

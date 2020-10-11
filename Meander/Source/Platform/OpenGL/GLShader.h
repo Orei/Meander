@@ -19,13 +19,13 @@ namespace Meander
 		virtual void Set(const char* name, const glm::mat4& value) override;
 	
 	private:
-		unsigned int m_Handle = 0;
+		uint32_t m_Handle = 0;
 
 		void ParseShaders(const char* path, std::string& vertexSource, std::string& fragmentSource);
 		void CreateProgram(const char* vertexSource, const char* fragmentSource);
-		unsigned int CreateShader(unsigned int glShaderType, const char* source);
-		bool ValidateShader(unsigned int handle);
+		uint32_t CreateShader(uint32_t glShaderType, const char* source);
+		bool ValidateShader(uint32_t handle);
 		bool ValidateProgram();
-		unsigned int GetUniformLocation(const char* name);
+		uint32_t GetUniformLocation(const char* name);
 	};
 }

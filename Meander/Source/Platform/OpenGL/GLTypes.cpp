@@ -4,20 +4,20 @@
 
 namespace Meander
 {
-	unsigned int GLTypes::GetClearFlags(const ClearFlags& flags)
+	uint32_t GLTypes::GetClearFlags(const ClearFlags& flags)
 	{
-		int value = 0;
+		uint32_t value = 0;
 
-		if ((int)flags & (int)ClearFlags::Depth)
+		if ((uint32_t)flags & (uint32_t)ClearFlags::Depth)
 			value += GL_DEPTH_BUFFER_BIT;
 
-		if ((int)flags & (int)ClearFlags::Color)
+		if ((uint32_t)flags & (uint32_t)ClearFlags::Color)
 			value += GL_COLOR_BUFFER_BIT;
 
 		return value;
 	}
 
-	unsigned int GLTypes::GetTextureFormat(const TextureFormat& format)
+	uint32_t GLTypes::GetTextureFormat(const TextureFormat& format)
 	{
 		switch (format)
 		{
@@ -36,7 +36,7 @@ namespace Meander
 		return 0;
 	}
 
-	unsigned int GLTypes::GetWindingOrder(const WindingOrder& order)
+	uint32_t GLTypes::GetWindingOrder(const WindingOrder& order)
 	{
 		switch (order)
 		{
@@ -48,7 +48,7 @@ namespace Meander
 		return 0;
 	}
 
-	unsigned int GLTypes::GetCullDirection(const CullDirection& direction)
+	uint32_t GLTypes::GetCullDirection(const CullDirection& direction)
 	{
 		switch (direction)
 		{
@@ -61,7 +61,7 @@ namespace Meander
 		return 0;
 	}
 
-	unsigned int GLTypes::GetTextureWrap(const TextureWrap& wrap)
+	uint32_t GLTypes::GetTextureWrap(const TextureWrap& wrap)
 	{
 		switch (wrap)
 		{
@@ -76,7 +76,7 @@ namespace Meander
 		return 0;
 	}
 
-	unsigned int GLTypes::GetTextureDataType(const TextureDataType& type)
+	uint32_t GLTypes::GetTextureDataType(const TextureDataType& type)
 	{
 		switch (type)
 		{

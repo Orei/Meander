@@ -1,7 +1,6 @@
 #include "pch.h"
 #include "GLFrameBuffer.h"
 #include "GLTexture.h"
-#include "Meander/Window.h"
 #include <glad/glad.h>
 
 namespace Meander

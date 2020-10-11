@@ -43,6 +43,6 @@ namespace Meander
 
 	private:
 		uint32_t m_Handle = 0;
-		unsigned int m_Count = 0;
+		uint32_t m_Count = 0;
 	};
 }
