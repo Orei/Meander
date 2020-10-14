@@ -17,14 +17,14 @@ namespace Meander
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
 		s_Instance = this;
 
-		// Create window and graphics context
+		// Create window and render context
 		m_Window = new GLFWWindow();
 		m_RenderContext = new GLContext();
 
 		m_Window->Initialize(windowProperties);
 		m_RenderContext->Initialize();
 
-		// Initialize after context
+		// Must be initialized after render context
 		Primitives::Initialize();
 		ImGuiRenderer::Initialize();
 	}

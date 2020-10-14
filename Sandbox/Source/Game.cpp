@@ -186,7 +186,7 @@ namespace Sandbox
     void Game::Update(Meander::GameTime& gameTime)
     {
     	// TODO: Tick the world when "playing in editor"
-    	// world->Tick(gameTime.GetDeltaSeconds());
+    	world->Tick(gameTime.GetDeltaSeconds());
 
     	const glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera->GetTransform().GetRight() +
     		Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +

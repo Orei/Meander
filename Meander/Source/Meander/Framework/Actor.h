@@ -12,6 +12,9 @@ namespace Meander
         Actor(const char* name = nullptr) : Entity(name) {}
         virtual ~Actor();
 
+        virtual void Awake() override {}
+        virtual void Tick(float deltaTime) override;
+
         template<typename T>
         T* Create()
         {

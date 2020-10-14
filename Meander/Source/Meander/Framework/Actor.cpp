@@ -13,6 +13,15 @@ namespace Meander
         m_Components.clear();
     }
 
+    void Actor::Tick(float deltaTime)
+    {
+        for (auto it = m_Components.begin(); it != m_Components.end(); it++)
+        {
+            auto& component = it->second;
+            component->Tick(deltaTime);
+        }
+    }
+
     void Actor::Register(Component* component)
     {
         // Add to our list of components

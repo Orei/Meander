@@ -18,7 +18,7 @@ namespace Meander
     {
         for (size_t i = m_Actors.size() - 1; i > 0; --i)
         {
-            const auto actor = m_Actors[i];
+            auto& actor = m_Actors[i];
 
             // TODO: This should probably be handled elsewhere
             if (actor->IsDestroyed())
