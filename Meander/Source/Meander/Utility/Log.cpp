@@ -4,15 +4,15 @@
 
 namespace Meander
 {
-	std::shared_ptr<spdlog::logger> Log::s_Logger;
+	std::shared_ptr<spdlog::logger> Log::s_Logger = Create();
 
-	void Log::Initialize()
+	std::shared_ptr<spdlog::logger> Log::Create()
 	{
 		spdlog::set_pattern("%^[%T] %n: %v%$");
 
-		s_Logger = spdlog::stdout_color_mt("MEANDER");
-		s_Logger->set_level(spdlog::level::trace);
+		auto logger = spdlog::stdout_color_mt("MEANDER");
+		logger->set_level(spdlog::level::trace);
 
-		MN_INFO("Log initialized.");
+		return logger;
 	}
 }

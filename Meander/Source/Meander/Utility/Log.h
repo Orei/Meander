@@ -7,11 +7,11 @@ namespace Meander
 	class Log
 	{
 	public:
-		static void Initialize();
 		inline static std::shared_ptr<spdlog::logger>& Get() { return s_Logger; }
 
 	private:
 		static std::shared_ptr<spdlog::logger> s_Logger;
+		static std::shared_ptr<spdlog::logger> Create();
 	};
 }
 

@@ -17,9 +17,6 @@ namespace Meander
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
 		s_Instance = this;
 
-		// Has to be created first to log messages
-		Log::Initialize();
-
 		// Create window and graphics context
 		m_Window = new GLFWWindow();
 		m_RenderContext = new GLContext();
