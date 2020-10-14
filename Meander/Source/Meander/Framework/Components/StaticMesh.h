@@ -15,20 +15,21 @@ namespace Meander
         inline Mesh* GetMesh() const { return m_Mesh; }
         inline Material* GetMaterial() const { return m_Material; }
 
+        COMPONENT_TYPE("StaticMesh");
+
     private:
         Mesh* m_Mesh = nullptr;
         Material* m_Material = nullptr;
 
-    public:
-        inline virtual const ComponentType& GetType() const override
-        {
-            return StaticType();
-        }
-        
-        static const ComponentType& StaticType()
-        {
-            static ComponentType type({ "StaticMesh" });
-            return type;
-        }
+        // inline virtual const ComponentType& GetType() const override
+        // {
+        //     return StaticType();
+        // }
+        //
+        // static const ComponentType& StaticType()
+        // {
+        //     static ComponentType type({ "StaticMesh" });
+        //     return type;
+        // }
     };
 }

@@ -360,7 +360,7 @@ namespace Sandbox
 
 	void ShowComponentModule(Component* component)
 	{
-		if (ImGui::CollapsingHeader(component->GetType().Name))
+		if (ImGui::CollapsingHeader(component->GetType()))
 		{
 		}
 	}

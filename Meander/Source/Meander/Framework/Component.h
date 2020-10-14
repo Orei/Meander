@@ -1,6 +1,8 @@
 ﻿#pragma once
 #include "Meander/Framework/Entity.h"
-#include "ComponentType.h"
+
+#define COMPONENT_TYPE(type) static const char* GetStaticType() { return type; } \
+    virtual const char* GetType() const override { return GetStaticType(); }
 
 namespace Meander
 {
@@ -16,7 +18,7 @@ namespace Meander
         virtual void Tick(float deltaTime) { }
 
         virtual Actor* GetOwner() const { return m_Owner; }
-        virtual const ComponentType& GetType() const = 0;
+        virtual const char* GetType() const = 0;
 
     protected:
         Actor* m_Owner = nullptr;

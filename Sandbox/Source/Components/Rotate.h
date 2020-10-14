@@ -13,17 +13,7 @@ namespace Sandbox
         
         virtual void Awake() override;
         virtual void Tick(float deltaTime) override;
-        
-    public:
-        inline virtual const ComponentType& GetType() const override
-        {
-            return StaticType();
-        }
 
-        static const ComponentType& StaticType()
-        {
-            static ComponentType type({ "Rotate" });
-            return type;
-        }
+        COMPONENT_TYPE("Rotate")
     };
 }

@@ -16,8 +16,8 @@ namespace Meander
     void Actor::Register(Component* component)
     {
         // Add to our list of components
-        const ComponentType& type = component->GetType();
-        m_Components[type.Name] = component;
+        const char* type = component->GetType();
+        m_Components[type] = component;
 
         // Make component aware of it's owner
         component->SetOwner(this);
@@ -29,12 +29,12 @@ namespace Meander
             return;
         
         // Get the static type
-        const ComponentType& type = component->GetType();
-        if (m_Components[type.Name] != component)
+        const char* type = component->GetType();
+        if (m_Components[type] != component)
             return;
 
         // Remove our reference to it
-        m_Components[type.Name] = nullptr;
+        m_Components[type] = nullptr;
 
         // Make component aware it's orphaned
         component->SetOwner(nullptr);

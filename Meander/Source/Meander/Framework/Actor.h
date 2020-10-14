@@ -1,6 +1,5 @@
 ﻿#pragma once
 #include "Entity.h"
-#include "ComponentType.h"
 #include <unordered_map>
 
 namespace Meander
@@ -26,19 +25,19 @@ namespace Meander
         template<typename T>
         T* Get()
         {
-            const ComponentType& type = T::StaticType();
+            const char* type = T::GetStaticType();
                 
-            auto it = m_Components.find(type.Name);
+            auto it = m_Components.find(type);
             if (it == m_Components.end())
                 return nullptr;
 
             return static_cast<T*>(it->second);
         }
                 
-        const std::unordered_map<std::string, Component*>& GetComponents() const { return m_Components; }
+        const std::unordered_map<const char*, Component*>& GetComponents() const { return m_Components; }
 
     private:
-        std::unordered_map<std::string, Component*> m_Components;
+        std::unordered_map<const char*, Component*> m_Components;
         
         void Register(Component* component);
         void Unregister(Component* component);

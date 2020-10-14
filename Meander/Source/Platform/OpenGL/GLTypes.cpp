@@ -6,7 +6,7 @@ namespace Meander
 {
 	uint32_t GLTypes::GetClearFlags(const ClearFlags& flags)
 	{
-		int value = 0;
+		uint32_t value = 0;
 
 		if ((int)flags & (int)ClearFlags::Depth)
 			value += GL_DEPTH_BUFFER_BIT;
