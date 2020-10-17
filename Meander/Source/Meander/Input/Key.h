@@ -2,7 +2,7 @@
 
 namespace Meander
 {
-	enum class Key : unsigned int
+	enum class Key : uint32_t
 	{
 		Space = 32,
 		Apostrophe = 39,

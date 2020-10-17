@@ -2,7 +2,7 @@
 
 namespace Meander
 {
-	enum class InputAction : unsigned int
+	enum class InputAction : uint32_t
 	{
 		Release = 0,
 		Press = 1,

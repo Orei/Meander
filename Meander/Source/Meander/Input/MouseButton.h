@@ -2,7 +2,7 @@
 
 namespace Meander
 {
-	enum class MouseButton : unsigned int
+	enum class MouseButton : uint32_t
 	{
 		Left = 0,
 		Right,
