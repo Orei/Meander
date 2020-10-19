@@ -22,50 +22,58 @@ namespace Meander
 	class Input
 	{
 	public:
-		/* Whether the key is currently pressed. */
-		static bool IsKeyDown(Key key);
+		Input();
+		virtual ~Input();
 
-		/* Whether the key is currently released. */
-		static bool IsKeyUp(Key key);
-
+		/* Whether the key is currently down. */
+		bool IsKeyDown(Key key);
+	
+		/* Whether the key is currently up. */
+		bool IsKeyUp(Key key);
+	
 		/* Whether the key was pressed this frame. */
-		static bool IsKeyPressed(Key key);
-
+		bool IsKeyPressed(Key key);
+	
 		/* Whether the key was released this frame. */
-		static bool IsKeyReleased(Key key);
-
+		bool IsKeyReleased(Key key);
+	
 		/* Returns a normalized float depending on the pressed keys. */
-		static float GetKeysAxis(Key negative, Key positive);
-
+		float GetKeysAxis(Key negative, Key positive);
+	
 		/* Whether the mouse button is currently pressed. */
-		static bool IsMouseDown(MouseButton button);
-
+		bool IsMouseDown(MouseButton button);
+	
 		/* Whether the mouse button is currently released. */
-		static bool IsMouseUp(MouseButton button);
-
+		bool IsMouseUp(MouseButton button);
+	
 		/* Whether the mouse button was pressed this frame. */
-		static bool IsMousePressed(MouseButton button);
-
+		bool IsMousePressed(MouseButton button);
+	
 		/* Whether the mouse button was released this frame. */
-		static bool IsMouseReleased(MouseButton button);
-
-		// TODO: Make these private or protected, we require a good way to access it though
-		static void SetKeyState(Key key, InputAction action);
-		static void SetMouseButtonState(MouseButton button, InputAction action);
-		static void SetMousePosition(const glm::vec2& position);
-
+		bool IsMouseReleased(MouseButton button);
+	
 		/* Returns the mouse position. */
-		static const glm::vec2& GetMousePosition() { return m_MousePosition; }
-		static const glm::vec2 GetMouseDelta() { return m_MousePosition - m_PreviousMousePosition; }
+		const glm::vec2& GetMousePosition() { return m_MousePosition; }
+		const glm::vec2 GetMouseDelta() { return m_MousePosition - m_PreviousMousePosition; }
+
+		/* Returns the input instance. */
+		inline static Input* Get() { return s_Instance; }
+
+	protected:
+		void SetKeyState(Key key, InputAction action);
+		void SetMouseButtonState(MouseButton button, InputAction action);
+		void SetMousePosition(const glm::vec2& position);
 
 	private:
-		static InputState m_KeyStates[Key::MAX];
-		static InputState m_MouseStates[MouseButton::MAX];
-		static glm::vec2 m_MousePosition;
-		static glm::vec2 m_PreviousMousePosition;
-		static uint32_t m_CurrentFrame;
+		InputState m_KeyStates[Key::MAX];
+		InputState m_MouseStates[MouseButton::MAX];
+		glm::vec2 m_MousePosition = {};
+		glm::vec2 m_PreviousMousePosition = {};
+		uint32_t m_CurrentFrame = 0;
 		
-		static void Update() { m_CurrentFrame++; m_PreviousMousePosition = m_MousePosition; }
+		void Update() { ++m_CurrentFrame; m_PreviousMousePosition = m_MousePosition; }
+
+		static Input* s_Instance;
 		
 		// Only allow application to update input.
 		friend class Application;

@@ -1,5 +1,8 @@
 #pragma once
 #include "WindowProperties.h"
+#include "Input/Key.h"
+#include "Input/InputAction.h"
+#include "Input/MouseButton.h"
 
 namespace Meander
 {
@@ -35,8 +38,17 @@ namespace Meander
 		/* Resizes the window. Ensure callback is called. */
 		virtual void Resize(uint32_t width, uint32_t height) = 0;
 
-		/* Sets the callback function called when the window is resized. */
-		void SetOnResizeCallback(std::function<void(uint32_t, uint32_t)> callback) { m_OnResize = callback; }
+		/* Registers the callback function called when the window is resized. */
+		void RegisterResizeCallback(std::function<void(uint32_t, uint32_t)> callback) { m_ResizeCallback = callback; }
+
+		/* Registers the callback function called when the window processes a key event. */
+		void RegisterKeyCallback(std::function<void(Key, InputAction)> callback) { m_KeyCallback = callback; }
+
+		/* Registers the callback function called when the window processes a key event. */
+		void RegisterMouseButtonCallback(std::function<void(MouseButton, InputAction)> callback) { m_MouseButtonCallback = callback; }
+
+		/* Registers the callback function called when the window processes a key event. */
+		void RegisterCursorPositionCallback(std::function<void(double, double)> callback) { m_CursorPositionCallback = callback; }
 
 		/* Returns the width of the window. */
 		inline uint32_t GetWidth() const { return s_Properties.Width; }
@@ -54,7 +66,10 @@ namespace Meander
 		inline static Window* Get() { return s_Instance; }
 
 	protected:
-		std::function<void(uint32_t, uint32_t)> m_OnResize;
+		std::function<void(uint32_t, uint32_t)> m_ResizeCallback;
+		std::function<void(Key, InputAction)> m_KeyCallback;
+		std::function<void(MouseButton, InputAction)> m_MouseButtonCallback;
+		std::function<void(double, double)> m_CursorPositionCallback;
 
 		static WindowProperties s_Properties;
 		static Window* s_Instance;

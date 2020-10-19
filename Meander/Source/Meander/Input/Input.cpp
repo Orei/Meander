@@ -3,11 +3,18 @@
 
 namespace Meander
 {
-	InputState Input::m_KeyStates[(uint32_t)Key::MAX];
-	InputState Input::m_MouseStates[(uint32_t)MouseButton::MAX];
-	glm::vec2 Input::m_MousePosition = glm::vec2(0.f);
-	glm::vec2 Input::m_PreviousMousePosition = glm::vec2(0.f);
-	uint32_t Input::m_CurrentFrame = 0;
+	Input* Input::s_Instance = nullptr;
+
+	Input::Input()
+	{
+		MN_ASSERT(s_Instance == nullptr, "An instance of Input already exists.");
+		s_Instance = this;
+	}
+
+	Input::~Input()
+	{
+		s_Instance = nullptr;
+	}
 
 	bool Input::IsKeyDown(Key key)
 	{

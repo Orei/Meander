@@ -7,6 +7,7 @@ namespace Meander
 	class Window;
 	class RenderContext;
 	class Canvas;
+	class Input;
 
 	class Application
 	{
@@ -20,6 +21,7 @@ namespace Meander
 		inline Window* GetWindow() { return m_Window; }
 		inline RenderContext* GetRenderContext() { return m_RenderContext; }
 		inline Canvas* GetCanvas() { return m_Canvas; }
+		inline Input* GetInput() { return m_Input; }
 
 		inline static Application* Get() { return s_Instance; }
 
@@ -28,6 +30,7 @@ namespace Meander
 		Window* m_Window = nullptr;
 		RenderContext* m_RenderContext = nullptr;
 		Canvas* m_Canvas = nullptr;
+		Input* m_Input = nullptr;
 
 		static Application* s_Instance;
 	};

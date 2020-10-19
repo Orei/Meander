@@ -188,26 +188,26 @@ namespace Sandbox
     	// TODO: Tick the world when "playing in editor"
     	world->Tick(gameTime.GetDeltaSeconds());
 
-    	const glm::vec3 movement = Input::GetKeysAxis(Key::A, Key::D) * camera->GetTransform().GetRight() +
-    		Input::GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
-    		Input::GetKeysAxis(Key::S, Key::W) * camera->GetTransform().GetForward();
+    	const glm::vec3 movement = m_Input->GetKeysAxis(Key::A, Key::D) * camera->GetTransform().GetRight() +
+    		m_Input->GetKeysAxis(Key::LeftControl, Key::Space) * WORLD_UP +
+    		m_Input->GetKeysAxis(Key::S, Key::W) * camera->GetTransform().GetForward();
     	
     	camera->GetTransform().Translate(movement * gameTime.GetDeltaSeconds() * 4.f);
     	
     	if (!cursorDisabled)
     	{
-    		const glm::vec2 look = Input::GetMouseDelta() * 0.05f;
+    		const glm::vec2 look = m_Input->GetMouseDelta() * 0.05f;
     		camera->GetTransform().SetRotation(glm::angleAxis(glm::radians(look.y), WORLD_RIGHT) *
     			camera->GetTransform().GetRotation() *
     			glm::angleAxis(glm::radians(look.x), WORLD_UP));
     	}
 
     	// TODO: Needs to be called last, otherwise the camera will do some funky rotational stuff
-    	if (Input::IsMousePressed(MouseButton::Right))
+    	if (m_Input->IsMousePressed(MouseButton::Right))
     	{
     		m_Window->SetCursorState(cursorDisabled = false);
     	}
-    	else if (Input::IsMouseReleased(MouseButton::Right))
+    	else if (m_Input->IsMouseReleased(MouseButton::Right))
     	{
     		m_Window->SetCursorState(cursorDisabled = true);
     	}

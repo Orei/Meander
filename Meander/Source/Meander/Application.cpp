@@ -17,7 +17,7 @@ namespace Meander
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
 		s_Instance = this;
 
-		// Create window, render context and canvas
+		m_Input = new Input();
 		m_Window = new GLFWWindow();
 		m_RenderContext = new GLContext();
 		m_Canvas = new ImCanvas();
@@ -25,6 +25,22 @@ namespace Meander
 		m_Window->Initialize(windowProperties);
 		m_RenderContext->Initialize();
 		m_Canvas->Initialize(m_Window, m_RenderContext);
+
+		// Funnel input-related window callbacks into our input handler
+		m_Window->RegisterKeyCallback([&](Key key, InputAction action)
+		{
+			m_Input->SetKeyState(key, action);
+		});
+
+		m_Window->RegisterMouseButtonCallback([&](MouseButton button, InputAction action)
+        {
+            m_Input->SetMouseButtonState(button, action);
+        });
+		
+		m_Window->RegisterCursorPositionCallback([&](double x, double y)
+		{
+		    m_Input->SetMousePosition({ (float)x, (float)y });
+		});
 
 		// Requires render context to be initialized
 		Primitives::Initialize();
@@ -39,7 +55,7 @@ namespace Meander
 	{
 		m_Running = true;
 
-		context->Initialize_Internal(this, m_RenderContext, m_Window, m_Canvas);
+		context->Initialize_Internal(this, m_RenderContext, m_Window, m_Canvas, m_Input);
 		context->Initialize();
 		context->Load();
 
@@ -56,7 +72,7 @@ namespace Meander
 			context->RenderUI(gameTime);
 			m_Canvas->End();
 
-			Input::Update();
+			m_Input->Update();
 			m_Window->Present();
 			m_Window->PollEvents();
 		}
