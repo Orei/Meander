@@ -6,6 +6,7 @@ namespace Meander
     class Application;
     class RenderContext;
     class Window;
+    class Canvas;
     
     class Client
     {
@@ -23,13 +24,15 @@ namespace Meander
         Application* m_Application = nullptr;
         RenderContext* m_RenderContext = nullptr;
         Window* m_Window = nullptr;
+        Canvas* m_Canvas = nullptr;
 
     private:
-        void Initialize_Internal(Application* app, RenderContext* graphics, Window* window)
+        void Initialize_Internal(Application* app, RenderContext* graphics, Window* window, Canvas* canvas)
         {
             m_Application = app;
             m_RenderContext = graphics;
             m_Window = window;
+            m_Canvas = canvas;
         }
        
         friend class Application;

@@ -6,7 +6,7 @@
 #include "Input/Input.h"
 #include "Platform/OpenGL/GLContext.h"
 #include "Platform/GLFW/GLFWWindow.h"
-#include "ImGui/ImGuiRenderer.h"
+#include "Platform/ImGui/ImCanvas.h"
 
 namespace Meander
 {
@@ -17,16 +17,17 @@ namespace Meander
 		MN_ASSERT(s_Instance == nullptr, "An instance of Application already exists.");
 		s_Instance = this;
 
-		// Create window and render context
+		// Create window, render context and canvas
 		m_Window = new GLFWWindow();
 		m_RenderContext = new GLContext();
+		m_Canvas = new ImCanvas();
 
 		m_Window->Initialize(windowProperties);
 		m_RenderContext->Initialize();
+		m_Canvas->Initialize(m_Window, m_RenderContext);
 
-		// Must be initialized after render context
+		// Requires render context to be initialized
 		Primitives::Initialize();
-		ImGuiRenderer::Initialize();
 	}
 
 	Application::~Application()
@@ -38,7 +39,7 @@ namespace Meander
 	{
 		m_Running = true;
 
-		context->Initialize_Internal(this, m_RenderContext, m_Window);
+		context->Initialize_Internal(this, m_RenderContext, m_Window, m_Canvas);
 		context->Initialize();
 		context->Load();
 
@@ -51,9 +52,9 @@ namespace Meander
 			context->Update(gameTime);
 			context->Render(gameTime);
 
-			ImGuiRenderer::Begin();
+			m_Canvas->Begin();
 			context->RenderUI(gameTime);
-			ImGuiRenderer::End();
+			m_Canvas->End();
 
 			Input::Update();
 			m_Window->Present();
