@@ -44,10 +44,10 @@ namespace Meander
 		/* Registers the callback function called when the window processes a key event. */
 		void RegisterKeyCallback(std::function<void(Key, InputAction)> callback) { m_KeyCallback = callback; }
 
-		/* Registers the callback function called when the window processes a key event. */
+		/* Registers the callback function called when the window processes a mouse button event. */
 		void RegisterMouseButtonCallback(std::function<void(MouseButton, InputAction)> callback) { m_MouseButtonCallback = callback; }
 
-		/* Registers the callback function called when the window processes a key event. */
+		/* Registers the callback function called when the window processes a cursor position event. */
 		void RegisterCursorPositionCallback(std::function<void(double, double)> callback) { m_CursorPositionCallback = callback; }
 
 		/* Returns the width of the window. */
